@@ -29,7 +29,7 @@
            </li> --}}
                 <li><a class="nav-link" href="credits.html"><i class="fas fa-user"></i><span>User</span></a>
                 </li>
-                <li><a class="nav-link" href="credits.html"><i class="fas fa-home"></i><span>Labor</span></a>
+                <li><a class="nav-link" href="{{ url('/labor') }}"><i class="fas fa-home"></i><span>Labor</span></a>
                 </li>
                 <li><a class="nav-link" href="credits.html"><i class="fas fa-tools"></i><span>Alat</span></a></li>
                 <li><a class="nav-link" href="credits.html"><i class="fas fa-tools"></i><span>Bahan</span></a></li>

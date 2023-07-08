@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+// use App\Http\Controllers\LaborsController;
+use App\Http\Controllers\LaborsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +16,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('dashboard');
+    return view('template.dashboard');
+
+//Route Labor
+// Route::resource("/Labor", LaborsController::class);
+// Route::get("/labors", [LaborsController::class, 'index']);
 });
+
+// Log
+Route::resource('log', LogController::class);
+
+// Route::get('/labor', [LaborsController::class, 'index']);
+// Route::get('/labor-add', [LaborsController::class, 'create']);
+
+Route::resource('labor', LaborsController::class);
+// Route::get('/labor-add', [LaborsController::class, 'create']);
