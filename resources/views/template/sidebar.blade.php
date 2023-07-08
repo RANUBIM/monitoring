@@ -27,12 +27,14 @@
                    <li><a href="auth-reset-password.html">Reset Password</a></li>
                </ul>
            </li> --}}
-                <li><a class="nav-link" href="credits.html"><i class="fas fa-user"></i><span>User</span></a>
+                <li><a class="nav-link" href="{{ url('/users') }}"><i class="fas fa-user"></i><span>User</span></a>
                 </li>
                 <li><a class="nav-link" href="{{ url('/labor') }}"><i class="fas fa-home"></i><span>Labor</span></a>
                 </li>
-                <li><a class="nav-link" href="credits.html"><i class="fas fa-tools"></i><span>Alat</span></a></li>
-                <li><a class="nav-link" href="credits.html"><i class="fas fa-tools"></i><span>Bahan</span></a></li>
+                <li><a class="nav-link" href="{{ url('/alat') }}"><i class="fa fa-screwdriver"></i><span>Alat</span></a>
+                </li>
+                <li><a class="nav-link" href="{{ url('/bahan') }}"><i class="fas fa-briefcase"></i><span>Bahan</span></a>
+                </li>
 
 
 

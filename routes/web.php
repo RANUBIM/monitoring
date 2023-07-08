@@ -29,5 +29,6 @@ Route::resource('log', LogController::class);
 // Route::get('/labor', [LaborsController::class, 'index']);
 // Route::get('/labor-add', [LaborsController::class, 'create']);
 
+Route::resource('user', LaborsController::class);
 Route::resource('labor', LaborsController::class);
 // Route::get('/labor-add', [LaborsController::class, 'create']);

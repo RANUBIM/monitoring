@@ -21,7 +21,7 @@
                   <div class="col-12 col-md-12 col-lg-12">
                      <div class="card">
                            <div class="card-header">
-                              <a href="/labor" class="btn mdi-bookmark-off-outline btn-primary "><i class="fa fa-refresh"></i>refresh</a>
+                              <a href="/labor" class="btn mdi-bookmark-off-outline btn-primary "><i class="fa fa-refresh"></i></a>
                               <a href="/labor/create" class="btn btn-primary ">Tambah</a>
                            </div>
                            <div class="card-body">
