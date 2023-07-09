@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 // use App\Http\Controllers\LaborsController;
 use App\Http\Controllers\LaborsController;
+use App\Http\Controllers\UsersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,6 @@ Route::resource('log', LogController::class);
 // Route::get('/labor', [LaborsController::class, 'index']);
 // Route::get('/labor-add', [LaborsController::class, 'create']);
 
-Route::resource('user', LaborsController::class);
+Route::resource('user', UsersController::class);
 Route::resource('labor', LaborsController::class);
 // Route::get('/labor-add', [LaborsController::class, 'create']);

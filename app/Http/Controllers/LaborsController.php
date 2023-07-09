@@ -30,9 +30,6 @@ class LaborsController extends Controller
      */
     public function create()
     {
-        // dd('tes');
-        // return view('masters.labor.form');
-
         $datas = Labors::first();
 
         return view('masters.labor.form', compact('datas'));
@@ -48,24 +45,23 @@ class LaborsController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'string|required|max:255'
-
         ]);
 
         $validatedData['uuid'] = Uuid::uuid4()->getHex();
         // $validatedData['created_by'] = Auth::user()->id;
         Labors::create($validatedData);
 
-        // // LOG
-        // $log = [
-        //     'uuid' => Uuid::uuid4()->getHex(),
-        //     // 'user_id' => Auth::user()->id,
-        //     // 'description' => '<em>Menambah</em> data KB <strong>[' . $request->name . ']</strong>', //name = nama tag di view (file index)
-        //     'category' => 'tambah',
-        //     'created_at' => now(),
-        // ];
+        // LOG
+        $log = [
+            'uuid' => Uuid::uuid4()->getHex(),
+            'user_id' => Auth::user()->id,
+            'description' => '<em>Menambah</em> data Labor <strong>[' . $request->name . ']</strong>', //name = nama tag di view (file index)
+            'category' => 'tambah',
+            'created_at' => now(),
+        ];
         
-        // DB::table('logs')->insert($log);
-        // // /LOG
+        DB::table('logs')->insert($log);
+        // /LOG
 
         return redirect('labor')->with('flash_messaga','Labor Added');
     }
@@ -113,16 +109,16 @@ class LaborsController extends Controller
 
         Labors::where('uuid', $uuid)->first()->update($validatedData);
 
-        // $log = [
-        //     'uuid' => Uuid::uuid4()->getHex(),
-        //     'user_id' => Auth::user()->id,
-        //     'description' => '<em>Mengubah</em> data RT <strong>[' . $request->name . ']</strong>', //name = nama tag di view (file index)
-        //     'category' => 'edit',
-        //     'created_at' => now(),
-        // ];
+        $log = [
+            'uuid' => Uuid::uuid4()->getHex(),
+            'user_id' => Auth::user()->id,
+            'description' => '<em>Mengubah</em> data Labor <strong>[' . $request->name . ']</strong>', //name = nama tag di view (file index)
+            'category' => 'edit',
+            'created_at' => now(),
+        ];
 
-        // DB::table('logs')->insert($log);
-        // // selesai
+        DB::table('logs')->insert($log);
+        // selesai
 
 
         return redirect('/labor')->with('success', 'Data Labor Berhasil Diupdate !!');
@@ -142,7 +138,7 @@ class LaborsController extends Controller
         $log = [
             'uuid' => Uuid::uuid4()->getHex(),
             // 'user_id' => Auth::user()->id,
-            'description' => '<em>Menghapus</em> data RT <strong>[' . $data->name . ']</strong>', //name = nama tag di view (file index)
+            'description' => '<em>Menghapus</em> data Labor <strong>[' . $data->name . ']</strong>', //name = nama tag di view (file index)
             'category' => 'hapus',
             'created_at' => now(),
         ];
