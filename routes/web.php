@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 // use App\Http\Controllers\LaborsController;
 use App\Http\Controllers\LaborsController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\AlatsController;
+use App\Http\Controllers\BahansController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,9 +29,7 @@ Route::get('/', function () {
 // Log
 Route::resource('log', LogController::class);
 
-// Route::get('/labor', [LaborsController::class, 'index']);
-// Route::get('/labor-add', [LaborsController::class, 'create']);
-
 Route::resource('user', UsersController::class);
 Route::resource('labor', LaborsController::class);
-// Route::get('/labor-add', [LaborsController::class, 'create']);
+Route::resource('alat', AlatsController::class);
+Route::resource('bahan', BahansController::class);

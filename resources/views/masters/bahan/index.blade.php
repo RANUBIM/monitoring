@@ -3,7 +3,7 @@
    <div class="main-content">
       <section class="section">
          <div class="section-header">
-               <h1>Labor</h1>
+               <h1>Bahan</h1>
                <div class="section-header-breadcrumb">
                   <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
                   <div class="breadcrumb-item"><a href="#">Bootstrap Components</a></div>
@@ -21,8 +21,8 @@
                   <div class="col-12 col-md-12 col-lg-12">
                      <div class="card">
                            <div class="card-header">
-                              <a href="/labor" class="btn mdi-bookmark-off-outline btn-primary "><i class="fa fa-table"></i></a>
-                              <a href="/labor/create" class="btn btn-primary ">Tambah</a>
+                              <a href="/bahan" class="btn btn-primary"><i class="fa fa-table"></i></a>
+                              <a href="/bahan/create" class="btn btn-primary ">Tambah</a>
                            </div>
                            <div class="card-body">
                               {{-- <div class="section-title mt-0">Light</div> --}}
@@ -30,7 +30,13 @@
                                  <thead>
                                        <tr>
                                           <th scope="col">#</th>
-                                          <th scope="col">Nama Labor</th>
+                                          <th scope="col">No. Inventaris</th>
+                                          <th scope="col">Tanggal Pengadaan</th>
+                                          <th scope="col">Labor</th>
+                                          <th scope="col">Nama</th>
+                                          <th scope="col">Spesifikasi</th>
+                                          <th scope="col">Stok</th>
+                                          <th scope="col">Keterangan</th>
                                           <th scope="col">Action</th>
                                        </tr>
                                  </thead>
@@ -38,11 +44,17 @@
                                     @foreach ($datas as $data)
                                        <tr>
                                           <th scope="row">{{ $loop->iteration }}</th>
-                                          <td>{{ $data->name }}</td>
+                                          <td>{{ $data->no_inv }}</td>
+                                          <td>{{ $data->tgl_pengadaan }}</td>
+                                          <td>{{ $data->labor_id }}</td>
+                                          <td>{{ $data->nama }}</td>
+                                          <td>{{ $data->spesifikasi }}</td>
+                                          <td>{{ $data->stok }} {{ $data->satuan }}</td>
+                                          <td>{{ $data->keterangan }}</td>
                                           <td>
-                                             <a href="/labor/{{ $data->uuid }}/edit" class="btn btn-primary">Edit</a>
+                                             <a href="/bahan/{{ $data->uuid }}/edit" class="btn btn-primary">Edit</a>
 
-                                             <form action="/labor/{{ $data->uuid }}" method="post"
+                                             <form action="/bahan/{{ $data->uuid }}" method="post"
                                                    class="d-inline">
                                                    @method('delete')
                                                    @csrf
