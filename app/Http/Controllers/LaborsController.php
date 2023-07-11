@@ -49,12 +49,13 @@ class LaborsController extends Controller
 
         $validatedData['uuid'] = Uuid::uuid4()->getHex();
         // $validatedData['created_by'] = Auth::user()->id;
+        $validatedData['created_by'] = "1";
         Labors::create($validatedData);
 
         // LOG
         $log = [
             'uuid' => Uuid::uuid4()->getHex(),
-            'user_id' => Auth::user()->id,
+            // 'user_id' => Auth::user()->id,
             'description' => '<em>Menambah</em> data Labor <strong>[' . $request->name . ']</strong>', //name = nama tag di view (file index)
             'category' => 'tambah',
             'created_at' => now(),

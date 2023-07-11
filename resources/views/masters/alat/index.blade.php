@@ -1,5 +1,15 @@
 @extends('template.template')
 @section('content')
+   @if (session()->has('success'))
+      <div class="alert alert-success col-lg-12" role="alert">
+         {{ session('success') }}
+      </div>
+   @endif
+   @if (session()->has('delete'))
+      <div class="alert alert-danger col-lg-12" role="alert">
+         {{ session('delete') }}
+      </div>
+   @endif
    <div class="main-content">
       <section class="section">
          <div class="section-header">
@@ -42,7 +52,11 @@
                                     @foreach ($datas as $data)
                                        <tr>
                                           <th scope="row">{{ $loop->iteration }}</th>
-                                          <td>{{ $data->labor_id }}</td>
+                                          <td>
+                                             @foreach ($data->laborAlat as $item)
+                                                {{ $item->name }}
+                                             @endforeach
+                                          </td>
                                           <td>{{ $data->nama }}</td>
                                           <td>{{ $data->spesifikasi }}</td>
                                           <td>{{ $data->stok }} {{ $data->satuan }}</td>

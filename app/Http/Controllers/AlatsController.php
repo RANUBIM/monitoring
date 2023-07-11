@@ -6,9 +6,12 @@ use App\Http\Controllers\Controller;
 
 use Ramsey\Uuid\Uuid;
 use App\Models\Alats;
+use App\Models\Labors;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
+// use App
 
 class AlatsController extends Controller
 {
@@ -17,9 +20,21 @@ class AlatsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(request $request)
     {
         $datas = Alats::all();
+
+        // $datas = Alats::select('alats.*','labors.*')
+        //         ->where('alats.deleted_by',null)
+        //         ->join('labors','alats.labor_id','=','labors.id');
+
+        // $labor_id =  $request->get('$labor_id');
+        // $nama =  $request->get('$nama');
+        // $spesifikasi =  $request->get('$spesifikasi');
+        // $stok =  $request->get('$stok');
+        // $keterangan =  $request->get('$keterangan');
+
+        // dd($datas);
         return view('masters.alat.index', compact('datas'));
     }
 

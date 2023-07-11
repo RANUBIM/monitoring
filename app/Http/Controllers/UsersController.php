@@ -55,7 +55,7 @@ class UsersController extends Controller
         ]);
 
         $validatedData['uuid'] = Uuid::uuid4()->getHex();
-        $validatedData['created_by'] = "belum";
+        $validatedData['created_by'] = "1";
         // $validatedData['created_by'] = Auth::user()->id;
         Users::create($validatedData);
 

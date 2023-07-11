@@ -10,4 +10,10 @@ class Alats extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+    protected $dates = ['deleted_at'];
+
+    public function laborAlat()
+    {
+        return $this->belongsTo('App\Alats');
+    }
 }

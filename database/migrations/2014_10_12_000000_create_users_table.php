@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('jurusan')->nullable();
             $table->string('mapel')->nullable();
             $table->string('kontak')->nullable();
+            $table->rememberToken();
             $table->integer("created_by");
             $table->integer("updated_by")->nullable();
             $table->integer("deleted_by")->nullable();

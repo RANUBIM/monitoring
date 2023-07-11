@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('alats', function (Blueprint $table) {
             $table->id();
             $table->string("uuid")->unique();
-            $table->string('labor_id')->required();
+            $table->integer('labor_id')->required();
             $table->string('nama')->required();
             $table->string('spesifikasi')->nullable();
             $table->string('stok')->nullable();

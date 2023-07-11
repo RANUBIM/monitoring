@@ -2,6 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 // use App\Http\Controllers\LaborsController;
+// use App\Http\Controllers\Auth\LoginController;
+
+// Login
+use App\Http\Controllers\LoginController;
+
+// Master
 use App\Http\Controllers\LaborsController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AlatsController;
@@ -26,10 +32,20 @@ Route::get('/', function () {
 // Route::get("/labors", [LaborsController::class, 'index']);
 });
 
+// Login
+Route::get('/login',[LoginController::class, 'index'])->name('login')->middleware('guest');
+Route::post('/login',[LoginController::class, 'authenticate']);
+Route::post('/logout',[LoginController::class, 'logout']);
+
 // Log
 Route::resource('log', LogController::class);
 
+// Master
 Route::resource('user', UsersController::class);
+// ->middleware('auth');
 Route::resource('labor', LaborsController::class);
+// ->middleware('auth');
 Route::resource('alat', AlatsController::class);
+// ->middleware('auth');
 Route::resource('bahan', BahansController::class);
+// ->middleware('auth');
