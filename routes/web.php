@@ -26,10 +26,6 @@ use App\Http\Controllers\BahansController;
 
 Route::get('/', function () {
     return view('template.dashboard');
-
-//Route Labor
-// Route::resource("/Labor", LaborsController::class);
-// Route::get("/labors", [LaborsController::class, 'index']);
 });
 
 // Login
@@ -38,14 +34,10 @@ Route::post('/login',[LoginController::class, 'authenticate']);
 Route::post('/logout',[LoginController::class, 'logout']);
 
 // Log
-Route::resource('log', LogController::class);
+Route::resource('log', LogController::class)->middleware('auth');
 
 // Master
-Route::resource('user', UsersController::class);
-// ->middleware('auth');
-Route::resource('labor', LaborsController::class);
-// ->middleware('auth');
-Route::resource('alat', AlatsController::class);
-// ->middleware('auth');
-Route::resource('bahan', BahansController::class);
-// ->middleware('auth');
+Route::resource('user', UsersController::class)->middleware('auth');
+Route::resource('labor', LaborsController::class)->middleware('auth');
+Route::resource('alat', AlatsController::class)->middleware('auth');
+Route::resource('bahan', BahansController::class)->middleware('auth');
