@@ -26,7 +26,7 @@ use App\Http\Controllers\BahansController;
 
 Route::get('/', function () {
     return view('template.dashboard');
-});
+})->middleware('auth');;
 
 // Login
 Route::get('/login',[LoginController::class, 'index'])->name('login')->middleware('guest');

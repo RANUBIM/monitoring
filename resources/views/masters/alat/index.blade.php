@@ -31,7 +31,7 @@
                   <div class="col-12 col-md-12 col-lg-12">
                      <div class="card">
                            <div class="card-header">
-                              <a href="/alat" class="btn btn-primary"><i class="fa fa-table"></i></a>
+                              <a href="/alat" class="btn btn-primary"><i class="fa fa-redo"></i></a>
                               <a href="/alat/create" class="btn btn-primary ">Tambah</a>
                            </div>
                            <div class="card-body">
@@ -52,11 +52,11 @@
                                     @foreach ($datas as $data)
                                        <tr>
                                           <th scope="row">{{ $loop->iteration }}</th>
-                                          <td>
+                                          {{-- <td>
                                              @foreach ($data->laborAlat as $item)
                                                 {{ $item->name }}
                                              @endforeach
-                                          </td>
+                                          </td> --}}
                                           <td>{{ $data->nama }}</td>
                                           <td>{{ $data->spesifikasi }}</td>
                                           <td>{{ $data->stok }} {{ $data->satuan }}</td>

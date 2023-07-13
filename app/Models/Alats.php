@@ -12,8 +12,8 @@ class Alats extends Model
     protected $guarded = ['id'];
     protected $dates = ['deleted_at'];
 
-    public function laborAlat()
-    {
-        return $this->belongsTo('App\Alats');
-    }
+    // public function laborAlat()
+    // {
+    //     return $this->belongsTo('App\Alats');
+    // }
 }

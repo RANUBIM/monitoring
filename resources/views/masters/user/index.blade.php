@@ -21,7 +21,7 @@
                   <div class="col-12 col-md-12 col-lg-12">
                      <div class="card">
                            <div class="card-header">
-                              <a href="/user" class="btn btn-primary"><i class="fa fa-table"></i></a>
+                              <a href="/user" class="btn btn-primary"><i class="fa fa-redo"></i></a>
                               <a href="/user/create" class="btn btn-primary ">Tambah</a>
                            </div>
                            <div class="card-body">

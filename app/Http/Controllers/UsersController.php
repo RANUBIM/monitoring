@@ -44,7 +44,7 @@ class UsersController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'niknis' => 'string|required|max:255',
+            'niknis' => 'string|required|max:255|min:5',
             'password' => 'string|required|max:255',
             'role' => 'string|required|max:255',
             'nama' => 'string|required|max:255',
@@ -112,7 +112,7 @@ class UsersController extends Controller
     {
         $validatedData = $request->validate([
             'niknis' => 'string|required|max:255',
-            'password' => 'string|required|max:255',
+            // 'password' => 'string|required|max:255',
             'role' => 'string|required|max:255',
             'nama' => 'string|required|max:255',
             'kelas' => 'string|max:255',
@@ -122,6 +122,8 @@ class UsersController extends Controller
 
         ]);
         // $validatedData['updated_by'] = Auth::user()->id;
+        $validatedData['password'] = bcrypt($validatedData['password']);
+        $validatedData['updated_by'] = Auth::user()->id;
 
         Users::where('uuid', $uuid)->first()->update($validatedData);
 

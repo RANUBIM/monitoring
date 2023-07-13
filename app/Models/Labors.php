@@ -10,5 +10,5 @@ class Labors extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
-    protected $fillable = ['name','uuid'];
+    protected $fillable = ['nama','uuid'];
 }

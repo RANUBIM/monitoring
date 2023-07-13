@@ -11,18 +11,42 @@
                </div>
          </div>
 
+         {{-- Notif --}}
+         @if (session()->has('success'))
+            <div class="alert alert-primary alert-dismissible show fade">
+               <div class="alert-body">
+                  <button class="close" data-dismiss="alert">
+                     <span>&times;</span>
+                  </button>
+                  {{ session('success') }}
+               </div>
+            </div>
+         @endif
+         @if (session()->has('delete'))
+            <div class="alert alert-danger alert-dismissible show fade">
+               <div class="alert-body">
+                  <button class="close" data-dismiss="alert">
+                     <span>&times;</span>
+                  </button>
+                  {{ session('delete') }}
+               </div>
+            </div>
+         @endif
+         {{-- /Notif --}}
+
          <div class="section-body">
                {{-- <h2 class="section-title">Tables</h2>
-               <p class="section-lead">
-                  Examples for opt-in styling of tables (given their prevalent use in JavaScript plugins) with Bootstrap.
-               </p> --}}
+<p class="section-lead">
+Examples for opt-in styling of tables (given their prevalent use in JavaScript plugins) with Bootstrap.
+</p> --}}
 
                <div class="row">
                   <div class="col-12 col-md-12 col-lg-12">
                      <div class="card">
                            <div class="card-header">
-                              <a href="/labor" class="btn mdi-bookmark-off-outline btn-primary "><i class="fa fa-table"></i></a>
-                              <a href="/labor/create" class="btn btn-primary ">Tambah</a>
+                              <a href="/labor" class="btn mdi-bookmark-off-outline btn-primary "><i
+                                       class="fa fa-redo"></i></a>
+                              <a href="/labor/create" class="btn btn-primary" style="float: right">Tambah</a>
                            </div>
                            <div class="card-body">
                               {{-- <div class="section-title mt-0">Light</div> --}}
@@ -35,22 +59,23 @@
                                        </tr>
                                  </thead>
                                  <tbody>
-                                    @foreach ($datas as $data)
-                                       <tr>
-                                          <th scope="row">{{ $loop->iteration }}</th>
-                                          <td>{{ $data->name }}</td>
-                                          <td>
-                                             <a href="/labor/{{ $data->uuid }}/edit" class="btn btn-primary">Edit</a>
+                                       @foreach ($datas as $data)
+                                          <tr>
+                                             <th scope="row">{{ $loop->iteration }}</th>
+                                             <td>{{ $data->nama }}</td>
+                                             <td>
+                                                   <a href="/labor/{{ $data->uuid }}/edit"
+                                                      class="btn btn-primary">Edit</a>
 
-                                             <form action="/labor/{{ $data->uuid }}" method="post"
-                                                   class="d-inline">
-                                                   @method('delete')
-                                                   @csrf
-                                                   <button type="submit" class="btn btn-primary">Hapus</button>
-                                             </form>
-                                          </td>
-                                       </tr>
-                                    @endforeach
+                                                   <form action="/labor/{{ $data->uuid }}" method="post"
+                                                      class="d-inline">
+                                                      @method('delete')
+                                                      @csrf
+                                                      <button type="submit" class="btn btn-primary">Hapus</button>
+                                                   </form>
+                                             </td>
+                                          </tr>
+                                       @endforeach
                                  </tbody>
                               </table>
                            </div>

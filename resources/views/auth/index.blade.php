@@ -47,9 +47,21 @@
                             <div class="card-header">
                                 <h4>Login</h4>
                             </div>
+                            {{-- Notif --}}
+                            @if (session()->has('loginError'))
+                                <div class="alert alert-danger alert-dismissible show fade">
+                                    <div class="alert-body">
+                                        <button class="close" data-dismiss="alert">
+                                            <span>&times;</span>
+                                        </button>
+                                        {{ session('loginError') }}
+                                    </div>
+                                </div>
+                            @endif
+                            {{-- /Notif --}}
 
                             <div class="card-body">
-                                <form method="POST" action="/login" class="needs-validation" >
+                                <form method="POST" action="/login" class="needs-validation">
                                     @csrf
                                     <div class="form-group">
                                         <label for="niknis">NIK / NIS</label>
@@ -95,15 +107,19 @@
                                         </div>
                                     </div> --}}
 
-                                    {{-- <div class="form-group">
-                    <div class="custom-control custom-checkbox">
-                      <input type="checkbox" name="remember" class="custom-control-input" tabindex="3" id="remember-me">
-                      <label class="custom-control-label" for="remember-me">Remember Me</label>
-                    </div>
-                  </div> --}}
+                                    <div class="form-group" style="margin-left: -20px">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" id="remember_token" name="remember_token"
+                                        {{ old('remember_token') ? 'checked' : '' }}>
+                                            {{-- <label class="custom-control-label" for="remember-me"> --}}
+                                                {{ __('Remember Me') }}
+                                            {{-- </label> --}}
+                                        </div>
+                                    </div>
 
-                                    {{-- <input type="checkbox" id="remember_token" name="remember_token" {{ old('remember_token') ? 'checked' : '' }}> {{ __('Remember Me') }}
-                      </label> --}}
+                                    {{-- <input type="checkbox" id="remember_token" name="remember_token"
+                                        {{ old('remember_token') ? 'checked' : '' }}> {{ __('Remember Me') }}
+                                    </label> --}}
 
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">

@@ -32,10 +32,10 @@
                                         @method('put')
                                         @csrf
                                         <div class="form-group">
-                                            <label for="name">Nama Labor</label>
-                                            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="name"
-                                                placeholder="name" required autofocus value="{{ old('name', $data->name) }}">
-                                            @error('name')
+                                            <label for="nama">Nama Labor</label>
+                                            <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror" id="nama"
+                                                placeholder="nama" required autofocus value="{{ old('nama', $data->nama) }}">
+                                            @error('nama')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>

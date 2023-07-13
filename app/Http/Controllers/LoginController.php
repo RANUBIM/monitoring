@@ -8,8 +8,9 @@ use Ramsey\Uuid\Uuid;
 
 //pastikan aktifkan ini utk cek auth loginya
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Auth\Events\Login;
 // use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -50,14 +51,14 @@ class LoginController extends Controller
           $log = [
             'uuid' => Uuid::uuid4()->getHex(),
             'user_id' => Auth::user()->id,
-            'description' => '<em>Login</em> akun <strong>[' . $data->name . ']</strong>',
+            'description' => '<em>Login</em> akun <strong>[' . $data->nama . ']</strong>',
             'category' => 'login',
             'created_at' => now(),
           ];
 
           DB::table('logs')->insert($log);
 
-          return redirect()->intended('/user');
+          return redirect()->intended('/');
       }
       
       // dd('gagal login');
@@ -70,8 +71,8 @@ class LoginController extends Controller
       // $data = User::get()->where('uuid',)->firstOrFail();
       $log = [
         'uuid' => Uuid::uuid4()->getHex(),
-        'user_id' => Logins::user()->id,
-        'description' => '<em>Log out</em> akun <strong>[' . $data->name . ']</strong>',
+        'user_id' => Auth::user()->id,
+        // 'description' => '<em>Log out</em> akun <strong>[' . $data->nama . ']</strong>',
         'description' => '<em>Log out</em> akun',
         'category' => 'logout',
         'created_at' => now(),
@@ -79,20 +80,15 @@ class LoginController extends Controller
 
       DB::table('logs')->insert($log);
 
-      Login::logout();
+      Auth::logout();
 
       $request->session()->invalidate();
 
       $request->session()->regenerateToken();
 
-      return redirect('/');
+      return redirect('/login');
     }
-    
-    public function create()
-    {
-      //
-    }
-    
+
     /**
      * Store a newly created resource in storage.
      *
@@ -135,7 +131,7 @@ class LoginController extends Controller
      */
     public function update(Request $request, $id)
   {
-        //
+        //testes
   }
 
   /**

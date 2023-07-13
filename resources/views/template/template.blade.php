@@ -82,6 +82,15 @@
     <!-- Template JS File -->
     <script src="assets/js/scripts.js"></script>
     <script src="assets/js/custom.js"></script>
+    <script>
+        $("document").ready(function()
+        {
+            setTimeout(function()
+            {
+                $("notip").remove();
+            }, 3000);
+        });
+    </script>
 </body>
 
 </html>
