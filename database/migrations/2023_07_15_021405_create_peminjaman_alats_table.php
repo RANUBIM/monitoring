@@ -13,9 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('peminjaman_alat', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::create('peminjaman_alats', function (Blueprint $table) {
+            $table->unsignedBigInteger('peminjaman_id');
+            $table->foreign('peminjaman_id')->references('id')->on('peminjamans')->onDelete('restrict');
+            $table->unsignedBigInteger('alat_id');
+            $table->foreign('alat_id')->references('id')->on('alats')->onDelete('restrict');
         });
     }
 

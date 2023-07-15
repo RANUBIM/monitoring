@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string("uuid")->unique();
             $table->unsignedBigInteger('user_id')->required();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
             $table->string('kegiatan')->required();
             $table->string('tujuan')->nullable();
             $table->string('status')->nullable();
