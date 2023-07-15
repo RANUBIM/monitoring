@@ -2,19 +2,18 @@
 
 namespace App\Models;
 
-use App\Models\Alats;
+use App\Models\Users;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Labors extends Model
+class Peminjamans extends Model
 {
     use HasFactory;
 
     protected $guarded = ['id'];
-    // protected $fillable = ['nama'];
-
-    public function dataAlat()
+    
+    public function dataUser()
     {
-        return $this->hasMany(Alats::class, 'labor_id', 'id');
+        return $this->belongsTo(Users::class, 'user_id', 'id');
     }
 }

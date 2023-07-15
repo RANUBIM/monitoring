@@ -19,7 +19,7 @@ class LaborsController extends Controller
      */
     public function index()
     {
-        $datas = Labors::all();
+        $datas = Labors::with('dataAlat')->get();
         return view('masters.labor.index', compact('datas'));
     }
 
@@ -30,8 +30,7 @@ class LaborsController extends Controller
      */
     public function create()
     {
-        $datas = Labors::first();
-
+        $datas = Labors::all();
         return view('masters.labor.form', compact('datas'));
     }
 
@@ -48,14 +47,14 @@ class LaborsController extends Controller
         ]);
 
         $validatedData['uuid'] = Uuid::uuid4()->getHex();
-        // $validatedData['created_by'] = Auth::user()->id;
-        $validatedData['created_by'] = "1";
+        $validatedData['created_by'] = Auth::user()->id;
+        // $validatedData['created_by'] = "1";
         Labors::create($validatedData);
 
         // LOG
         $log = [
             'uuid' => Uuid::uuid4()->getHex(),
-            // 'user_id' => Auth::user()->id,
+            'user_id' => Auth::user()->id,
             //name = nama tag di view (file index)
             'description' => '<em>Menambah</em> data Labor <strong>[' . $request->nama . ']</strong>', 
             'category' => 'tambah',
@@ -137,7 +136,7 @@ class LaborsController extends Controller
         $data->save();
         $log = [
             'uuid' => Uuid::uuid4()->getHex(),
-            // 'user_id' => Auth::user()->id,
+            'user_id' => Auth::user()->id,
             'description' => '<em>Menghapus</em> data Labor <strong>[' . $data->nama . ']</strong>', //name = nama tag di view (file index)
             'category' => 'hapus',
             'created_at' => now(),

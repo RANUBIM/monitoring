@@ -13,15 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('labors', function (Blueprint $table) {
+        Schema::create('peminjaman_alat', function (Blueprint $table) {
             $table->id();
-            $table->string("uuid")->unique();
-            $table->string("nama")->nullable();
-            $table->integer("created_by")->nullable();
-            $table->integer("updated_by")->nullable();
-            $table->integer("deleted_by")->nullable();
             $table->timestamps();
-            // $table->softDeletes();
         });
     }
 
@@ -32,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('labors');
+        Schema::dropIfExists('peminjaman_alat');
     }
 };

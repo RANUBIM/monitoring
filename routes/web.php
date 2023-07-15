@@ -5,13 +5,14 @@ use Illuminate\Support\Facades\Route;
 // use App\Http\Controllers\Auth\LoginController;
 
 // Login
-use App\Http\Controllers\LoginController;
+use App\Http\Controllers\AlatsController;
 
 // Master
-use App\Http\Controllers\LaborsController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UsersController;
-use App\Http\Controllers\AlatsController;
 use App\Http\Controllers\BahansController;
+use App\Http\Controllers\LaborsController;
+use App\Http\Controllers\PeminjamansController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,3 +42,6 @@ Route::resource('user', UsersController::class)->middleware('auth');
 Route::resource('labor', LaborsController::class)->middleware('auth');
 Route::resource('alat', AlatsController::class)->middleware('auth');
 Route::resource('bahan', BahansController::class)->middleware('auth');
+
+// Main
+Route::resource('peminjaman', PeminjamansController::class)->middleware('auth');

@@ -22,11 +22,14 @@ class AlatsController extends Controller
      */
     public function index(request $request)
     {
-        $datas = Alats::all();
+        // $datas = Alats::with('dataLabor');
+        $datas = Alats::with('dataLabor')->get();
 
-        // $datas = Alats::select('alats.*','labors.*')
-        //         ->where('alats.deleted_by',null)
-        //         ->join('labors','alats.labor_id','=','labors.id');
+        // $datas = DB::table('alats')->get();
+        // $datas = DB::table('alats.*','labors.*')
+                        // ->where('alats.deleted_by',null)
+                        // ->join('labors','labors.id','=','alats.labor_id')->get();
+        // dd($datas);
 
         // $labor_id =  $request->get('$labor_id');
         // $nama =  $request->get('$nama');
@@ -45,9 +48,10 @@ class AlatsController extends Controller
      */
     public function create()
     {
-        $datas = Alats::first();
+        $datas = Alats::all();
+        $dataLabor = Labors::all();
 
-        return view('masters.alat.form', compact('datas'));
+        return view('masters.alat.form', compact('datas','dataLabor'));
     }
 
     /**
@@ -68,15 +72,14 @@ class AlatsController extends Controller
         ]);
 
         $validatedData['uuid'] = Uuid::uuid4()->getHex();
-        $validatedData['created_by'] = "1";
-        // $validatedData['created_by'] = Auth::user()->id;
+        $validatedData['created_by'] = Auth::user()->id;
         Alats::create($validatedData);
 
         // LOG
         $log = [
             'uuid' => Uuid::uuid4()->getHex(),
-            // 'user_id' => Auth::user()->id,
-            'description' => '<em>Menambah</em> data Alat <strong>[' . $request->name . ']</strong>', //name = nama tag di view (file index)
+            'user_id' => Auth::user()->id,
+            'description' => '<em>Menambah</em> data Alat <strong>[' . $request->nama . ']</strong>', //name = nama tag di view (file index)
             'category' => 'tambah',
             'created_at' => now(),
         ];
@@ -129,15 +132,14 @@ class AlatsController extends Controller
             'satuan' => 'string|required|max:255',
             'keterangan' => 'string|required|max:255'
         ]);
-        // $validatedData['updated_by'] = Auth::user()->id;
-        $validatedData['updated_by'] = "1";
+        $validatedData['updated_by'] = Auth::user()->id;
 
         Alats::where('uuid', $uuid)->first()->update($validatedData);
 
         $log = [
             'uuid' => Uuid::uuid4()->getHex(),
-            // 'user_id' => Auth::user()->id,
-            'description' => '<em>Mengubah</em> data Alat <strong>[' . $request->name . ']</strong>', //name = nama tag di view (file index)
+            'user_id' => Auth::user()->id,
+            'description' => '<em>Mengubah</em> data Alat <strong>[' . $request->nama . ']</strong>', //name = nama tag di view (file index)
             'category' => 'edit',
             'created_at' => now(),
         ];
@@ -162,8 +164,8 @@ class AlatsController extends Controller
         $data->save();
         $log = [
             'uuid' => Uuid::uuid4()->getHex(),
-            // 'user_id' => Auth::user()->id,
-            'description' => '<em>Menghapus</em> data Alat <strong>[' . $data->name . ']</strong>', //name = nama tag di view (file index)
+            'user_id' => Auth::user()->id,
+            'description' => '<em>Menghapus</em> data Alat <strong>[' . $data->nama . ']</strong>', //name = nama tag di view (file index)
             'category' => 'hapus',
             'created_at' => now(),
         ];

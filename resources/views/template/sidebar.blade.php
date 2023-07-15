@@ -35,10 +35,14 @@
                 </li>
                 <li><a class="nav-link" href="{{ url('/bahan') }}"><i class="fas fa-briefcase"></i><span>Bahan</span></a>
                 </li>
-
-
-
+                
+                
+                
                 <li class="menu-header">MAIN DATA</li>
+                <li><a class="nav-link" href="{{ url('/peminjaman') }}"><i class="fas fa-cube"></i><span>Peminjaman</span></a>
+                </li>
+                <li><a class="nav-link" href="{{ url('#') }}"><i class="fas fa-cube"></i><span>Penggunaan</span></a>
+                </li>
                 {{-- <li class="dropdown">
                <a href="#" class="nav-link has-dropdown"><i class="far fa-user"></i>
                    <span>Auth</span></a>
@@ -50,7 +54,7 @@
                </ul>
            </li> --}}
 
-                <li class="dropdown">
+                {{-- <li class="dropdown">
                     <a href="#" class="nav-link has-dropdown"><i class="far fa-user"></i>
                         <span>Peminjaman Alat</span></a>
                     <ul class="dropdown-menu">
@@ -65,7 +69,7 @@
                         <li><a href="auth-forgot-password.html">Pengajuan</a></li>
                         <li><a href="auth-login.html">Penggunaan</a></li>
                     </ul>
-                </li>
+                </li> --}}
             </ul>
 
             <div class="mt-4 mb-4 p-3 hide-sidebar-mini">

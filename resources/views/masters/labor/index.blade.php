@@ -55,6 +55,7 @@ Examples for opt-in styling of tables (given their prevalent use in JavaScript p
                                        <tr>
                                           <th scope="col">#</th>
                                           <th scope="col">Nama Labor</th>
+                                          <th scope="col">Data</th>
                                           <th scope="col">Action</th>
                                        </tr>
                                  </thead>
@@ -63,6 +64,11 @@ Examples for opt-in styling of tables (given their prevalent use in JavaScript p
                                           <tr>
                                              <th scope="row">{{ $loop->iteration }}</th>
                                              <td>{{ $data->nama }}</td>
+                                             <td>
+                                                @foreach ($data->dataAlat as $dataAlat)
+                                                   {{ $dataAlat['nama'] }} <br>
+                                                @endforeach
+                                             </td>
                                              <td>
                                                    <a href="/labor/{{ $data->uuid }}/edit"
                                                       class="btn btn-primary">Edit</a>
