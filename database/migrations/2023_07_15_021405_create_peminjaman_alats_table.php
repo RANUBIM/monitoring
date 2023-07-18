@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreign('peminjaman_id')->references('id')->on('peminjamans')->onDelete('restrict');
             $table->unsignedBigInteger('alat_id');
             $table->foreign('alat_id')->references('id')->on('alats')->onDelete('restrict');
+            $table->integer('jumlah')->required();
         });
     }
 

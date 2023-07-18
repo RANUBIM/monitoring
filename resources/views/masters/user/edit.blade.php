@@ -32,34 +32,40 @@
                                         @method('put')
                                         @csrf
                                         <div class="form-group">
-                                            <label for="niknis">NIK / NIS</label>
-                                            <input type="text" name="niknis" class="form-control @error('niknis') is-invalid @enderror" id="niknis"
-                                                placeholder="niknis" required autofocus value="{{ old('niknis', $data->niknis) }}">
-                                            @error('niknis')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="password">Password</label>
-                                            <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="password"
-                                                placeholder="password" required autofocus value="{{ old('password', $data->password) }}">
-                                            @error('nama')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="role">Role</label>
-                                            <input type="text" name="role" class="form-control @error('role') is-invalid @enderror" id="role"
-                                                placeholder="nama" required autofocus value="{{ old('role', $data->role) }}">
+                                            <label>Role</label>
+                                            <select class="form-control" name="role" id="role" required>
+                                                <option value="{{ old('role', $data->role) }}">{{ old('role', $data->role) }}</option>
+                                                <option value="Kepala Jurusan">Kepala Jurusan</option>
+                                                <option value="Guru">Guru</option>
+                                                <option value="Siswa">Siswa</option>
+                                            </select>
                                             @error('role')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
                                             @enderror
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-6">
+                                                <label for="niknis">NIK / NIS</label>
+                                                <input type="text" name="niknis" class="form-control @error('niknis') is-invalid @enderror" id="niknis"
+                                                    placeholder="niknis" required autofocus value="{{ old('niknis', $data->niknis) }}">
+                                                @error('niknis')
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                            </div>
+                                            <div class="form-group col-6">
+                                                <label for="password">Password</label>
+                                                <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="password"
+                                                    placeholder="password" required autofocus value="{{ old('password', $data->password) }}">
+                                                @error('nama')
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                            </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="name">Nama</label>

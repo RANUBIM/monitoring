@@ -18,7 +18,7 @@ class PeminjamansController extends Controller
      */
     public function index()
     {
-        $datas = Peminjamans::with('dataUser')->get();
+        $datas = Peminjamans::with(['dataUser','dataAlat.dataLabor'])->get();
         return view('main.peminjaman.index', compact('datas'));
     }
 
@@ -79,7 +79,7 @@ class PeminjamansController extends Controller
      * @param  \App\Models\Peminjamans  $peminjamans
      * @return \Illuminate\Http\Response
      */
-    public function show(Peminjamans $peminjamans)
+    public function show(Peminjamans $peminjamans, $uuid)
     {
         //
     }
@@ -92,8 +92,9 @@ class PeminjamansController extends Controller
      */
     public function edit(Peminjamans $peminjamans, $uuid)
     {
-        $datas = Peminjamans::with('dataUser')->get();
+        $datas = Peminjamans::with(['dataAlat','dataUser'])->where("uuid", $uuid)->firstOrFail();
         $dataUser = Users::all();
+        // dd($datas);
 
         return view('main.peminjaman.edit', compact('datas','dataUser'));
     }
@@ -156,5 +157,17 @@ class PeminjamansController extends Controller
         $data->delete();
 
         return redirect()->route('peminjaman.index')->with('success', 'Data berhasil dihapus!');
+    }
+
+    public function detail(Peminjamans $peminjamans, $uuid)
+    {
+        $datas = Peminjamans::with(['dataUser','dataAlat.dataLabor'])->where('uuid', $uuid)->first();
+        // $dataPeminjamanAlat = DB::table('peminjaman_alats')
+                                // ->join('peminjamans','peminjaman_alats.peminjaman_id','=','peminjamans.id')
+                                // ->select('peminjaman_alat.*','peminjaman.*')->get();
+        $dataUser = Users::all();
+        // dd($datas);
+        // dd($dataPeminjamanAlat);
+        return view('main.peminjaman.detail', compact('datas','dataUser'));
     }
 }

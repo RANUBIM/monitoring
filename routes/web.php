@@ -45,3 +45,4 @@ Route::resource('bahan', BahansController::class)->middleware('auth');
 
 // Main
 Route::resource('peminjaman', PeminjamansController::class)->middleware('auth');
+Route::get('/detail-peminjaman/{uuid}', [PeminjamansController::class, 'detail'])->middleware('auth');

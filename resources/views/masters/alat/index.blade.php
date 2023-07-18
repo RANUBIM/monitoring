@@ -70,7 +70,27 @@
                                           <td>{{ $data->spesifikasi }}</td>
                                           <td>{{ $data->stok }} {{ $data->satuan }}</td>
                                           <td>{{ $data->keterangan }}</td>
+                                          {{-- Tombol Aksi Dropdown --}}
                                           <td>
+                                             <div class="dropdown">
+                                                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                   Aksi
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                   <a href="/alat/{{ $data->uuid }}" class="dropdown-item">Detail</a>
+                                                   <a href="/alat/{{ $data->uuid }}/edit" class="dropdown-item">Edit</a>
+                                                   
+                                                   <form action="/alat/{{ $data->uuid }}" method="post"
+                                                      class="d-inline">
+                                                      @method('delete')
+                                                      @csrf
+                                                      <button type="submit" class="a dropdown-item"><a>Hapus</a></button>
+                                                   </form>
+                                                </div>
+                                             </div>
+                                          </td>
+                                          {{-- /Tombol Aksi Dropdown --}}
+                                          {{-- <td>
                                              <a href="/alat/{{ $data->uuid }}/edit" class="btn btn-primary">Edit</a>
 
                                              <form action="/alat/{{ $data->uuid }}" method="post"
@@ -79,7 +99,7 @@
                                                    @csrf
                                                    <button type="submit" class="btn btn-primary">Hapus</button>
                                              </form>
-                                          </td>
+                                          </td> --}}
                                        </tr>
                                     @endforeach
                                  </tbody>

@@ -59,6 +59,7 @@
                                           <th scope="col">Tanggal Peminjaman/Pengembalian</th>
                                           {{-- <th scope="col">Kondisi</th> --}}
                                           <th scope="col">Status</th>
+                                          {{-- <th scope="col">Alat</th> --}}
                                           <th scope="col">Action</th>
                                        </tr>
                                  </thead>
@@ -76,11 +77,16 @@
                                              kondisi pengembalian : {{ $data->kondisi_pengembalian }} 
                                           </td> --}}
                                           <td>{{ $data->status }}</td>
+                                          {{-- <td>{{ $data->dataAlat }}</td> --}}
+                                          {{-- <td>
+                                             @foreach ($data->dataAlat as $item)
+                                             {{ $item['nama'] }}
+                                             @endforeach
+                                          </td> --}}
                                           
                                           {{-- Tombol Aksi Button --}}
-                                          <td >
-                                             
-                                             <a href="/peminjaman/{{ $data->uuid }}/edit" class="btn btn-primary">Detail</a>
+                                          {{-- <td >
+                                             <a href="/detail-peminjaman/{{ $data->uuid }}" class="btn btn-primary">Detail</a>
                                              <a href="/peminjaman/{{ $data->uuid }}/edit" class="btn btn-primary">Edit</a>
                                              
                                              <form action="/peminjaman/{{ $data->uuid }}" method="post"
@@ -89,20 +95,20 @@
                                                 @csrf
                                                 <button type="submit" class="btn btn-primary"><a class=""></a>Hapus</button>
                                              </form>
-                                          </td>
+                                          </td> --}}
                                           {{-- /Tombol Aksi Button --}}
                                           
                                           {{-- Tombol Aksi Dropdown --}}
-                                          {{-- <td>
+                                          <td>
                                              <div class="dropdown">
                                                 <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                   Dropdown button
+                                                   Aksi
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                   <a href="/alat/{{ $data->uuid }}/detail" class="dropdown-item">Detail</a>
-                                                   <a href="/alat/{{ $data->uuid }}/edit" class="dropdown-item">Edit</a>
+                                                   <a href="/detail-peminjaman/{{ $data->uuid }}" class="dropdown-item">Detail</a>
+                                                   <a href="/peminjaman/{{ $data->uuid }}/edit" class="dropdown-item">Edit</a>
                                                    
-                                                   <form action="/alat/{{ $data->uuid }}" method="post"
+                                                   <form action="/peminjaman/{{ $data->uuid }}" method="post"
                                                       class="d-inline">
                                                       @method('delete')
                                                       @csrf
@@ -110,7 +116,7 @@
                                                    </form>
                                                 </div>
                                              </div>
-                                          </td> --}}
+                                          </td>
                                           {{-- /Tombol Aksi Dropdown --}}
                                        </tr>
                                        @endforeach

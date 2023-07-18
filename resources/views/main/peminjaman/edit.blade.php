@@ -27,17 +27,17 @@
                                     <label>Default Input Text</label>
                                     <input type="text" class="form-control">
                                 </div> --}}
-                                @foreach($datas as $key => $data)
-                                    <form class="forms-sample" action="/peminjaman/{{ $data->uuid}}" method="POST">
+                                {{-- @foreach($datas as $key => $data) --}}
+                                    <form class="forms-sample" action="/peminjamanan/{{ $datas->uuid}}" method="POST">
                                         @method('put')
                                         @csrf
                                         <div class="form-group">
                                             <label>Peminjam</label>
                                             <select id="user_id" class="form-control @error('user_id') is-invalid @enderror select2" name="user_id" style="width: 100%;" >
+                                                
                                                 @foreach ($dataUser as $user)
-                                                <option selected="selected" value="{{ old('user_id', $data->user_id) }}">{{ old('user_id', $user->nama) }}</option>
-                                                    <option value="{{ $user->id }}">
-                                                        {{ $user->role }} - {{ $user->nama }}
+                                                    <option value="{{ old('user_id', $datas->user_id) }}" @if ($datas->user_id == $user->id) selected="selected" @endif>
+                                                        {{ old('user_id', $user->nama) }}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -51,7 +51,7 @@
                                         <div class="form-group">
                                             <label for="kegiatan">Kegiatan</label>
                                             <input type="text" name="kegiatan" class="form-control @error('kegiatan') is-invalid @enderror" id="kegiatan"
-                                                placeholder="kegiatan"  autofocus value="{{ old('kegiatan', $data->kegiatan) }}">
+                                                placeholder="kegiatan"  autofocus value="{{ old('kegiatan', $datas->kegiatan) }}">
                                             @error('kegiatan')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -61,7 +61,7 @@
                                         <div class="form-group">
                                             <label for="tujuan">Tujuan</label>
                                             <textarea type="text" name="tujuan" class="form-control @error('tujuan') is-invalid @enderror" id="tujuan"
-                                                placeholder="tujuan" autofocus value="">{{ old('tujuan', $data->tujuan) }}</textarea>
+                                                placeholder="tujuan" autofocus value="">{{ old('tujuan', $datas->tujuan) }}</textarea>
                                             @error('tujuan')
                                                 <div class="invalid-feedback">
                                                     {{-- {{ $message }} --}}
@@ -83,7 +83,7 @@
                                             <div class="form-group col-6">
                                                 <label for="tgl_peminjaman">Tanggal Peminjaman</label>
                                                 <input type="date" name="tgl_peminjaman" class="form-control @error('tgl_peminjaman') is-invalid @enderror" id="tgl_peminjaman"
-                                                    placeholder="tgl_peminjaman" autofocus value="{{ old('tgl_peminjaman', $data->tgl_peminjaman) }}">
+                                                    placeholder="tgl_peminjaman" autofocus value="{{ old('tgl_peminjaman', $datas->tgl_peminjaman) }}">
                                                 @error('tgl_peminjaman')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}
@@ -93,7 +93,7 @@
                                             <div class="form-group col-6">
                                                 <label for="tgl_pengembalian">Tanggal Pengembalian</label>
                                                 <input type="date" name="tgl_pengembalian" class="form-control @error('tgl_pengembalian') is-invalid @enderror" id="tgl_pengembalian"
-                                                    placeholder="tgl_pengembalian" autofocus value="{{ old('tgl_pengembalian', $data->tgl_pengembalian) }}">
+                                                    placeholder="tgl_pengembalian" autofocus value="{{ old('tgl_pengembalian', $datas->tgl_pengembalian) }}">
                                                 @error('tgl_pengembalian')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}
@@ -114,7 +114,7 @@
                                         <button type="submit" class="btn btn-primary me-2">Submit</button>
                                         <button class="btn btn-light">Cancel</button>
                                     </form>  
-                                @endforeach                              
+                                {{-- @endforeach                               --}}
                             </div>
                         </div>
                     </div>

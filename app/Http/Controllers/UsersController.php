@@ -54,9 +54,10 @@ class UsersController extends Controller
             'kontak' => 'string|required|max:255',
         ]);
 
+        $validatedData['password'] = bcrypt($validatedData['password']);
         $validatedData['uuid'] = Uuid::uuid4()->getHex();
-        $validatedData['created_by'] = "1";
-        // $validatedData['created_by'] = Auth::user()->id;
+        $validatedData['created_by'] = Auth::user()->id;
+
         Users::create($validatedData);
 
         // LOG
@@ -112,7 +113,7 @@ class UsersController extends Controller
     {
         $validatedData = $request->validate([
             'niknis' => 'string|required|max:255',
-            // 'password' => 'string|required|max:255',
+            'password' => 'string|required|max:255',
             'role' => 'string|required|max:255',
             'nama' => 'string|required|max:255',
             'kelas' => 'string|max:255',
