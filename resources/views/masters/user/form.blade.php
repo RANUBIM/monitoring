@@ -46,7 +46,7 @@
                                     <div class="row">
                                         <div class="form-group col-6">
                                             <label for="niknis">NIK / NIS</label>
-                                            <input type="text" name="niknis" class="form-control @error('niknis') is-invalid @enderror" id="niknis"
+                                            <input type="number" name="niknis" class="form-control @error('niknis') is-invalid @enderror" id="niknis"
                                                 placeholder="niknis" required autofocus value="{{ old('niknis') }}">
                                             @error('niknis')
                                                 <div class="invalid-feedback">

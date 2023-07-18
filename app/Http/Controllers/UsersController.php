@@ -63,7 +63,7 @@ class UsersController extends Controller
         // LOG
         $log = [
             'uuid' => Uuid::uuid4()->getHex(),
-            // 'user_id' => Auth::user()->id,
+            'user_id' => Auth::user()->id,
             'description' => '<em>Menambah</em> data User <strong>[' . $request->name . ']</strong>', //name = nama tag di view (file index)
             'category' => 'tambah',
             'created_at' => now(),
@@ -74,7 +74,7 @@ class UsersController extends Controller
 
         // dd('$validatedData');
 
-        return redirect('user')->with('flash_messaga','User Added');
+        return redirect('user')->with('success','Data user berhasil ditambah');
     }
 
     /**
@@ -140,7 +140,7 @@ class UsersController extends Controller
         // selesai
 
 
-        return redirect('/user')->with('success', 'Data User Berhasil Diupdate !!');
+        return redirect('/user')->with('success', 'Data user berhasil diubah');
     }
 
     /**
@@ -165,6 +165,6 @@ class UsersController extends Controller
         DB::table('logs')->insert($log);
         $data->delete();
 
-        return redirect()->route('user.index')->with('success', 'Data berhasil dihapus!');
+        return redirect()->route('user.index')->with('success', 'Data user berhasil dihapus!');
     }
 }

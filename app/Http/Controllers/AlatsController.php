@@ -89,7 +89,7 @@ class AlatsController extends Controller
 
         // dd('$validatedData');
 
-        return redirect('alat')->with('flash_messaga','Alat Added');
+        return redirect('alat')->with('success','Data alat berhasil ditambah');
     }
 
     /**
@@ -148,7 +148,7 @@ class AlatsController extends Controller
         // selesai
 
 
-        return redirect('/alat')->with('success', 'Data Alat Berhasil Diupdate !!');
+        return redirect('/alat')->with('success', 'Data alat berhasil diubah');
     }
 
     /**
@@ -173,6 +173,6 @@ class AlatsController extends Controller
         DB::table('logs')->insert($log);
         $data->delete();
 
-        return redirect()->route('alat.index')->with('success', 'Data berhasil dihapus!');
+        return redirect()->route('alat.index')->with('delete', 'Data alat berhasil dihapus');
     }
 }

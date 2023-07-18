@@ -11,6 +11,29 @@
                </div>
          </div>
 
+         {{-- Notif --}}
+         @if (session()->has('success'))
+            <div class="alert alert-primary alert-dismissible show fade">
+               <div class="alert-body">
+                  <button class="close" data-dismiss="alert">
+                     <span>&times;</span>
+                  </button>
+                  {{ session('success') }}
+               </div>
+            </div>
+         @endif
+         @if (session()->has('delete'))
+            <div class="alert alert-danger alert-dismissible show fade">
+               <div class="alert-body">
+                  <button class="close" data-dismiss="alert">
+                     <span>&times;</span>
+                  </button>
+                  {{ session('delete') }}
+               </div>
+            </div>
+         @endif
+         {{-- /Notif --}}
+         
          <div class="section-body">
                {{-- <h2 class="section-title">Tables</h2>
                <p class="section-lead">

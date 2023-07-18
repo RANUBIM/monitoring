@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('bahans', function (Blueprint $table) {
             $table->id();
             $table->string("uuid")->unique();
-            $table->string("labor_id")->required();
+            $table->unsignedBigInteger("labor_id")->required();
             $table->string("no_inv")->unique();
             $table->date("tgl_pengadaan")->required();
             $table->string('nama')->required();

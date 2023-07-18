@@ -64,7 +64,7 @@ class LaborsController extends Controller
         DB::table('logs')->insert($log);
         // /LOG
 
-        return redirect('labor')->with('success','Labor Added');
+        return redirect('labor')->with('success','Data labor berhasil ditambah');
     }
 
     /**
@@ -120,7 +120,7 @@ class LaborsController extends Controller
         // selesai
 
 
-        return redirect('/labor')->with('success', 'Data Labor Berhasil Diupdate !!');
+        return redirect('/labor')->with('success', 'Data labor berhasil diubah');
     }
 
     /**
@@ -145,6 +145,6 @@ class LaborsController extends Controller
         DB::table('logs')->insert($log);
         $data->delete();
 
-        return redirect()->route('labor.index')->with('delete', 'Data berhasil dihapus!');
+        return redirect()->route('labor.index')->with('delete', 'Data labor berhasil dihapus!');
     }
 }
