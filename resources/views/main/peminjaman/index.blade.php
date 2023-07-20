@@ -105,7 +105,7 @@
                                                    Aksi
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                   <a href="/detail-peminjaman/{{ $data->uuid }}" class="dropdown-item">Detail</a>
+                                                   <a href="/detail-peminjamanAlat/{{ $data->uuid }}" class="dropdown-item">Detail</a>
                                                    <a href="/peminjaman/{{ $data->uuid }}/edit" class="dropdown-item">Edit</a>
                                                    
                                                    <form action="/peminjaman/{{ $data->uuid }}" method="post"

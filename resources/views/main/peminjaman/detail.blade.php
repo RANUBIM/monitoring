@@ -137,7 +137,7 @@
                             <div class="card-header">
                                 <a href="/detail-peminjaman/{{ $datas->uuid }}" class="btn btn-primary"><i
                                         class="fa fa-redo"></i></a>
-                                <a href="/peminjaman/create" class="btn btn-primary ">Tambah</a>
+                                <a href="/create-peminjamanAlat/{{ $datas->uuid }}" class="btn btn-primary ">Tambah</a>
                             </div>
                             <div class="card-body">
                                 {{-- <div class="section-title mt-0">Light</div> --}}
@@ -173,12 +173,15 @@
                                                     <a href="/peminjaman/{{ $datas->uuid }}/edit"
                                                         class="btn btn-primary">Edit</a>
 
-                                                    <form action="/peminjaman/{{ $datas->uuid }}" method="post"
+                                                    <form action="/destroy-peminjamanAlat/{{ $item->pivot->uuid }}" method="POST"
                                                         class="d-inline">
-                                                        @method('delete')
+                                                        @method('DELETE')
                                                         @csrf
-                                                        <button type="submit" class="btn btn-primary"><a
-                                                                class=""></a>Hapus</button>
+                                                        <input type="hidden" name="nama" value="{{ $item->nama }}">
+                                                        <input type="hidden" name="uuid" value="{{ $datas->uuid }}">
+                                                        <input type="hidden" name="uuidAlat" value="{{ $item->uuid }}">
+                                                        <input type="hidden" name="uuidPivot" value="{{ $item->pivot->uuid }}">
+                                                        <button type="submit" class="btn btn-primary">Hapus</button>
                                                     </form>
                                                 </td>
                                                 {{-- /Tombol Aksi Button --}}

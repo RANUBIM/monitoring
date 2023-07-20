@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Alats;
 use App\Models\Users;
 use Ramsey\Uuid\Uuid;
 use App\Models\Peminjamans;
@@ -166,8 +167,94 @@ class PeminjamansController extends Controller
                                 // ->join('peminjamans','peminjaman_alats.peminjaman_id','=','peminjamans.id')
                                 // ->select('peminjaman_alat.*','peminjaman.*')->get();
         $dataUser = Users::all();
+
+        // LOG
+        $log = [
+            'uuid' => Uuid::uuid4()->getHex(),
+            'user_id' => Auth::user()->id,
+            'description' => '<em>Mengubah</em> data Peminjaman <strong>[' . $datas->kegiatan . ']</strong>', //name = nama tag di view (file index)
+            'category' => 'edit',
+            'created_at' => now(),
+        ];
+
+        DB::table('logs')->insert($log);
+        // /LOG
+
         // dd($datas);
         // dd($dataPeminjamanAlat);
         return view('main.peminjaman.detail', compact('datas','dataUser'));
+    }
+    
+    public function peminjamanAlatCreate(Peminjamans $peminjamans, $uuid)
+    {
+        // $datas = Peminjamans::with(['dataUser','dataAlat.dataLabor'])->where('uuid', $uuid)->first();
+        $datas = Peminjamans::with('dataUser')->where('uuid',$uuid)->first();
+        // $dataUser = Users::get();
+        $dataAlat = Alats::with('dataLabor')->get();
+
+        return view('main.peminjaman.formPeminjamanAlat', compact('datas','dataAlat'));
+    }
+
+    public function peminjamanAlatStore(Request $request)
+    {
+        $validatedData = $request->validate([
+            'peminjaman_id' => 'string|required|max:255',
+            'alat_id' => 'string|required|max:255',
+            'jumlah' => 'integer|required|max:255'
+        ]);
+
+        $validatedData['uuid'] = Uuid::uuid4()->getHex();
+        DB::table('peminjaman_alats')->insert($validatedData);
+        // Peminjamans::peminjamanAlatCreate($validatedData);
+
+        // LOG
+        $log = [
+            'uuid' => Uuid::uuid4()->getHex(),
+            'user_id' => Auth::user()->id,
+            'description' => '<em>Menambah</em> data Peminjaman <strong>[' . $request->nama . ']</strong>', //name = nama tag di view (file index)
+            'category' => 'tambah',
+            'created_at' => now(),
+        ];
+        
+        DB::table('logs')->insert($log);
+        // /LOG
+        
+        return redirect('/detail-peminjamanAlat/'.$request['uuid'])->with('flash_messaga','Peminjaman Added');
+    }
+
+    public function peminjamanAlatDestroy(Request $request, $uuid)
+    {
+        // $data = Peminjamans::get()->where('uuid', $uuid)->firstOrFail();
+        $validatedData = $request->validate([
+            'nama' => 'string|required|max:255',
+            'uuid' => 'string|required|max:255',
+            'uuidAlat' => 'string|required|max:255',
+            'uuidPivot' => 'string|required|max:255'
+        ]);
+        
+        $data = DB::table('peminjaman_alats')->get()->where('uuid', $validatedData['uuidPivot'])->first();
+
+        // dd($validatedData);
+
+        // $dataLog = Peminjamans::with('dataAlat')->where('', $uuid)
+        // $data->deleted_by = Auth::user()->id;
+        // $data->save();
+
+        $log = [
+            'uuid' => Uuid::uuid4()->getHex(),
+            'user_id' => Auth::user()->id,
+            'description' => '<em>Menghapus</em> data Peminjaman Alat <strong>[' . $request->nama . ']</strong>', //name = nama tag di view (file index)
+            'category' => 'hapus',
+            'created_at' => now(),
+        ];
+        DB::table('logs')->insert($log);
+
+        // dd($data);
+        // $data->delete();
+        DB::table('peminjaman_alats')->where('uuid', $validatedData['uuidPivot'])->delete();
+
+        // dd($validatedData);
+
+        return redirect('/detail-peminjamanAlat/'.$validatedData['uuid'])->with('delete','Peminjaman Added');
     }
 }

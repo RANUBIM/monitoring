@@ -27,24 +27,31 @@
                                     <label>Default Input Text</label>
                                     <input type="text" class="form-control">
                                 </div> --}}
-                                @foreach($datas as $key => $data)
-                                    <form class="forms-sample" action="/alat/{{ $data->uuid}}" method="POST">
+                                {{-- @foreach($datas as $key => $data) --}}
+                                    <form class="forms-sample" action="/alat/{{ $datas->uuid}}" method="POST">
                                         @method('put')
                                         @csrf
                                         <div class="form-group">
-                                            <label for="labor_id">Labor</label>
-                                            <input type="text" name="labor_id" class="form-control @error('labor_id') is-invalid @enderror" id="labor_id"
-                                                placeholder="labor_id" required autofocus value="{{ old('labor_id', $data->labor_id) }}">
-                                            @error('nama')
+                                            <label>Labor</label>
+                                            <select id="labor_id" class="form-control @error('labor_id') is-invalid @enderror select2" name="labor_id" style="width: 100%;" >
+                                                
+                                                @foreach ($dataLabor as $labor)
+                                                    <option value="{{ old('labor_id', $datas->labor_id) }}" @if ($datas->labor_id == $labor->id) selected="selected" @endif>
+                                                        {{ old('labor_id', $labor->nama) }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            @error('labor_id')
                                                 <div class="invalid-feedback">
-                                                    {{ $message }}
+                                                    {{-- {{ $message }} --}}
+                                                    Form peminjam wajib diisi
                                                 </div>
                                             @enderror
                                         </div>
                                         <div class="form-group">
                                             <label for="nama">Nama</label>
                                             <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror" id="nama"
-                                                placeholder="nama" required autofocus value="{{ old('nama', $data->nama) }}">
+                                                placeholder="nama" required autofocus value="{{ old('nama', $datas->nama) }}">
                                             @error('nama')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -54,7 +61,7 @@
                                         <div class="form-group">
                                             <label for="spesifikasi">Spesifikasi</label>
                                             <input type="text" name="spesifikasi" class="form-control @error('spesifikasi') is-invalid @enderror" id="spesifikasi"
-                                                placeholder="spesifikasi" required autofocus value="{{ old('spesifikasi', $data->spesifikasi) }}">
+                                                placeholder="spesifikasi" required autofocus value="{{ old('spesifikasi', $datas->spesifikasi) }}">
                                             @error('spesifikasi')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -64,8 +71,8 @@
                                         <div class="row">
                                             <div class="form-group col-6">
                                                 <label for="stok">Stok</label>
-                                                <input type="text" name="stok" class="form-control @error('stok') is-invalid @enderror" id="stok"
-                                                    placeholder="stok" required autofocus value="{{ old('stok', $data->stok) }}">
+                                                <input type="number" name="stok" class="form-control @error('stok') is-invalid @enderror" id="stok"
+                                                    placeholder="stok" required autofocus value="{{ old('stok', $datas->stok) }}">
                                                 @error('stok')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}
@@ -75,7 +82,7 @@
                                             <div class="form-group col-6">
                                                 <label for="satuan">Satuan</label>
                                                 <input type="text" name="satuan" class="form-control @error('satuan') is-invalid @enderror" id="satuan"
-                                                    placeholder="satuan" required autofocus value="{{ old('satuan', $data->satuan) }}">
+                                                    placeholder="satuan" required autofocus value="{{ old('satuan', $datas->satuan) }}">
                                                 @error('satuan')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}
@@ -86,7 +93,7 @@
                                         <div class="form-group">
                                             <label for="keterangan">Keterangan</label>
                                             <textarea type="text" name="keterangan" class="form-control @error('keterangan') is-invalid @enderror" id="keterangan"
-                                                placeholder="keterangan" required autofocus value="{{ old('keterangan', $data->keterangan) }}"></textarea>
+                                                placeholder="keterangan" required autofocus value="">{{ old('keterangan', $datas->keterangan) }}</textarea>
                                             @error('keterangan')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -96,7 +103,7 @@
                                         <button type="submit" class="btn btn-primary me-2">Submit</button>
                                         <button class="btn btn-light">Cancel</button>
                                     </form>  
-                                @endforeach                              
+                                {{-- @endforeach--}}
                             </div>
                         </div>
                     </div>

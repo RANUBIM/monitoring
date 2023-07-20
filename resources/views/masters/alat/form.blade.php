@@ -74,7 +74,7 @@
                                     <div class="row">
                                         <div class="form-group col-6">
                                             <label for="stok">Stok</label>
-                                            <input type="text" name="stok" class="form-control @error('stok') is-invalid @enderror" id="stok"
+                                            <input type="number" name="stok" class="form-control @error('stok') is-invalid @enderror" id="stok"
                                                 placeholder="stok" required autofocus value="{{ old('stok') }}">
                                             @error('stok')
                                                 <div class="invalid-feedback">

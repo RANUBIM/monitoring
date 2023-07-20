@@ -111,8 +111,10 @@ class AlatsController extends Controller
      */
     public function edit(Alats $alats, $uuid)
     {
-        $datas = Alats::where('uuid', $uuid)->get();
-        return view('masters.alat.edit', compact('datas'));
+        $datas = Alats::where('uuid', $uuid)->where("uuid", $uuid)->first();
+        $dataLabor = Labors::all();
+
+        return view('masters.alat.edit', compact('datas','dataLabor'));
     }
 
     /**
