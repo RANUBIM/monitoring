@@ -43,9 +43,11 @@ Route::resource('labor', LaborsController::class)->middleware('auth');
 Route::resource('alat', AlatsController::class)->middleware('auth');
 Route::resource('bahan', BahansController::class)->middleware('auth');
 
-// Main
+// Peminjaman
 Route::resource('peminjaman', PeminjamansController::class)->middleware('auth');
 Route::get('/detail-peminjamanAlat/{uuid}', [PeminjamansController::class, 'detail'])->middleware('auth');
 Route::get('/create-peminjamanAlat/{uuid}', [PeminjamansController::class, 'peminjamanAlatCreate'])->middleware('auth');
 Route::get('/store-peminjamanAlat', [PeminjamansController::class, 'peminjamanAlatStore'])->middleware('auth');
+Route::get('/edit-peminjamanAlat/{uuid}', [PeminjamansController::class, 'peminjamanAlatEdit'])->middleware('auth');
+Route::get('/update-peminjamanAlat/{uuid}', [PeminjamansController::class, 'peminjamanAlatUpdate'])->middleware('auth');
 Route::delete('/destroy-peminjamanAlat/{uuid}', [PeminjamansController::class, 'peminjamanAlatDestroy'])->middleware('auth');
