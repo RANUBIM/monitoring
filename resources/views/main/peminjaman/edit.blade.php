@@ -28,7 +28,7 @@
                                     <input type="text" class="form-control">
                                 </div> --}}
                                 {{-- @foreach($datas as $key => $data) --}}
-                                    <form class="forms-sample" action="/peminjamanan/{{ $datas->uuid}}" method="POST">
+                                    <form class="forms-sample" action="/peminjaman/{{ $datas->uuid}}" method="POST">
                                         @method('put')
                                         @csrf
                                         <div class="form-group">

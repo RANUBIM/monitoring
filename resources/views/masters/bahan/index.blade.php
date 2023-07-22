@@ -11,12 +11,34 @@
                </div>
          </div>
 
+         {{-- Notif --}}
+         @if (session()->has('success'))
+            <div class="alert alert-primary alert-dismissible show fade">
+               <div class="alert-body">
+                  <button class="close" data-dismiss="alert">
+                     <span>&times;</span>
+                  </button>
+                  {{ session('success') }}
+               </div>
+            </div>
+         @endif
+         @if (session()->has('delete'))
+            <div class="alert alert-danger alert-dismissible show fade">
+               <div class="alert-body">
+                  <button class="close" data-dismiss="alert">
+                     <span>&times;</span>
+                  </button>
+                  {{ session('delete') }}
+               </div>
+            </div>
+         @endif
+         {{-- /Notif --}}
+
          <div class="section-body">
                {{-- <h2 class="section-title">Tables</h2>
                <p class="section-lead">
                   Examples for opt-in styling of tables (given their prevalent use in JavaScript plugins) with Bootstrap.
                </p> --}}
-
                <div class="row">
                   <div class="col-12 col-md-12 col-lg-12">
                      <div class="card">
@@ -46,12 +68,32 @@
                                           <th scope="row">{{ $loop->iteration }}</th>
                                           <td>{{ $data->no_inv }}</td>
                                           <td>{{ $data->tgl_pengadaan }}</td>
-                                          <td>{{ $data->labor_id }}</td>
+                                          <td>{{ $data->dataLabor->nama }}</td>
                                           <td>{{ $data->nama }}</td>
                                           <td>{{ $data->spesifikasi }}</td>
                                           <td>{{ $data->stok }} {{ $data->satuan }}</td>
                                           <td>{{ $data->keterangan }}</td>
+                                          {{-- Tombol Aksi Dropdown --}}
                                           <td>
+                                             <div class="dropdown">
+                                                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                   Aksi
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                   <a href="/bahan/{{ $data->uuid }}" class="dropdown-item">Detail</a>
+                                                   <a href="/bahan/{{ $data->uuid }}/edit" class="dropdown-item">Edit</a>
+                                                   
+                                                   <form action="/bahan/{{ $data->uuid }}" method="post"
+                                                      class="d-inline">
+                                                      @method('delete')
+                                                      @csrf
+                                                      <button type="submit" class="a dropdown-item"><a>Hapus</a></button>
+                                                   </form>
+                                                </div>
+                                             </div>
+                                          </td>
+                                          {{-- /Tombol Aksi Dropdown --}}
+                                          {{-- <td>
                                              <a href="/bahan/{{ $data->uuid }}/edit" class="btn btn-primary">Edit</a>
 
                                              <form action="/bahan/{{ $data->uuid }}" method="post"
@@ -60,7 +102,7 @@
                                                    @csrf
                                                    <button type="submit" class="btn btn-primary">Hapus</button>
                                              </form>
-                                          </td>
+                                          </td> --}}
                                        </tr>
                                     @endforeach
                                  </tbody>

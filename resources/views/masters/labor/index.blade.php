@@ -77,7 +77,7 @@ Examples for opt-in styling of tables (given their prevalent use in JavaScript p
                                                    Aksi
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                   <a href="/labor/{{ $data->uuid }}" class="dropdown-item">Detail</a>
+                                                   {{-- <a href="/labor/{{ $data->uuid }}" class="dropdown-item">Detail</a> --}}
                                                    <a href="/labor/{{ $data->uuid }}/edit" class="dropdown-item">Edit</a>
                                                    
                                                    <form action="/labor/{{ $data->uuid }}" method="post"

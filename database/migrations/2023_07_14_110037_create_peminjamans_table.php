@@ -24,7 +24,7 @@ return new class extends Migration
             $table->date('tgl_peminjaman')->nullable();
             $table->date('tgl_pengembalian')->nullable();
             $table->string('kondisi_peminjaman')->nullable();
-            $table->string('kondisi_pengecekan')->nullable();
+            // $table->string('kondisi_pengecekan')->nullable();
             $table->string('kondisi_pengembalian')->nullable();
             $table->integer("created_by");
             $table->integer("updated_by")->nullable();

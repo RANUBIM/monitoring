@@ -31,13 +31,15 @@
                                     @csrf
                                     <div class="form-group">
                                         <label for="labor_id">Labor</label>
-                                        <input type="text" name="labor_id" class="form-control @error('labor_id') is-invalid @enderror" id="labor_id"
-                                            placeholder="labor_id" required autofocus value="{{ old('labor_id') }}">
-                                        @error('labor_id')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
+                                        <select id="labor_id" class="form-control" name="labor_id" style="width: 100%;"
+                                            required>
+                                            <option selected="selected" value="">Pilih Tempat Penyimpanan</option>
+                                            @foreach ($dataLabor as $labor)
+                                                <option value="{{ $labor->id }}">
+                                                    {{ $labor->nama }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                     <div class="row">
                                         <div class="form-group col-6">

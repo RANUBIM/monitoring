@@ -71,7 +71,7 @@ class PeminjamansController extends Controller
 
         // dd('$validatedData');
 
-        return redirect('peminjaman')->with('flash_messaga','Peminjaman Added');
+        return redirect('/peminjaman')->with('success','Data peminjaman berhasil ditambah');
     }
 
     /**
@@ -132,7 +132,7 @@ class PeminjamansController extends Controller
         // selesai
 
 
-        return redirect('/peminjaman')->with('success', 'Data Peminjaman Berhasil Diupdate !!');
+        return redirect('/peminjaman')->with('success','Data peminjaman berhasil diubah');
     }
 
     /**
@@ -157,7 +157,7 @@ class PeminjamansController extends Controller
         DB::table('logs')->insert($log);
         $data->delete();
 
-        return redirect()->route('peminjaman.index')->with('success', 'Data berhasil dihapus!');
+        return redirect()->route('peminjaman.index')->with('delete','Data peminjaman berhasil dihapus');
     }
 
     public function detail(Peminjamans $peminjamans, $uuid)
@@ -222,11 +222,113 @@ class PeminjamansController extends Controller
         return redirect('/detail-peminjamanAlat/'.$request['uuid'])->with('flash_messaga','Peminjaman Added');
     }
 
+    public function peminjamanAlatEdit(Peminjamans $peminjamans, Request $request, $uuid)
+    {
+        // dd($uuid);
+        $validatedData = $request->validate([
+            'namaUser' => 'string|required|max:255',
+            'namaAlat' => 'string|required|max:255',
+            'uuid' => 'string|required|max:255',
+            'uuidAlat' => 'string|required|max:255',
+            'uuidPivot' => 'string|required|max:255'
+        ]);
+
+        // dd($validatedData);
+
+        $datas = DB::table('peminjaman_alats')->get()->where('uuid', $uuid)->first();
+        $datass = Peminjamans::with(['dataAlat.dataLabor','dataUser'])->where("uuid", $uuid)->first();
+        $dataAlat = Alats::with('dataLabor')->get();
+        $dataUser = Users::get();
+        // dd($datas);
+
+        return view('main.peminjaman.editPeminjaman', compact('datas','datass','dataAlat','dataUser','validatedData'));
+    }
+
+    public function peminjamanAlatUpdate(Peminjamans $peminjamans, Request $request, $uuid)
+    {
+        $validatedDataUUID = $request->validate([
+            // 'namaUser' => 'string|required|max:255',
+            // 'namaAlat' => 'string|required|max:255',
+            'uuid' => 'string|required|max:255',
+            'uuidAlat' => 'string|required|max:255',
+            'uuidPivot' => 'string|required|max:255'
+        ]);
+
+        $validatedData = $request->validate([
+            // 'peminjaman_id' => 'string|required|max:255',
+            'alat_id' => 'string|required|max:255',
+            'jumlah' => 'string|required|max:255',
+        ]);
+        
+        // dd($validatedData);
+
+        DB::table('peminjaman_alats')->where('uuid', $uuid)->update($validatedData);
+
+        $log = [
+            'uuid' => Uuid::uuid4()->getHex(),
+            'user_id' => Auth::user()->id,
+            'description' => '<em>Mengubah</em> data Peminjaman Alat <strong>[' . $request->nama . ']</strong>', //name = nama tag di view (file index)
+            'category' => 'edit',
+            'created_at' => now(),
+        ];
+
+        DB::table('logs')->insert($log);
+        // selesai
+
+        return redirect('/detail-peminjamanAlat/'.$validatedDataUUID['uuid'])->with('success','Peminjaman Added');
+    }
+
+    public function peminjamanAlatUpdateCadangan(Peminjamans $peminjamans, Request $request, $uuid)
+    {
+        $validatedDataUUID = $request->validate([
+            'namaUser' => 'string|required|max:255',
+            'namaAlat' => 'string|required|max:255',
+            'uuid' => 'string|required|max:255',
+            'uuidAlat' => 'string|required|max:255',
+            'uuidPivot' => 'string|required|max:255'
+        ]);
+
+        $validatedData = $request->validate([
+            // 'peminjaman_id' => 'string|required|max:255',
+            // 'alat_id' => 'string|required|max:255',
+            'jumlah' => 'string|required|max:255',
+        ]);
+        // $validatedData['updated_by'] = Auth::user()->id;
+        // dd($validatedData);
+        dd("tes");
+
+        // DB::table('peminjaman_alats')->where('uuid', $uuid)->update($validatedData);
+
+        // $dataJumlah = Alats::get()->where('id', $validatedData['alat_id'])->first();
+        // $hitungJumlah = $dataJumlah['jumlah'] - $validatedData['jumlah'];
+        // dd($hitungJumlah);
+
+        // Peminjamans::where('uuid', $uuid)->first()->update($validatedData);
+
+        $log = [
+            'uuid' => Uuid::uuid4()->getHex(),
+            'user_id' => Auth::user()->id,
+            'description' => '<em>Mengubah</em> data Peminjaman Alat <strong>[' . $request->nama . ']</strong>', //name = nama tag di view (file index)
+            'category' => 'edit',
+            'created_at' => now(),
+        ];
+
+        DB::table('logs')->insert($log);
+        // selesai
+
+
+        // return redirect('/peminjaman')->with('success', 'Data Peminjaman Berhasil Diupdate !!');
+        // dd($validatedDataUUID);
+        // dd($validatedData);
+        // return redirect('/detail-peminjamanAlat/'.$validatedDataUUID['uuid'])->with('success','Peminjaman Added');
+    }
+
     public function peminjamanAlatDestroy(Request $request, $uuid)
     {
         // $data = Peminjamans::get()->where('uuid', $uuid)->firstOrFail();
         $validatedData = $request->validate([
-            'nama' => 'string|required|max:255',
+            // 'namaUser' => 'string|required|max:255',
+            'namaAlat' => 'string|required|max:255',
             'uuid' => 'string|required|max:255',
             'uuidAlat' => 'string|required|max:255',
             'uuidPivot' => 'string|required|max:255'
@@ -243,17 +345,14 @@ class PeminjamansController extends Controller
         $log = [
             'uuid' => Uuid::uuid4()->getHex(),
             'user_id' => Auth::user()->id,
-            'description' => '<em>Menghapus</em> data Peminjaman Alat <strong>[' . $request->nama . ']</strong>', //name = nama tag di view (file index)
+            'description' => '<em>Menghapus</em> data Peminjaman Alat <strong>[' . $validatedData['namaAlat'] . ']</strong>', //name = nama tag di view (file index)
             'category' => 'hapus',
             'created_at' => now(),
         ];
         DB::table('logs')->insert($log);
 
         // dd($data);
-        // $data->delete();
         DB::table('peminjaman_alats')->where('uuid', $validatedData['uuidPivot'])->delete();
-
-        // dd($validatedData);
 
         return redirect('/detail-peminjamanAlat/'.$validatedData['uuid'])->with('delete','Peminjaman Added');
     }

@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-
 use Ramsey\Uuid\Uuid;
+
 use App\Models\Bahans;
-use Illuminate\Support\Facades\DB;
+use App\Models\Labors;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class BahansController extends Controller
@@ -19,7 +20,7 @@ class BahansController extends Controller
      */
     public function index()
     {
-        $datas = Bahans::all();
+        $datas = Bahans::with('dataLabor')->get();
         return view('masters.bahan.index', compact('datas'));
     }
 
@@ -30,8 +31,10 @@ class BahansController extends Controller
      */
     public function create()
     {
-        $datas = Bahans::first();
-        return view('masters.bahan.form', compact('datas'));
+        $datas = Bahans::all();
+        $dataLabor = Labors::all();
+
+        return view('masters.bahan.form', compact('datas','dataLabor'));
     }
 
     /**
@@ -72,7 +75,7 @@ class BahansController extends Controller
 
         // dd('$validatedData');
 
-        return redirect('bahan')->with('flash_messaga','Bahan Added');
+        return redirect('bahan')->with('success','Data bahan berhasil ditambah');
     }
 
     /**
@@ -94,8 +97,10 @@ class BahansController extends Controller
      */
     public function edit(Bahans $bahans, $uuid)
     {
-        $datas = Bahans::where('uuid', $uuid)->get();
-        return view('masters.bahan.edit', compact('datas'));
+        $datas = Bahans::where('uuid', $uuid)->where("uuid", $uuid)->first();
+        $dataLabor = Labors::all();
+
+        return view('masters.bahan.edit', compact('datas','dataLabor'));
     }
 
     /**
@@ -134,7 +139,7 @@ class BahansController extends Controller
         // selesai
 
 
-        return redirect('/bahan')->with('success', 'Data Bahan Berhasil Diupdate !!');
+        return redirect('/bahan')->with('success', 'Data bahan berhasil diubah');
     }
 
     /**
@@ -159,6 +164,6 @@ class BahansController extends Controller
         DB::table('logs')->insert($log);
         $data->delete();
 
-        return redirect()->route('bahan.index')->with('success', 'Data berhasil dihapus!');
+        return redirect()->route('bahan.index')->with('delete', 'Data bahan berhasil dihapus');
     }
 }

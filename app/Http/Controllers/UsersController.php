@@ -165,6 +165,6 @@ class UsersController extends Controller
         DB::table('logs')->insert($log);
         $data->delete();
 
-        return redirect()->route('user.index')->with('success', 'Data user berhasil dihapus!');
+        return redirect()->route('user.index')->with('delete', 'Data user berhasil dihapus!');
     }
 }

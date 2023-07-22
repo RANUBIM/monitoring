@@ -81,7 +81,7 @@
                                                    Aksi
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                   <a href="/user/{{ $data->uuid }}" class="dropdown-item">Detail</a>
+                                                   {{-- <a href="/user/{{ $data->uuid }}" class="dropdown-item">Detail</a> --}}
                                                    <a href="/user/{{ $data->uuid }}/edit" class="dropdown-item">Edit</a>
                                                    
                                                    <form action="/user/{{ $data->uuid }}" method="post"

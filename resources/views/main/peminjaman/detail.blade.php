@@ -170,17 +170,35 @@
 
                                                 {{-- Tombol Aksi Button --}}
                                                 <td>
-                                                    <a href="/peminjaman/{{ $datas->uuid }}/edit"
-                                                        class="btn btn-primary">Edit</a>
+                                                    {{-- <a href="/edit-peminjamanAlat/{{ $item->pivot->uuid }}"
+                                                        class="btn btn-primary">Edit</a> --}}
 
-                                                    <form action="/destroy-peminjamanAlat/{{ $item->pivot->uuid }}" method="POST"
-                                                        class="d-inline">
+                                                    <form action="/edit-peminjamanAlat/{{ $item->pivot->uuid }}"
+                                                        method="POST" class="d-inline">
+                                                        @method('GET')
+                                                        @csrf
+                                                        <input type="hidden" name="namaUser" value="{{ $datas->dataUser->nama }}">
+                                                        <input type="hidden" name="namaAlat" value="{{ $item->nama }}">
+                                                        <input type="hidden" name="uuid"
+                                                            value="{{ $datas->uuid }}">
+                                                        <input type="hidden" name="uuidAlat"
+                                                            value="{{ $item->uuid }}">
+                                                        <input type="hidden" name="uuidPivot"
+                                                            value="{{ $item->pivot->uuid }}">
+                                                        <button type="submit" class="btn btn-primary">Edit</button>
+                                                    </form>
+
+                                                    <form action="/destroy-peminjamanAlat/{{ $item->pivot->uuid }}"
+                                                        method="POST" class="d-inline">
                                                         @method('DELETE')
                                                         @csrf
-                                                        <input type="hidden" name="nama" value="{{ $item->nama }}">
-                                                        <input type="hidden" name="uuid" value="{{ $datas->uuid }}">
-                                                        <input type="hidden" name="uuidAlat" value="{{ $item->uuid }}">
-                                                        <input type="hidden" name="uuidPivot" value="{{ $item->pivot->uuid }}">
+                                                        <input type="hidden" name="namaAlat" value="{{ $item->nama }}">
+                                                        <input type="hidden" name="uuid"
+                                                            value="{{ $datas->uuid }}">
+                                                        <input type="hidden" name="uuidAlat"
+                                                            value="{{ $item->uuid }}">
+                                                        <input type="hidden" name="uuidPivot"
+                                                            value="{{ $item->pivot->uuid }}">
                                                         <button type="submit" class="btn btn-primary">Hapus</button>
                                                     </form>
                                                 </td>
