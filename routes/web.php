@@ -51,3 +51,12 @@ Route::get('/store-peminjamanAlat', [PeminjamansController::class, 'peminjamanAl
 Route::get('/edit-peminjamanAlat/{uuid}', [PeminjamansController::class, 'peminjamanAlatEdit'])->middleware('auth');
 Route::get('/update-peminjamanAlat/{uuid}', [PeminjamansController::class, 'peminjamanAlatUpdate'])->middleware('auth');
 Route::delete('/destroy-peminjamanAlat/{uuid}', [PeminjamansController::class, 'peminjamanAlatDestroy'])->middleware('auth');
+
+// Penggunaan
+Route::resource('penggunaan', PenggunaansController::class)->middleware('auth');
+Route::get('/detail-penggunaanBahan/{uuid}', [PenggunaansController::class, 'detail'])->middleware('auth');
+Route::get('/create-penggunaanBahan/{uuid}', [PenggunaansController::class, 'penggunaanBahanCreate'])->middleware('auth');
+Route::get('/store-penggunaanBahan', [PenggunaansController::class, 'penggunaanBahanStore'])->middleware('auth');
+Route::get('/edit-penggunaanBahan/{uuid}', [PenggunaansController::class, 'penggunaanBahanEdit'])->middleware('auth');
+Route::get('/update-penggunaanBahan/{uuid}', [PenggunaansController::class, 'penggunaanBahanUpdate'])->middleware('auth');
+Route::delete('/destroy-penggunaanBahan/{uuid}', [PenggunaansController::class, 'penggunaanBahanDestroy'])->middleware('auth');
