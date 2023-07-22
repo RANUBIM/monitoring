@@ -48,7 +48,6 @@ class LaborsController extends Controller
 
         $validatedData['uuid'] = Uuid::uuid4()->getHex();
         $validatedData['created_by'] = Auth::user()->id;
-        // $validatedData['created_by'] = "1";
         Labors::create($validatedData);
 
         // LOG

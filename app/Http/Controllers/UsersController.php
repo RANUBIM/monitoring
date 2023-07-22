@@ -64,7 +64,7 @@ class UsersController extends Controller
         $log = [
             'uuid' => Uuid::uuid4()->getHex(),
             'user_id' => Auth::user()->id,
-            'description' => '<em>Menambah</em> data User <strong>[' . $request->name . ']</strong>', //name = nama tag di view (file index)
+            'description' => '<em>Menambah</em> data User <strong>[' . $validatedData['nama'] . ']</strong>', //name = nama tag di view (file index)
             'category' => 'tambah',
             'created_at' => now(),
         ];
@@ -130,8 +130,8 @@ class UsersController extends Controller
 
         $log = [
             'uuid' => Uuid::uuid4()->getHex(),
-            // 'user_id' => Auth::user()->id,
-            'description' => '<em>Mengubah</em> data User <strong>[' . $request->name . ']</strong>', //name = nama tag di view (file index)
+            'user_id' => Auth::user()->id,
+            'description' => '<em>Mengubah</em> data User <strong>[' . $validatedData['nama'] . ']</strong>', //name = nama tag di view (file index)
             'category' => 'edit',
             'created_at' => now(),
         ];
@@ -152,12 +152,12 @@ class UsersController extends Controller
     public function destroy(Users $users, $uuid)
     {
         $data = Users::get()->where('uuid', $uuid)->firstOrFail();
-        // $data->deleted_by = Auth::user()->id;
+        $data->deleted_by = Auth::user()->id;
         $data->save();
         $log = [
             'uuid' => Uuid::uuid4()->getHex(),
-            // 'user_id' => Auth::user()->id,
-            'description' => '<em>Menghapus</em> data User <strong>[' . $data->name . ']</strong>', //name = nama tag di view (file index)
+            'user_id' => Auth::user()->id,
+            'description' => '<em>Menghapus</em> data User <strong>[' . $data->nama . ']</strong>', //name = nama tag di view (file index)
             'category' => 'hapus',
             'created_at' => now(),
         ];

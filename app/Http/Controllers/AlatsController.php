@@ -162,7 +162,7 @@ class AlatsController extends Controller
     public function destroy(Alats $alats, $uuid)
     {
         $data = Alats::get()->where('uuid', $uuid)->firstOrFail();
-        // $data->deleted_by = Auth::user()->id;
+        $data->deleted_by = Auth::user()->id;
         $data->save();
         $log = [
             'uuid' => Uuid::uuid4()->getHex(),
