@@ -41,7 +41,7 @@
                 <li class="menu-header">MAIN DATA</li>
                 <li><a class="nav-link" href="{{ url('/peminjaman') }}"><i class="fas fa-cube"></i><span>Peminjaman</span></a>
                 </li>
-                <li><a class="nav-link" href="{{ url('#') }}"><i class="fas fa-cube"></i><span>Penggunaan</span></a>
+                <li><a class="nav-link" href="{{ url('/penggunaan') }}"><i class="fas fa-cube"></i><span>Penggunaan</span></a>
                 </li>
                 {{-- <li class="dropdown">
                <a href="#" class="nav-link has-dropdown"><i class="far fa-user"></i>

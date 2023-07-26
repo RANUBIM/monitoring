@@ -83,7 +83,7 @@
                                             <div class="form-group col-6">
                                                 <label for="tgl_peminjaman">Tanggal Peminjaman</label>
                                                 <input type="date" name="tgl_peminjaman" class="form-control @error('tgl_peminjaman') is-invalid @enderror" id="tgl_peminjaman"
-                                                    placeholder="tgl_peminjaman" autofocus value="{{ old('tgl_peminjaman', $datas->tgl_peminjaman) }}">
+                                                    placeholder="tgl_peminjaman" autofocus value="{{ old('tgl_peminjaman', $datas->tgl_peminjaman->format('Y-m-d')) }}">
                                                 @error('tgl_peminjaman')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}
@@ -93,7 +93,7 @@
                                             <div class="form-group col-6">
                                                 <label for="tgl_pengembalian">Tanggal Pengembalian</label>
                                                 <input type="date" name="tgl_pengembalian" class="form-control @error('tgl_pengembalian') is-invalid @enderror" id="tgl_pengembalian"
-                                                    placeholder="tgl_pengembalian" autofocus value="{{ old('tgl_pengembalian', $datas->tgl_pengembalian) }}">
+                                                    placeholder="tgl_pengembalian" autofocus value="{{ old('tgl_pengembalian', $datas->tgl_pengembalian->format('Y-m-d')) }}">
                                                 @error('tgl_pengembalian')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}

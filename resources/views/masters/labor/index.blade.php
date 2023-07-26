@@ -56,7 +56,7 @@ Examples for opt-in styling of tables (given their prevalent use in JavaScript p
                                           <th scope="col">#</th>
                                           <th scope="col">Nama Labor</th>
                                           <th scope="col">Data</th>
-                                          <th scope="col">Action</th>
+                                          <th scope="col">Aksi</th>
                                        </tr>
                                  </thead>
                                  <tbody>

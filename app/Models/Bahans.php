@@ -11,7 +11,7 @@ class Bahans extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
-    // protected $dates = ['deleted_at'];
+    protected $dates = ['tgl_pengadaan','deleted_at'];
 
     public function dataLabor()
     {

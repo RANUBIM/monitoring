@@ -5,14 +5,15 @@ use Illuminate\Support\Facades\Route;
 // use App\Http\Controllers\Auth\LoginController;
 
 // Login
-use App\Http\Controllers\AlatsController;
+use App\Http\Controllers\LoginController;
 
 // Master
-use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UsersController;
-use App\Http\Controllers\BahansController;
 use App\Http\Controllers\LaborsController;
+use App\Http\Controllers\AlatsController;
+use App\Http\Controllers\BahansController;
 use App\Http\Controllers\PeminjamansController;
+use App\Http\Controllers\PenggunaansController;
 
 /*
 |--------------------------------------------------------------------------

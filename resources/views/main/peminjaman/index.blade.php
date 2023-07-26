@@ -60,7 +60,7 @@
                                           {{-- <th scope="col">Kondisi</th> --}}
                                           <th scope="col">Status</th>
                                           {{-- <th scope="col">Alat</th> --}}
-                                          <th scope="col">Action</th>
+                                          <th scope="col">Aksi</th>
                                        </tr>
                                  </thead>
                                  <tbody>
@@ -70,7 +70,7 @@
                                           <td>{{ $data->dataUser['nama'] }}</td>
                                           <td>{{ $data->kegiatan }}</td>
                                           {{-- <td>{{ $data->tujuan }}</td> --}}
-                                          <td>{{ $data->tgl_peminjaman }} - {{ $data->tgl_pengembalian }}</td>
+                                          <td>{{ $data->tgl_peminjaman->isoFormat('D MMMM Y') }} - {{ $data->tgl_pengembalian->isoFormat('D MMMM Y') }}</td>
                                           {{-- <td>
                                              kondisi peminjaman : {{ $data->kondisi_peminjaman }} <br>
                                              kondisi pengecekan : {{ $data->kondisi_pengecekan }} <br>
@@ -105,6 +105,9 @@
                                                    Aksi
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                   @if (Auth::user()->role == "Kepala Jurusan")
+                                                      <a href="/detail-peminjamanAlat/{{ $data->uuid }}" class="dropdown-item">Punya Kepala Jurusan</a>
+                                                   @endif
                                                    <a href="/detail-peminjamanAlat/{{ $data->uuid }}" class="dropdown-item">Detail</a>
                                                    <a href="/peminjaman/{{ $data->uuid }}/edit" class="dropdown-item">Edit</a>
                                                    

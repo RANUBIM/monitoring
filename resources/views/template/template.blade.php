@@ -16,6 +16,9 @@
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/css/components.css">
     <link rel="stylesheet" href="/assets/modules/select2/dist/css/select2.min.css">
+
+    <link rel="stylesheet" href="/assets/modules/bootstrap-daterangepicker/daterangepicker.css">
+
     <!-- Start GA -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script>
     <script>
@@ -76,6 +79,8 @@
     <script src="/assets/modules/moment.min.js"></script>
     <script src="/assets/js/stisla.js"></script>
     <script src="/assets/modules/select2/dist/js/select2.full.min.js"></script>
+    <script src="/assets/modules/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <script src="/assets/js/page/forms-advanced-forms.js"></script>
 
     <!-- JS Libraies -->
 
@@ -93,6 +98,12 @@
                 $("notip").remove();
             }, 3000);
         });
+
+        $('.daterange-cus').daterangepicker({
+            locale: {format: 'YYYY-MM-DD'},
+            drops: 'down',
+            opens: 'right'
+            });
     </script>
 </body>
 

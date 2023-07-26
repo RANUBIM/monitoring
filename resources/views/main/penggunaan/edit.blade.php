@@ -4,7 +4,7 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Alat</h1>
+                <h1>Penggunaan</h1>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
                     <div class="breadcrumb-item"><a href="#">Forms</a></div>
@@ -20,83 +20,89 @@
                     <div class="col-12 col-md-12 col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Edit Data Alat</h4>
+                                <h4>Edit Data Penggunaan</h4>
                             </div>
                             <div class="card-body">
                                 {{-- <div class="form-group">
                                     <label>Default Input Text</label>
                                     <input type="text" class="form-control">
                                 </div> --}}
-                                @foreach($datas as $key => $data)
-                                    <form class="forms-sample" action="/alat/{{ $data->uuid}}" method="POST">
+                                {{-- @foreach($datas as $key => $data) --}}
+                                    <form class="forms-sample" action="/penggunaan/{{ $datas->uuid}}" method="POST">
                                         @method('put')
                                         @csrf
                                         <div class="form-group">
-                                            <label for="labor_id">Labor</label>
-                                            <input type="text" name="labor_id" class="form-control @error('labor_id') is-invalid @enderror" id="labor_id"
-                                                placeholder="labor_id" required autofocus value="{{ old('labor_id', $data->labor_id) }}">
-                                            @error('nama')
+                                            <label>Peminjam</label>
+                                            <select id="user_id" class="form-control @error('user_id') is-invalid @enderror select2" name="user_id" style="width: 100%;" >
+                                                
+                                                @foreach ($dataUser as $user)
+                                                    <option value="{{ old('user_id', $datas->user_id) }}" @if ($datas->user_id == $user->id) selected="selected" @endif>
+                                                        {{ old('user_id', $user->nama) }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            @error('user_id')
+                                                <div class="invalid-feedback">
+                                                    {{-- {{ $message }} --}}
+                                                    Form peminjam wajib diisi
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="kegiatan">Kegiatan</label>
+                                            <input type="text" name="kegiatan" class="form-control @error('kegiatan') is-invalid @enderror" id="kegiatan"
+                                                placeholder="kegiatan"  autofocus value="{{ old('kegiatan', $datas->kegiatan) }}">
+                                            @error('kegiatan')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
                                             @enderror
                                         </div>
                                         <div class="form-group">
-                                            <label for="nama">Nama</label>
-                                            <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror" id="nama"
-                                                placeholder="nama" required autofocus value="{{ old('nama', $data->nama) }}">
-                                            @error('nama')
+                                            <label for="tujuan">Tujuan</label>
+                                            <textarea type="text" name="tujuan" class="form-control @error('tujuan') is-invalid @enderror" id="tujuan"
+                                                placeholder="tujuan" autofocus value="">{{ old('tujuan', $datas->tujuan) }}</textarea>
+                                            @error('tujuan')
+                                                <div class="invalid-feedback">
+                                                    {{-- {{ $message }} --}}
+                                                    "Harap mengisi tujuan kegiatan"
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        {{-- <div class="form-group">
+                                            <label for="status">Status</label>
+                                            <input type="text" name="status" class="form-control @error('status') is-invalid @enderror" id="status"
+                                                placeholder="status" required autofocus value="{{ old('status') }}">
+                                            @error('status')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
                                             @enderror
-                                        </div>
+                                        </div> --}}
                                         <div class="form-group">
-                                            <label for="spesifikasi">Spesifikasi</label>
-                                            <input type="text" name="spesifikasi" class="form-control @error('spesifikasi') is-invalid @enderror" id="spesifikasi"
-                                                placeholder="spesifikasi" required autofocus value="{{ old('spesifikasi', $data->spesifikasi) }}">
-                                            @error('spesifikasi')
+                                            <label for="tgl_permintaan">Tanggal Permintaan</label>
+                                            <input type="date" name="tgl_permintaan" class="form-control @error('tgl_permintaan') is-invalid @enderror" id="tgl_permintaan"
+                                                placeholder="tgl_permintaan" autofocus value="{{ old('tgl_permintaan', $datas->tgl_permintaan) }}">
+                                            @error('tgl_permintaan')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
                                             @enderror
                                         </div>
-                                        <div class="row">
-                                            <div class="form-group col-6">
-                                                <label for="stok">Stok</label>
-                                                <input type="text" name="stok" class="form-control @error('stok') is-invalid @enderror" id="stok"
-                                                    placeholder="stok" required autofocus value="{{ old('stok', $data->stok) }}">
-                                                @error('stok')
-                                                    <div class="invalid-feedback">
-                                                        {{ $message }}
-                                                    </div>
-                                                @enderror
-                                            </div>
-                                            <div class="form-group col-6">
-                                                <label for="satuan">Satuan</label>
-                                                <input type="text" name="satuan" class="form-control @error('satuan') is-invalid @enderror" id="satuan"
-                                                    placeholder="satuan" required autofocus value="{{ old('satuan', $data->satuan) }}">
-                                                @error('satuan')
-                                                    <div class="invalid-feedback">
-                                                        {{ $message }}
-                                                    </div>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="keterangan">Keterangan</label>
-                                            <textarea type="text" name="keterangan" class="form-control @error('keterangan') is-invalid @enderror" id="keterangan"
-                                                placeholder="keterangan" required autofocus value="{{ old('keterangan', $data->keterangan) }}"></textarea>
-                                            @error('keterangan')
+                                        {{-- <div class="form-group">
+                                            <label for="kondisi_peminjaman">Kondisi Peminjaman</label>
+                                            <textarea type="text" name="kondisi_peminjaman" class="form-control @error('kondisi_peminjaman') is-invalid @enderror" id="kondisi_peminjaman"
+                                                placeholder="kondisi_peminjaman" required autofocus value="{{ old('kondisi_peminjaman') }}"></textarea>
+                                            @error('kondisi_peminjaman')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
                                             @enderror
-                                        </div>
+                                        </div> --}}
                                         <button type="submit" class="btn btn-primary me-2">Submit</button>
                                         <button class="btn btn-light">Cancel</button>
                                     </form>  
-                                @endforeach                              
+                                {{-- @endforeach                               --}}
                             </div>
                         </div>
                     </div>

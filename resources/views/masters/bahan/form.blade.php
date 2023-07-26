@@ -108,7 +108,7 @@
                                     <div class="form-group">
                                         <label for="keterangan">Keterangan</label>
                                         <textarea type="text" name="keterangan" class="form-control @error('keterangan') is-invalid @enderror" id="keterangan"
-                                            placeholder="keterangan" required autofocus value="{{ old('keterangan') }}"></textarea>
+                                            placeholder="keterangan"  autofocus value="{{ old('keterangan') }}"></textarea>
                                         @error('keterangan')
                                             <div class="invalid-feedback">
                                                 {{ $message }}

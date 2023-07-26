@@ -59,7 +59,7 @@
                                           <th scope="col">Spesifikasi</th>
                                           <th scope="col">Stok</th>
                                           <th scope="col">Keterangan</th>
-                                          <th scope="col">Action</th>
+                                          <th scope="col">Aksi</th>
                                        </tr>
                                  </thead>
                                  <tbody>
@@ -67,7 +67,7 @@
                                        <tr>
                                           <th scope="row">{{ $loop->iteration }}</th>
                                           <td>{{ $data->no_inv }}</td>
-                                          <td>{{ $data->tgl_pengadaan }}</td>
+                                          <td>{{ $data->tgl_pengadaan->isoFormat("D MMMM Y") }}</td>
                                           <td>{{ $data->dataLabor->nama }}</td>
                                           <td>{{ $data->nama }}</td>
                                           <td>{{ $data->spesifikasi }}</td>

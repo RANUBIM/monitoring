@@ -9,6 +9,7 @@ use App\Models\Peminjamans;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class PeminjamansController extends Controller
 {
@@ -144,7 +145,7 @@ class PeminjamansController extends Controller
     public function destroy(Peminjamans $peminjamans, $uuid)
     {
         $data = Peminjamans::get()->where('uuid', $uuid)->firstOrFail();
-        // $data->deleted_by = Auth::user()->id;
+        $data->deleted_by = Auth::user()->id;
         $data->save();
         $log = [
             'uuid' => Uuid::uuid4()->getHex(),
@@ -189,7 +190,6 @@ class PeminjamansController extends Controller
     {
         // $datas = Peminjamans::with(['dataUser','dataAlat.dataLabor'])->where('uuid', $uuid)->first();
         $datas = Peminjamans::with('dataUser')->where('uuid',$uuid)->first();
-        // $dataUser = Users::get();
         $dataAlat = Alats::with('dataLabor')->get();
 
         return view('main.peminjaman.formPeminjamanAlat', compact('datas','dataAlat'));
@@ -197,11 +197,17 @@ class PeminjamansController extends Controller
 
     public function peminjamanAlatStore(Request $request)
     {
+        $dataAlat = Alats::with('dataLabor')->get()->where("id", $request->alat_id)->first();
+        // dd($dataAlat->stok);
+        // dd($request->alat_id);
+
         $validatedData = $request->validate([
             'peminjaman_id' => 'string|required|max:255',
             'alat_id' => 'string|required|max:255',
-            'jumlah' => 'integer|required|max:255'
+            'jumlah' => 'numeric|min:1|max:'.$dataAlat->stok.'|required'
         ]);
+        
+        // dd($validatedData);
 
         $validatedData['uuid'] = Uuid::uuid4()->getHex();
         DB::table('peminjaman_alats')->insert($validatedData);
@@ -253,13 +259,16 @@ class PeminjamansController extends Controller
             'uuidAlat' => 'string|required|max:255',
             'uuidPivot' => 'string|required|max:255'
         ]);
+        // dd($validatedDataUUID);
+
+        $dataAlat = Alats::with('dataLabor')->get()->where("id",$request->alat_id)->first();
+        // dd($dataAlat);
 
         $validatedData = $request->validate([
             // 'peminjaman_id' => 'string|required|max:255',
-            'alat_id' => 'string|required|max:255',
-            'jumlah' => 'string|required|max:255',
+            'alat_id' => 'string|max:255|required',
+            'jumlah' => 'numeric|min:1|max:100|required'
         ]);
-        
         // dd($validatedData);
 
         DB::table('peminjaman_alats')->where('uuid', $uuid)->update($validatedData);

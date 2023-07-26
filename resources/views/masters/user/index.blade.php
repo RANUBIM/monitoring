@@ -60,7 +60,7 @@
                                           <th scope="col">Jurusan</th>
                                           <th scope="col">Mata Pelajaran</th>
                                           <th scope="col">Kontak</th>
-                                          <th scope="col">Action</th>
+                                          <th scope="col">Aksi</th>
                                        </tr>
                                  </thead>
                                  <tbody>

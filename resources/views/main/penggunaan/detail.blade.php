@@ -4,7 +4,7 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Peminjaman</h1>
+                <h1>Penggunaan</h1>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
                     <div class="breadcrumb-item"><a href="#">Forms</a></div>
@@ -16,12 +16,12 @@
                 {{-- <h2 class="section-title">Advanced Forms</h2>
                 <p class="section-lead">We provide advanced input fields, such as date picker, color picker, and so on.</p> --}}
 
-                {{-- DATA DETAIL PEMINJAMAN --}}
+                {{-- DATA DETAIL PENGGUNAAN --}}
                 <div class="row">
                     <div class="col-12 col-md-12 col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Detail Data Peminjaman</h4>
+                                <h4>Detail Data Penggunaan</h4>
                             </div>
                             <div class="card-body">
                                 {{-- <div class="form-group">
@@ -29,7 +29,7 @@
                                     <input type="text" class="form-control">
                                 </div> --}}
                                 {{-- @foreach ($datas as $key => $data) --}}
-                                <form class="forms-sample" action="/peminjaman/{{ $datas->uuid }}" method="POST">
+                                <form class="forms-sample" action="/penggunaan/{{ $datas->uuid }}" method="POST">
                                     @method('put')
                                     @csrf
                                     <div class="form-group">
@@ -44,11 +44,11 @@
                                                 </option>
                                             @endforeach
                                         </select> --}}
-                                        <input type="text" name="peminjam_id"
-                                            class="form-control @error('peminjam_id') is-invalid @enderror" id="peminjam_id"
-                                            placeholder="peminjam_id" autofocus
-                                            value="{{ old('peminjam_id', $datas->dataUser->nama) }}" readonly>
-                                        @error('user_id')
+                                        <input type="text" name="penggunaan_id"
+                                            class="form-control @error('penggunaan_id') is-invalid @enderror" id="penggunaan_id"
+                                            placeholder="penggunaan_id" autofocus
+                                            value="{{ old('penggunaan_id', $datas->dataUser->nama) }}" readonly>
+                                        @error('penggunaan_id')
                                             <div class="invalid-feedback">
                                                 {{-- {{ $message }} --}}
                                                 Form peminjam wajib diisi
@@ -88,31 +88,17 @@
                                                 </div>
                                             @enderror
                                         </div> --}}
-                                    <div class="row">
-                                        <div class="form-group col-6">
-                                            <label for="tgl_peminjaman">Tanggal Peminjaman</label>
-                                            <input type="date" name="tgl_peminjaman"
-                                                class="form-control @error('tgl_peminjaman') is-invalid @enderror"
-                                                id="tgl_peminjaman" placeholder="tgl_peminjaman" autofocus
-                                                value="{{ old('tgl_peminjaman', $datas->tgl_peminjaman->format('Y-m-d')) }}" readonly>
-                                            @error('tgl_peminjaman')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group col-6">
-                                            <label for="tgl_pengembalian">Tanggal Pengembalian</label>
-                                            <input type="date" name="tgl_pengembalian"
-                                                class="form-control @error('tgl_pengembalian') is-invalid @enderror"
-                                                id="tgl_pengembalian" placeholder="tgl_pengembalian" autofocus
-                                                value="{{ old('tgl_pengembalian', $datas->tgl_pengembalian->format('Y-m-d')) }}" readonly>
-                                            @error('tgl_pengembalian')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
+                                    <div class="form-group">
+                                        <label for="tgl_permintaan">Tanggal Penggunaan</label>
+                                        <input type="date" name="tgl_permintaan"
+                                            class="form-control @error('tgl_permintaan') is-invalid @enderror"
+                                            id="tgl_permintaan" placeholder="tgl_permintaan" autofocus
+                                            value="{{ old('tgl_permintaan', $datas->tgl_permintaan->format('Y-m-d')) }}" readonly>
+                                        @error('tgl_permintaan')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
                                     </div>
                                     {{-- <div class="form-group">
                                             <label for="kondisi_peminjaman">Kondisi Peminjaman</label>
@@ -139,9 +125,9 @@
                     <div class="col-12 col-md-12 col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <a href="/detail-peminjaman/{{ $datas->uuid }}" class="btn btn-primary"><i
+                                <a href="/detail-penggunaan/{{ $datas->uuid }}" class="btn btn-primary"><i
                                         class="fa fa-redo"></i></a>
-                                <a href="/create-peminjamanAlat/{{ $datas->uuid }}" class="btn btn-primary ">Tambah</a>
+                                <a href="/create-penggunaanBahan/{{ $datas->uuid }}" class="btn btn-primary ">Tambah</a>
                             </div>
                             <div class="card-body">
                                 {{-- <div class="section-title mt-0">Light</div> --}}
@@ -149,14 +135,14 @@
                                     <thead>
                                         <tr>
                                             <th scope="col">#</th>
-                                            <th scope="col">Nama Alat</th>
+                                            <th scope="col">Nama Bahan</th>
                                             <th scope="col">Jumlah</th>
                                             <th scope="col">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {{-- @foreach ($datas as $data) --}}
-                                        @foreach ($datas->dataAlat as $item)
+                                        @foreach ($datas->dataBahan as $item)
                                             <tr>
                                                 <th scope="row">{{ $loop->iteration }}</th>
                                                 <td>{{ $item->nama }}</td>
@@ -174,32 +160,32 @@
 
                                                 {{-- Tombol Aksi Button --}}
                                                 <td>
-                                                    {{-- <a href="/edit-peminjamanAlat/{{ $item->pivot->uuid }}"
+                                                    {{-- <a href="/edit-penggunaanBahan/{{ $item->pivot->uuid }}"
                                                         class="btn btn-primary">Edit</a> --}}
 
-                                                    <form action="/edit-peminjamanAlat/{{ $item->pivot->uuid }}"
+                                                    <form action="/edit-penggunaanBahan/{{ $item->pivot->uuid }}"
                                                         method="POST" class="d-inline">
                                                         @method('GET')
                                                         @csrf
                                                         <input type="hidden" name="namaUser" value="{{ $datas->dataUser->nama }}">
-                                                        <input type="hidden" name="namaAlat" value="{{ $item->nama }}">
+                                                        <input type="hidden" name="namaBahan" value="{{ $item->nama }}">
                                                         <input type="hidden" name="uuid"
                                                             value="{{ $datas->uuid }}">
-                                                        <input type="hidden" name="uuidAlat"
+                                                        <input type="hidden" name="uuidBahan"
                                                             value="{{ $item->uuid }}">
                                                         <input type="hidden" name="uuidPivot"
                                                             value="{{ $item->pivot->uuid }}">
                                                         <button type="submit" class="btn btn-primary">Edit</button>
                                                     </form>
 
-                                                    <form action="/destroy-peminjamanAlat/{{ $item->pivot->uuid }}"
+                                                    <form action="/destroy-penggunaanBahan/{{ $item->pivot->uuid }}"
                                                         method="POST" class="d-inline">
                                                         @method('DELETE')
                                                         @csrf
-                                                        <input type="hidden" name="namaAlat" value="{{ $item->nama }}">
+                                                        <input type="hidden" name="namaBahan" value="{{ $item->nama }}">
                                                         <input type="hidden" name="uuid"
                                                             value="{{ $datas->uuid }}">
-                                                        <input type="hidden" name="uuidAlat"
+                                                        <input type="hidden" name="uuidBahan"
                                                             value="{{ $item->uuid }}">
                                                         <input type="hidden" name="uuidPivot"
                                                             value="{{ $item->pivot->uuid }}">

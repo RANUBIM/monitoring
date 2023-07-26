@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Peminjamans;
+use App\Models\Penggunaans;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -43,5 +44,10 @@ class Users extends Authenticatable
     public function dataPeminjaman()
     {
         return $this->hasMany(Peminjamans::class, 'peminjaman_id', 'id');
+    }
+
+    public function dataPenggunaan()
+    {
+        return $this->hasMany(Penggunaans::class, 'penggunaan_id', 'id');
     }
 }

@@ -43,6 +43,8 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->tes);
+
         $validatedData = $request->validate([
             'niknis' => 'string|required|max:255|min:5',
             'password' => 'string|required|max:255',
