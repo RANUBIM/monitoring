@@ -43,8 +43,10 @@
                   <div class="col-12 col-md-12 col-lg-12">
                      <div class="card">
                            <div class="card-header">
-                              <a href="/bahan" class="btn btn-primary"><i class="fa fa-redo"></i></a>
-                              <a href="/bahan/create" class="btn btn-primary ">Tambah</a>
+                              @if (Auth::user()->role === 'Kepala Jurusan')
+                                 <a href="/bahan" class="btn btn-primary"><i class="fa fa-redo"></i></a>
+                                 <a href="/bahan/create" class="btn btn-primary ">Tambah</a>
+                              @endif
                            </div>
                            <div class="card-body">
                               {{-- <div class="section-title mt-0">Light</div> --}}
@@ -53,13 +55,15 @@
                                        <tr>
                                           <th scope="col">#</th>
                                           <th scope="col">No. Inventaris</th>
-                                          <th scope="col">Tanggal Pengadaan</th>
                                           <th scope="col">Labor</th>
                                           <th scope="col">Nama</th>
                                           <th scope="col">Spesifikasi</th>
                                           <th scope="col">Stok</th>
                                           <th scope="col">Keterangan</th>
+                                          <th scope="col">Tanggal Pengadaan</th>
+                                          @if (Auth::user()->role === 'Kepala Jurusan')
                                           <th scope="col">Aksi</th>
+                                          @endif
                                        </tr>
                                  </thead>
                                  <tbody>
@@ -67,31 +71,33 @@
                                        <tr>
                                           <th scope="row">{{ $loop->iteration }}</th>
                                           <td>{{ $data->no_inv }}</td>
-                                          <td>{{ $data->tgl_pengadaan->isoFormat("D MMMM Y") }}</td>
                                           <td>{{ $data->dataLabor->nama }}</td>
                                           <td>{{ $data->nama }}</td>
                                           <td>{{ $data->spesifikasi }}</td>
                                           <td>{{ $data->stok }} {{ $data->satuan }}</td>
                                           <td>{{ $data->keterangan }}</td>
+                                          <td>{{ $data->tgl_pengadaan->isoFormat("D MMMM Y") }}</td>
                                           {{-- Tombol Aksi Dropdown --}}
-                                          <td>
-                                             <div class="dropdown">
-                                                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                   Aksi
-                                                </button>
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                   <a href="/bahan/{{ $data->uuid }}" class="dropdown-item">Detail</a>
-                                                   <a href="/bahan/{{ $data->uuid }}/edit" class="dropdown-item">Edit</a>
-                                                   
-                                                   <form action="/bahan/{{ $data->uuid }}" method="post"
-                                                      class="d-inline">
-                                                      @method('delete')
-                                                      @csrf
-                                                      <button type="submit" class="a dropdown-item"><a>Hapus</a></button>
-                                                   </form>
+                                          @if (Auth::user()->role === 'Kepala Jurusan')    
+                                             <td>
+                                                <div class="dropdown">
+                                                   <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                      Aksi
+                                                   </button>
+                                                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                      {{-- <a href="/bahan/{{ $data->uuid }}" class="dropdown-item">Detail</a> --}}
+                                                      <a href="/bahan/{{ $data->uuid }}/edit" class="dropdown-item">Edit</a>
+                                                      
+                                                      <form action="/bahan/{{ $data->uuid }}" method="post"
+                                                         class="d-inline">
+                                                         @method('delete')
+                                                         @csrf
+                                                         <button type="submit" class="a dropdown-item"><a>Hapus</a></button>
+                                                      </form>
+                                                   </div>
                                                 </div>
-                                             </div>
-                                          </td>
+                                             </td>
+                                          @endif
                                           {{-- /Tombol Aksi Dropdown --}}
                                           {{-- <td>
                                              <a href="/bahan/{{ $data->uuid }}/edit" class="btn btn-primary">Edit</a>

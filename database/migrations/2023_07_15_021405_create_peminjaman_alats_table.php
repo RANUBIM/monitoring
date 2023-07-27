@@ -17,9 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string("uuid")->unique();
             $table->unsignedBigInteger('peminjaman_id');
-            $table->foreign('peminjaman_id')->references('id')->on('peminjamans')->onDelete('cascade');
+            $table->foreign('peminjaman_id')->references('id')->on('peminjamans')->onDelete('restrict');
             $table->unsignedBigInteger('alat_id');
-            $table->foreign('alat_id')->references('id')->on('alats')->onDelete('cascade');
+            $table->foreign('alat_id')->references('id')->on('alats')->onDelete('restrict');
             $table->integer('jumlah')->required();
         });
     }

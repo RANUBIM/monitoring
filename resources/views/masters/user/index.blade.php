@@ -53,9 +53,9 @@
                                  <thead>
                                        <tr>
                                           <th scope="col">#</th>
+                                          <th scope="col">Role</th>
                                           <th scope="col">NIK/NIS</th>
                                           <th scope="col">Nama</th>
-                                          <th scope="col">Role</th>
                                           <th scope="col">Kelas</th>
                                           <th scope="col">Jurusan</th>
                                           <th scope="col">Mata Pelajaran</th>
@@ -67,9 +67,9 @@
                                     @foreach ($datas as $data)
                                        <tr>
                                           <th scope="row">{{ $loop->iteration }}</th>
+                                          <td>{{ $data->role }}</td>
                                           <td>{{ $data->niknis }}</td>
                                           <td>{{ $data->nama }}</td>
-                                          <td>{{ $data->role }}</td>
                                           <td>{{ $data->kelas }}</td>
                                           <td>{{ $data->jurusan }}</td>
                                           <td>{{ $data->mapel }}</td>

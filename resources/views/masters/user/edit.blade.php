@@ -36,6 +36,7 @@
                                             <select class="form-control" name="role" id="role" required>
                                                 <option value="{{ old('role', $data->role) }}">{{ old('role', $data->role) }}</option>
                                                 <option value="Kepala Jurusan">Kepala Jurusan</option>
+                                                <option value="Laboran">Laboran</option>
                                                 <option value="Guru">Guru</option>
                                                 <option value="Siswa">Siswa</option>
                                             </select>

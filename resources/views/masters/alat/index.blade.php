@@ -44,8 +44,10 @@
                   <div class="col-12 col-md-12 col-lg-12">
                      <div class="card">
                            <div class="card-header">
-                              <a href="/alat" class="btn btn-primary"><i class="fa fa-redo"></i></a>
-                              <a href="/alat/create" class="btn btn-primary ">Tambah</a>
+                              @if (Auth::user()->role === 'Kepala Jurusan')
+                                 <a href="/alat" class="btn btn-primary"><i class="fa fa-redo"></i></a>
+                                 <a href="/alat/create" class="btn btn-primary ">Tambah</a>
+                              @endif
                            </div>
                            <div class="card-body">
                               {{-- <div class="section-title mt-0">Light</div> --}}
@@ -58,7 +60,10 @@
                                           <th scope="col">Spesifikasi</th>
                                           <th scope="col">Stok</th>
                                           <th scope="col">Keterangan</th>
-                                          <th scope="col">Aksi</th>
+                                          @if (Auth::user()->role === 'Kepala Jurusan')
+                                             <th scope="col">Aksi</th> 
+                                          @endif
+
                                        </tr>
                                  </thead>
                                  <tbody>
@@ -71,24 +76,26 @@
                                           <td>{{ $data->stok }} {{ $data->satuan }}</td>
                                           <td>{{ $data->keterangan }}</td>
                                           {{-- Tombol Aksi Dropdown --}}
-                                          <td>
-                                             <div class="dropdown">
-                                                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                   Aksi
-                                                </button>
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                   <a href="/alat/{{ $data->uuid }}" class="dropdown-item">Detail</a>
-                                                   <a href="/alat/{{ $data->uuid }}/edit" class="dropdown-item">Edit</a>
-                                                   
-                                                   <form action="/alat/{{ $data->uuid }}" method="post"
-                                                      class="d-inline">
-                                                      @method('delete')
-                                                      @csrf
-                                                      <button type="submit" class="a dropdown-item"><a>Hapus</a></button>
-                                                   </form>
+                                          @if (Auth::user()->role === 'Kepala Jurusan')
+                                             <td>
+                                                <div class="dropdown">
+                                                   <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                      Aksi
+                                                   </button>
+                                                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                      {{-- <a href="/alat/{{ $data->uuid }}" class="dropdown-item">Detail</a> --}}
+                                                      <a href="/alat/{{ $data->uuid }}/edit" class="dropdown-item">Edit</a>
+                                                      
+                                                      <form action="/alat/{{ $data->uuid }}" method="post"
+                                                         class="d-inline">
+                                                         @method('delete')
+                                                         @csrf
+                                                         <button type="submit" class="a dropdown-item"><a>Hapus</a></button>
+                                                      </form>
+                                                   </div>
                                                 </div>
-                                             </div>
-                                          </td>
+                                             </td>
+                                          @endif
                                           {{-- /Tombol Aksi Dropdown --}}
                                           {{-- <td>
                                              <a href="/alat/{{ $data->uuid }}/edit" class="btn btn-primary">Edit</a>

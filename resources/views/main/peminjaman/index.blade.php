@@ -65,26 +65,31 @@
                                  </thead>
                                  <tbody>
                                     @foreach ($datas as $data)
-                                       <tr>
-                                          <th scope="row">{{ $loop->iteration }}</th>
-                                          <td>{{ $data->dataUser['nama'] }}</td>
-                                          <td>{{ $data->kegiatan }}</td>
-                                          {{-- <td>{{ $data->tujuan }}</td> --}}
-                                          <td>{{ $data->tgl_peminjaman->isoFormat('D MMMM Y') }} - {{ $data->tgl_pengembalian->isoFormat('D MMMM Y') }}</td>
-                                          {{-- <td>
-                                             kondisi peminjaman : {{ $data->kondisi_peminjaman }} <br>
-                                             kondisi pengecekan : {{ $data->kondisi_pengecekan }} <br>
-                                             kondisi pengembalian : {{ $data->kondisi_pengembalian }} 
-                                          </td> --}}
-                                          <td>{{ $data->status }}</td>
-                                          {{-- <td>{{ $data->dataAlat }}</td> --}}
-                                          {{-- <td>
-                                             @foreach ($data->dataAlat as $item)
-                                             {{ $item['nama'] }}
-                                             @endforeach
-                                          </td> --}}
-                                          
-                                          {{-- Tombol Aksi Button --}}
+                                    @if ($data->status == 'Menunggu Persetujuan' 
+                                       && ($data->dataUser->id == Auth::user()->id
+                                       || (Auth::user()->role != "Guru" 
+                                       && Auth::user()->role != "Siswa" ))) 
+                                    <tr>
+                                       <th scope="row">{{ $loop->iteration }}</th>
+                                       <td>{{ $data->dataUser['nama'] }}</td>
+                                       <td>{{ $data->kegiatan }}</td>
+                                       {{-- <td>{{ $data->tujuan }}</td> --}}
+                                       <td>{{ $data->tgl_peminjaman->isoFormat('D MMMM Y') }} - {{ $data->tgl_pengembalian->isoFormat('D MMMM Y') }}</td>
+                                       {{-- <td>
+                                          kondisi peminjaman : {{ $data->kondisi_peminjaman }} <br>
+                                          kondisi pengecekan : {{ $data->kondisi_pengecekan }} <br>
+                                          kondisi pengembalian : {{ $data->kondisi_pengembalian }} 
+                                       </td> --}}
+                                       <td>{{ $data->status }}</td>
+                                       {{-- <td>{{ $data->dataAlat }}</td> --}}
+                                       {{-- <td>
+                                          @foreach ($data->dataAlat as $item)
+                                          {{ $item['nama'] }}
+                                          @endforeach
+                                       </td> --}}
+                                       
+                                       {{-- Tombol Aksi Button --}}
+                                       
                                           {{-- <td >
                                              <a href="/detail-peminjaman/{{ $data->uuid }}" class="btn btn-primary">Detail</a>
                                              <a href="/peminjaman/{{ $data->uuid }}/edit" class="btn btn-primary">Edit</a>
@@ -122,6 +127,7 @@
                                           </td>
                                           {{-- /Tombol Aksi Dropdown --}}
                                        </tr>
+                                       @endif
                                        @endforeach
                                     </tbody>
                                  </table>

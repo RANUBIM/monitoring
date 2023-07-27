@@ -17,10 +17,12 @@ return new class extends Migration
             $table->id();
             $table->string("uuid")->unique();
             $table->unsignedBigInteger('labor_id')->required();
+            $table->foreign('labor_id')->references('id')->on('labors')->onDelete('restrict');
             $table->string('nama')->required();
             $table->string('spesifikasi')->nullable();
             $table->string('stok')->nullable();
             $table->string('satuan')->nullable();
+            $table->string('digunakan')->nullable();
             $table->string('keterangan')->nullable();
             $table->integer("created_by");
             $table->integer("updated_by")->nullable();
