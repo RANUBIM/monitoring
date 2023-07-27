@@ -20,9 +20,9 @@ return new class extends Migration
             $table->foreign('labor_id')->references('id')->on('labors')->onDelete('restrict');
             $table->string('nama')->required();
             $table->string('spesifikasi')->nullable();
-            $table->string('stok')->nullable();
+            $table->integer('stok')->nullable();
             $table->string('satuan')->nullable();
-            $table->string('digunakan')->nullable();
+            $table->integer('dipinjam')->default('0');
             $table->string('keterangan')->nullable();
             $table->integer("created_by");
             $table->integer("updated_by")->nullable();

@@ -22,9 +22,9 @@ return new class extends Migration
             $table->date("tgl_pengadaan")->required();
             $table->string('nama')->required();
             $table->string('spesifikasi')->nullable();
-            $table->string('stok')->nullable();
+            $table->integer('stok')->nullable();
             $table->string('satuan')->nullable();
-            $table->string('digunakan')->nullable();
+            $table->integer('digunakan')->default('0');
             $table->string('keterangan')->nullable();
             $table->integer("created_by");
             $table->integer("updated_by")->nullable();

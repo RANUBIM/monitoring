@@ -27,7 +27,7 @@
                         <li><a href="auth-reset-password.html">Reset Password</a></li>
                     </ul>
                 </li> --}}
-                @if (Auth::user()->role === 'Kepala Jurusan')
+                @if (Auth::user()->role == 'Kepala Jurusan')
                     <li><a class="nav-link" href="{{ url('/user') }}"><i class="fas fa-user"></i><span>User</span></a>
                     </li>
                     <li><a class="nav-link" href="{{ url('/labor') }}"><i class="fas fa-home"></i><span>Labor</span></a>
@@ -36,7 +36,7 @@
                     </li>
                     <li><a class="nav-link" href="{{ url('/bahan') }}"><i class="fas fa-briefcase"></i><span>Bahan</span></a>
                     </li>
-                @elseif (Auth::user()->role === 'Guru' || Auth::user()->role === 'Siswa')
+                @elseif (Auth::user()->role == 'Guru' || Auth::user()->role == 'Siswa' || Auth::user()->role == 'Laboran')
                     <li><a class="nav-link" href="{{ url('/alat') }}"><i class="fa fa-screwdriver"></i><span>Alat</span></a>
                     </li>
                     <li><a class="nav-link" href="{{ url('/bahan') }}"><i class="fas fa-briefcase"></i><span>Bahan</span></a>

@@ -139,7 +139,7 @@
                     <div class="col-12 col-md-12 col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <a href="/detail-peminjaman/{{ $datas->uuid }}" class="btn btn-primary"><i
+                                <a href="/detail-peminjamanAlat/{{ $datas->uuid }}" class="btn btn-primary"><i
                                         class="fa fa-redo"></i></a>
                                 <a href="/create-peminjamanAlat/{{ $datas->uuid }}" class="btn btn-primary ">Tambah</a>
                             </div>

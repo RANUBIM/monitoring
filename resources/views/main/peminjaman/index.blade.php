@@ -110,7 +110,7 @@
                                                    Aksi
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                   @if (Auth::user()->role == "Kepala Jurusan")
+                                                   @if (Auth::user()->role == "Kepala Jurusan" && Auth::user()->role == "Laboran")
                                                       <a href="/detail-peminjamanAlat/{{ $data->uuid }}" class="dropdown-item">Punya Kepala Jurusan</a>
                                                    @endif
                                                    <a href="/detail-peminjamanAlat/{{ $data->uuid }}" class="dropdown-item">Detail</a>

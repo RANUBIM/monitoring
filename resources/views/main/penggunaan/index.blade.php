@@ -55,7 +55,7 @@
                                           <th scope="col">#</th>
                                           <th scope="col">Peminjam</th>
                                           <th scope="col">Kegiatan</th>
-                                          <th scope="col">Tujuan</th>
+                                          {{-- <th scope="col">Tujuan</th> --}}
                                           <th scope="col">Tanggal Permintaan</th>
                                           <th scope="col">Status</th>
                                           <th scope="col">Aksi</th>
@@ -67,7 +67,7 @@
                                           <th scope="row">{{ $loop->iteration }}</th>
                                           <td>{{ $data->dataUser['nama'] }}</td>
                                           <td>{{ $data->kegiatan }}</td>
-                                          <td>{{ $data->tujuan }}</td>
+                                          {{-- <td>{{ $data->tujuan }}</td> --}}
                                           <td>{{ $data->tgl_permintaan->isoFormat("D MMMM Y") }}</td>
                                           <td>{{ $data->status }}</td>
                                           
