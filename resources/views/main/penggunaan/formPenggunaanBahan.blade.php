@@ -64,7 +64,7 @@
                                             <option selected="selected" value="">Input Bahan</option>
                                             @foreach ($dataBahan as $bahan)
                                                 <option value="{{ $bahan->id }}">
-                                                    {{ $bahan->dataLabor->nama }} - {{ $bahan->nama }}
+                                                    {{ $bahan->dataLabor->nama }} - {{ $bahan->nama }} [ {{ $bahan->stok-$bahan->digunakan }} ]
                                                 </option>
                                             @endforeach
                                         </select>

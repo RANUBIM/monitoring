@@ -64,7 +64,7 @@
                                             <option selected="selected" value="">Input Alat</option>
                                             @foreach ($dataAlat as $alat)
                                                 <option value="{{ $alat->id }}">
-                                                    {{ $alat->dataLabor->nama }} - {{ $alat->nama }}
+                                                    {{ $alat->dataLabor->nama }} - {{ $alat->nama }} [ {{ $alat->stok-$alat->dipinjam }} ]
                                                 </option>
                                             @endforeach
                                         </select>

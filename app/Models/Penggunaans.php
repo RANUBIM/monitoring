@@ -22,6 +22,6 @@ class Penggunaans extends Model
     public function dataBahan()
     {
         return $this->belongsToMany(Bahans::class, 'penggunaan_bahans', 'penggunaan_id', 'bahan_id')
-        ->withPivot(['id','uuid','jumlah']);
+        ->withPivot(['id','uuid','jumlah','status']);
     }
 }

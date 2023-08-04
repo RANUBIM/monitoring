@@ -42,10 +42,13 @@
                                             </select> --}}
                                         <input type="hidden" name="user_id"
                                             class="form-control @error('user_id') is-invalid @enderror" id="user_id"
-                                            placeholder="user_id" autofocus value="{{ Auth::user()->id }}">
+                                            placeholder="user_id" autofocus value="{{ $datas->dataUser->id }}">
                                         <input type="text" name="user_id"
                                             class="form-control @error('user_id') is-invalid @enderror" id="user_id"
-                                            placeholder="user_id" autofocus value="{{ Auth::user()->nama }}" disabled>
+                                            placeholder="user_id" autofocus value="{{ $datas->dataUser->nama }}" disabled>
+                                        {{-- <input type="text" name="user_id"
+                                            class="form-control @error('user_id') is-invalid @enderror" id="user_id"
+                                            placeholder="user_id" autofocus value="{{ $datas->peminjaman_id->dataUser->nama }}" disabled> --}}
                                         @error('user_id')
                                             <div class="invalid-feedback">
                                                 {{-- {{ $message }} --}}

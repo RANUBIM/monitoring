@@ -114,6 +114,33 @@
                                             @enderror
                                         </div>
                                     </div>
+                                    @if ( $datas->status == "7" )
+                                        <div class="row">
+                                            <div class="form-group col-6">
+                                                <label for="kondisi_peminjaman">Kondisi Peminjaman</label>
+                                                <textarea type="text" name="kondisi_peminjaman" class="form-control @error('kondisi_peminjaman') is-invalid @enderror" id="kondisi_peminjaman"
+                                                    placeholder="kondisi_peminjaman" autofocus value="" readonly>{{ old('kondisi_peminjaman', $datas->kondisi_peminjaman) }}</textarea>
+                                                @error('kondisi_peminjaman')
+                                                    <div class="invalid-feedback">
+                                                        {{-- {{ $message }} --}}
+                                                        "Harap mengisi tujuan kegiatan"
+                                                    </div>
+                                                @enderror
+                                            </div>
+                                            <div class="form-group col-6">
+                                                <label for="kondisi_pengembalian">Kondisi Pengembalian</label>
+                                                <textarea type="text" name="kondisi_pengembalian" class="form-control @error('kondisi_pengembalian') is-invalid @enderror" id="kondisi_pengembalian"
+                                                    placeholder="kondisi_pengembalian" autofocus value="" readonly>{{ old('kondisi_pengembalian', $datas->kondisi_pengembalian) }}</textarea>
+                                                @error('kondisi_pengembalian')
+                                                    <div class="invalid-feedback">
+                                                        {{-- {{ $message }} --}}
+                                                        "Harap mengisi tujuan kegiatan"
+                                                    </div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    @else
+                                    @endif
                                     {{-- <div class="form-group">
                                             <label for="kondisi_peminjaman">Kondisi Peminjaman</label>
                                             <textarea type="text" name="kondisi_peminjaman" class="form-control @error('kondisi_peminjaman') is-invalid @enderror" id="kondisi_peminjaman"
@@ -124,10 +151,8 @@
                                                 </div>
                                             @enderror
                                         </div> --}}
-                                    {{-- <button type="submit" class="btn btn-primary me-2">Submit</button>
-                                        <button class="btn btn-light">Cancel</button> --}}
                                 </form>
-                                {{-- @endforeach                               --}}
+                                {{-- @endforeach --}}
                             </div>
                         </div>
                     </div>
@@ -139,19 +164,45 @@
                     <div class="col-12 col-md-12 col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <a href="/detail-peminjamanAlat/{{ $datas->uuid }}" class="btn btn-primary"><i
+                                @if ( $datas->status == "7")
+                                @else
+                                    <a href="/detail-peminjamanAlat/{{ $datas->uuid }}" class="btn btn-primary"><i
                                         class="fa fa-redo"></i></a>
-                                <a href="/create-peminjamanAlat/{{ $datas->uuid }}" class="btn btn-primary ">Tambah</a>
+                                @endif
+
+                                @if ( $datas->status == "1")
+                                    @if (Auth::user()->nama == $datas->dataUser->nama)
+                                        <a href="/create-peminjamanAlat/{{ $datas->uuid }}" class="btn btn-primary ">Tambah</a>
+                                    @endif
+                                @elseif ( $datas->status == "2")
+                                    {{-- output_if --}}
+                                @elseif ( $datas->status == "3")
+                                    {{-- output_if --}}
+                                @elseif ( $datas->status == "4")
+                                    {{-- output_if --}}
+                                @elseif ( $datas->status == "5")
+                                    {{-- output_if --}}
+                                @elseif ( $datas->status == "6")
+                                    {{-- output_if --}}
+                                @elseif ( $datas->status == "7")
+                                    {{-- output_if --}}
+                                @else
+                                    {{-- output_if --}}
+                                @endif
                             </div>
                             <div class="card-body">
                                 {{-- <div class="section-title mt-0">Light</div> --}}
-                                <table class="table table-hover table-responsive-lg table-bordered">
+                                <table class="table table-hover table-responsive-lg table-bordered text-center">
                                     <thead>
                                         <tr>
                                             <th scope="col">#</th>
+                                            <th scope="col">Labor</th>
                                             <th scope="col">Nama Alat</th>
                                             <th scope="col">Jumlah</th>
+                                            @if ( $datas->status == "7")
+                                            @else
                                             <th scope="col">Action</th>
+                                            @endif
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -159,8 +210,9 @@
                                         @foreach ($datas->dataAlat as $item)
                                             <tr>
                                                 <th scope="row">{{ $loop->iteration }}</th>
-                                                <td>{{ $item->nama }}</td>
-                                                <td>{{ $item->pivot->jumlah }}</td>
+                                                <td class="text-left">{{ $item->dataLabor->nama }}</td>
+                                                <td class="text-left">{{ $item->nama }}</td>
+                                                <td>{{ $item->pivot->jumlah }} {{ $item->satuan }}</td>
                                                 {{-- <td>
                                                 @foreach ($datas->dataAlat as $item)
                                                 {{ $item['nama'] }}
@@ -173,67 +225,213 @@
                                             </td> --}}
 
                                                 {{-- Tombol Aksi Button --}}
-                                                <td>
-                                                    {{-- <a href="/edit-peminjamanAlat/{{ $item->pivot->uuid }}"
-                                                        class="btn btn-primary">Edit</a> --}}
+                                                @if ( $datas->status == "7")
+                                                @else
+                                                    <td>
+                                                        {{-- <a href="/edit-peminjamanAlat/{{ $item->pivot->uuid }}"
+                                                            class="btn btn-primary">Edit</a> --}}
+                                                        @if ( $datas->status == "1")
+                                                            <form action="/edit-peminjamanAlat/{{ $item->pivot->uuid }}"
+                                                                method="POST" class="d-inline">
+                                                                @method('GET')
+                                                                @csrf
+                                                                <input type="hidden" name="namaUser" value="{{ $datas->dataUser->nama }}">
+                                                                <input type="hidden" name="namaAlat" value="{{ $item->nama }}">
+                                                                <input type="hidden" name="uuid"
+                                                                    value="{{ $datas->uuid }}">
+                                                                <input type="hidden" name="uuidAlat"
+                                                                    value="{{ $item->uuid }}">
+                                                                <input type="hidden" name="uuidPivot"
+                                                                    value="{{ $item->pivot->uuid }}">
+                                                                <button type="submit" class="btn btn-primary">Edit</button>
+                                                            </form>
 
-                                                    <form action="/edit-peminjamanAlat/{{ $item->pivot->uuid }}"
-                                                        method="POST" class="d-inline">
-                                                        @method('GET')
-                                                        @csrf
-                                                        <input type="hidden" name="namaUser" value="{{ $datas->dataUser->nama }}">
-                                                        <input type="hidden" name="namaAlat" value="{{ $item->nama }}">
-                                                        <input type="hidden" name="uuid"
-                                                            value="{{ $datas->uuid }}">
-                                                        <input type="hidden" name="uuidAlat"
-                                                            value="{{ $item->uuid }}">
-                                                        <input type="hidden" name="uuidPivot"
-                                                            value="{{ $item->pivot->uuid }}">
-                                                        <button type="submit" class="btn btn-primary">Edit</button>
-                                                    </form>
-
-                                                    <form action="/destroy-peminjamanAlat/{{ $item->pivot->uuid }}"
-                                                        method="POST" class="d-inline">
-                                                        @method('DELETE')
-                                                        @csrf
-                                                        <input type="hidden" name="namaAlat" value="{{ $item->nama }}">
-                                                        <input type="hidden" name="uuid"
-                                                            value="{{ $datas->uuid }}">
-                                                        <input type="hidden" name="uuidAlat"
-                                                            value="{{ $item->uuid }}">
-                                                        <input type="hidden" name="uuidPivot"
-                                                            value="{{ $item->pivot->uuid }}">
-                                                        <button type="submit" class="btn btn-primary">Hapus</button>
-                                                    </form>
-                                                </td>
+                                                            @if (Auth::user()->nama == $datas->dataUser->nama)
+                                                            <form action="/destroy-peminjamanAlat/{{ $item->pivot->uuid }}"
+                                                                method="POST" class="d-inline">
+                                                                @method('DELETE')
+                                                                @csrf
+                                                                <input type="hidden" name="namaAlat" value="{{ $item->nama }}">
+                                                                <input type="hidden" name="uuid"
+                                                                    value="{{ $datas->uuid }}">
+                                                                <input type="hidden" name="uuidAlat"
+                                                                    value="{{ $item->uuid }}">
+                                                                <input type="hidden" name="uuidPivot"
+                                                                    value="{{ $item->pivot->uuid }}">
+                                                                <button type="submit" class="btn btn-primary">Hapus</button>
+                                                            </form>
+                                                            @endif
+                                                        @elseif ( $datas->status == "2")
+                                                            @if (Auth::user()->role == "Kepala Jurusan" || Auth::user()->role == "Laboran")
+                                                                <form action="/edit-peminjamanAlat/{{ $item->pivot->uuid }}"
+                                                                    method="POST" class="d-inline">
+                                                                    @method('GET')
+                                                                    @csrf
+                                                                    <input type="hidden" name="namaUser" value="{{ $datas->dataUser->nama }}">
+                                                                    <input type="hidden" name="namaAlat" value="{{ $item->nama }}">
+                                                                    <input type="hidden" name="uuid"
+                                                                        value="{{ $datas->uuid }}">
+                                                                    <input type="hidden" name="uuidAlat"
+                                                                        value="{{ $item->uuid }}">
+                                                                    <input type="hidden" name="uuidPivot"
+                                                                        value="{{ $item->pivot->uuid }}">
+                                                                    <button type="submit" class="btn btn-primary">Edit</button>
+                                                                </form>
+                                                            @endif
+                                                        @elseif ( $datas->status == "3")
+                                                            @if (Auth::user()->role == "Kepala Jurusan" && $item->pivot->status == "0")
+                                                                <form action="/check-peminjamanAlat/{{ $item->pivot->uuid }}"
+                                                                    method="POST" class="d-inline">
+                                                                    @method('GET')
+                                                                    @csrf
+                                                                    <input type="hidden" name="namaUser" value="{{ $datas->dataUser->nama }}">
+                                                                    <input type="hidden" name="namaAlat" value="{{ $item->nama }}">
+                                                                    <input type="hidden" name="uuid"
+                                                                        value="{{ $datas->uuid }}">
+                                                                    <input type="hidden" name="uuidAlat"
+                                                                        value="{{ $item->uuid }}">
+                                                                    <input type="hidden" name="uuidPivot"
+                                                                        value="{{ $item->pivot->uuid }}">
+                                                                    <button type="submit" class="btn btn-primary">Check</button>
+                                                                </form>
+                                                            @elseif ($item->pivot->status == "1")
+                                                                <button class="btn btn-success">Checked!</button>
+                                                            @endif
+                                                            {{-- @foreach ($datas->dataAlat as $items)
+                                                                {{ $items->nama }}
+                                                            @endforeach --}}
+                                                        @elseif ( $datas->status == "4")
+                                                            {{-- output_if --}}
+                                                        @elseif ( $datas->status == "5")
+                                                            {{-- output_if --}}
+                                                        @elseif ( $datas->status == "6")
+                                                            @if ($item->pivot->status == "1")
+                                                                <form action="/check-pengembalianAlat/{{ $item->pivot->uuid }}"
+                                                                    method="POST" class="d-inline">
+                                                                    @method('GET')
+                                                                    @csrf
+                                                                    <input type="hidden" name="namaUser" value="{{ $datas->dataUser->nama }}">
+                                                                    <input type="hidden" name="namaAlat" value="{{ $item->nama }}">
+                                                                    <input type="hidden" name="uuid"
+                                                                        value="{{ $datas->uuid }}">
+                                                                    <input type="hidden" name="uuidAlat"
+                                                                        value="{{ $item->uuid }}">
+                                                                    <input type="hidden" name="uuidPivot"
+                                                                        value="{{ $item->pivot->uuid }}">
+                                                                    <button type="submit" class="btn btn-primary">Check</button>
+                                                                </form>
+                                                            @elseif ($item->pivot->status == "2")
+                                                                <button class="btn btn-success">Checked!</button>
+                                                            @endif
+                                                        @elseif ( $datas->status == "7")
+                                                            {{-- output_if --}}
+                                                        @else
+                                                            {{-- output_if --}}
+                                                        @endif
+                                                    </td>
+                                                @endif
                                                 {{-- /Tombol Aksi Button --}}
 
                                                 {{-- Tombol Aksi Dropdown --}}
                                                 {{-- <td>
-                                            <div class="dropdown">
-                                                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    Dropdown button
-                                                </button>
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                    <a href="/detail-peminjaman/{{ $datas->uuid }}" class="dropdown-item">Detail</a>
-                                                    <a href="/peminjaman/{{ $datas->uuid }}/edit" class="dropdown-item">Edit</a>
-                                                    
-                                                    <form action="/peminjaman/{{ $datas->uuid }}" method="post"
-                                                        class="d-inline">
-                                                        @method('delete')
-                                                        @csrf
-                                                        <button type="submit" class="a dropdown-item"><a>Hapus</a></button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                            </td> --}}
+                                                    <div class="dropdown">
+                                                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            Dropdown button
+                                                        </button>
+                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                            <a href="/detail-peminjaman/{{ $datas->uuid }}" class="dropdown-item">Detail</a>
+                                                            <a href="/peminjaman/{{ $datas->uuid }}/edit" class="dropdown-item">Edit</a>
+                                                            
+                                                            <form action="/peminjaman/{{ $datas->uuid }}" method="post"
+                                                                class="d-inline">
+                                                                @method('delete')
+                                                                @csrf
+                                                                <button type="submit" class="a dropdown-item"><a>Hapus</a></button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </td> --}}
                                                 {{-- /Tombol Aksi Dropdown --}}
                                             </tr>
                                         @endforeach
                                         {{-- @endforeach --}}
                                     </tbody>
                                 </table>
+                                    {{-- TOMBOL CHANGE STATUS --}}
+                                    {{-- {{ $datas->dataAlat as $item }} --}}
+                                    @if ( $datas->status == "1")
+                                        @if (Auth::user()->nama == $datas->dataUser->nama)
+                                            <div class="text-right">
+                                                <form action="/status1-peminjamanAlat/{{ $datas->uuid }}"
+                                                    method="POST" class="d-inline">
+                                                    @method('GET')
+                                                    @csrf
+                                                    {{-- <input type="hidden" name="namaAlat" value="{{ $datas->nama }}"> --}}
+                                                    <input type="hidden" name="uuid" value="{{ $datas->uuid }}">
+                                                    {{-- <input type="hidden" name="uuidAlat" value="{{ $item->uuid }}">
+                                                    <input type="hidden" name="uuidPivot" value="{{ $item->pivot->uuid }}"> --}}
+                                                    <button type="submit" class="btn btn-primary">Ajukan Peminjaman</button>
+                                                </form>
+                                                <button class="btn btn-light">Cancel</button>
+                                            </div>
+                                        @endif
+                                    @elseif ( $datas->status == "2")
+                                        {{-- Status: Menunggu Persetujuan --}}
+                                        @if (Auth::user()->role == "Kepala Jurusan")
+                                            <div class="text-right">
+                                                <form action="/status2-peminjamanAlat/{{ $datas->uuid }}"
+                                                    method="POST" class="d-inline">
+                                                    @method('GET')
+                                                    @csrf
+                                                    {{-- <input type="hidden" name="namaAlat" value="{{ $datas->nama }}"> --}}
+                                                    <input type="hidden" name="uuid" value="{{ $datas->uuid }}">
+                                                    {{-- <input type="hidden" name="uuidAlat" value="{{ $item->uuid }}">
+                                                    <input type="hidden" name="uuidPivot" value="{{ $item->pivot->uuid }}"> --}}
+                                                    <button type="submit" class="btn btn-primary">Terima</button>
+                                                </form>
+                                                <button class="btn btn-primary" data-toggle="modal" data-target="#ModalPenolakan">Tolak</button>
+                                            </div>
+                                        @endif
+                                    @elseif ( $datas->status == "3")
+                                    {{-- Status: Menunggu Penyediaan --}}
+                                        @if (Auth::user()->role == "Kepala Jurusan")
+                                            <div class="text-right">
+                                                <button class="btn btn-primary" data-toggle="modal" data-target="#ModalKondisiPeminjaman">Kondisi Peminjaman</button>
+                                                <a class="btn btn-secondary" href="/peminjaman">Cancel</a>
+                                            </div>
+                                        @else
+                                            <div class="text-right">
+                                                <a class="btn btn-secondary" href="/peminjaman">Cancel</a>
+                                            </div>
+                                        @endif
+                                    @elseif ( $datas->status == "4")
+                                    {{-- Status: Alat dapat diambil --}}
+                                    @elseif ( $datas->status == "5")
+                                    {{-- Status: Alat dipinjam --}}
+                                    @elseif ( $datas->status == "6")
+                                    {{-- Status: Proses pengecekan alat --}}
+                                        @if (Auth::user()->role == "Kepala Jurusan")
+                                            <div class="text-right">
+                                                <button class="btn btn-primary" data-toggle="modal" data-target="#ModalKondisiPengembalian">Kondisi Pengembalian</button>
+                                                <a class="btn btn-secondary" href="/peminjaman">Cancel</a>
+                                            </div>
+                                        @else
+                                            <div class="text-right">
+                                                <a class="btn btn-secondary" href="/peminjaman">Cancel</a>
+                                            </div>
+                                        @endif
+                                    @elseif ( $datas->status == "7")
+                                    {{-- Status: Alat dikembalikan --}}
+                                        <div class="text-right">
+                                            <a class="btn btn-primary" href="/peminjaman">Cancel</a>
+                                        </div>
+                                    @else
+                                    {{-- output_if --}}
+                                    @endif
+                                    {{-- @endforeach --}}
+                                    {{-- TOMBOL CHANGE STATUS --}}
                             </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -242,4 +440,97 @@
             </div>
         </section>
     </div>
+    <!-- /Main Content -->
+    {{-- MODAL PENOLAKAN PEMINJAMAN --}}
+    <div class="modal fade" tabindex="-1" role="dialog" id="ModalPenolakan">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="/statusTolak-peminjamanAlat/{{ $datas->uuid }}" method="POST" class="d-inline">
+                    <div class="modal-body">
+                        @method('GET')
+                        @csrf
+                        {{-- <input type="hidden" name="namaAlat" value="{{ $datas->nama }}"> --}}
+                        <input type="hidden" name="uuid" value="{{ $datas->uuid }}">
+                        <label for="status"></label>
+                        <textarea class="form-control" name="status" id="status" cols="30" rows="10"></textarea>
+                        {{-- <input type="hidden" name="uuidAlat" value="{{ $item->uuid }}">
+                        <input type="hidden" name="uuidPivot" value="{{ $item->pivot->uuid }}"> --}}
+                    </div>
+                    <div class="modal-footer bg-whitesmoke br">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{-- /MODAL PENOLAKAN PEMINJAMAN --}}
+    
+    {{-- MODAL KONDISI PEMINJAMAN ALAT --}}
+    <div class="modal fade" tabindex="-1" role="dialog" id="ModalKondisiPeminjaman">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal Kondisi Peminjaman Alat</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="/kondisiPeminjaman-peminjamanAlat/{{ $datas->uuid }}" method="POST" class="d-inline">
+                    <div class="modal-body">
+                        @method('GET')
+                        @csrf
+                        {{-- <input type="hidden" name="namaAlat" value="{{ $datas->nama }}"> --}}
+                        <input type="hidden" name="uuid" value="{{ $datas->uuid }}">
+                        <label for="kondisi_peminjaman"></label>
+                        <textarea class="form-control" name="kondisi_peminjaman" id="kondisi_peminjaman" cols="30" rows="10"></textarea>
+                        {{-- <input type="hidden" name="uuidAlat" value="{{ $item->uuid }}">
+                        <input type="hidden" name="uuidPivot" value="{{ $item->pivot->uuid }}"> --}}
+                    </div>
+                    <div class="modal-footer bg-whitesmoke br">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{-- /MODAL KONDISI PEMINJAMAN ALAT --}}
+    
+    {{-- MODAL KONDISI PENGEMBALIAN ALAT --}}
+    <div class="modal fade" tabindex="-1" role="dialog" id="ModalKondisiPengembalian">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal Kondisi Pengembalian Alat</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="/kondisiPengembalian-peminjamanAlat/{{ $datas->uuid }}" method="POST" class="d-inline">
+                    <div class="modal-body">
+                        @method('GET')
+                        @csrf
+                        {{-- <input type="hidden" name="namaAlat" value="{{ $datas->nama }}"> --}}
+                        <input type="hidden" name="uuid" value="{{ $datas->uuid }}">
+                        <label for="kondisi_pengembalian"></label>
+                        <textarea class="form-control" name="kondisi_pengembalian" id="kondisi_pengembalian" cols="30" rows="10"></textarea>
+                        {{-- <input type="hidden" name="uuidAlat" value="{{ $item->uuid }}">
+                        <input type="hidden" name="uuidPivot" value="{{ $item->pivot->uuid }}"> --}}
+                    </div>
+                    <div class="modal-footer bg-whitesmoke br">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{-- /MODAL KONDISI PEMINJAMAN ALAT --}}
 @endsection

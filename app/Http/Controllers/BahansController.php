@@ -122,8 +122,8 @@ class BahansController extends Controller
             'satuan' => 'string|required|max:255',
             'keterangan' => 'string|required|max:255'
         ]);
-        // $validatedData['updated_by'] = Auth::user()->id;
-        $validatedData['updated_by'] = "1";
+        $validatedData['updated_by'] = Auth::user()->id;
+        // $validatedData['updated_by'] = "1";
 
         Bahans::where('uuid', $uuid)->first()->update($validatedData);
 

@@ -41,7 +41,7 @@
                                     </div> --}}
                                     <div class="form-group">
                                         <label>Peminjam</label>
-                                        <select id="user_id" class="form-control @error('user_id') is-invalid @enderror select2" name="user_id" style="width: 100%;" 
+                                        {{-- <select id="user_id" class="form-control @error('user_id') is-invalid @enderror select2" name="user_id" style="width: 100%;" 
                                             >
                                             <option selected="selected" value="">Input Peminjam</option>
                                             @foreach ($dataUser as $user)
@@ -49,7 +49,11 @@
                                                     {{ $user->role }} - {{ $user->nama }}
                                                 </option>
                                             @endforeach
-                                        </select>
+                                        </select> --}}
+                                        <input type="hidden" name="user_id" class="form-control @error('user_id') is-invalid @enderror" id="user_id"
+                                            placeholder="user_id"  autofocus value="{{ Auth::user()->id }}">
+                                        <input type="text" name="user_id" class="form-control @error('user_id') is-invalid @enderror" id="user_id"
+                                            placeholder="user_id"  autofocus value="{{ Auth::user()->nama }}" disabled>
                                         @error('user_id')
                                             <div class="invalid-feedback">
                                                 {{-- {{ $message }} --}}

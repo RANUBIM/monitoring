@@ -21,6 +21,7 @@ return new class extends Migration
             $table->unsignedBigInteger('alat_id');
             $table->foreign('alat_id')->references('id')->on('alats')->onDelete('restrict');
             $table->integer('jumlah')->required();
+            $table->integer('status')->default("0");
         });
     }
 

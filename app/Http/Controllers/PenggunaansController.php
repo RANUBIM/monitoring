@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bahans;
+use App\Models\PenggunaanBahans;
 use App\Models\Users;
 use Ramsey\Uuid\Uuid;
 use App\Models\Penggunaans;
@@ -53,7 +54,7 @@ class PenggunaansController extends Controller
             // 'note' => 'string|required|max:255'
         ]);
 
-        $validatedData['status'] = 'Input Permintaan';
+        $validatedData['status'] = '1';
         $validatedData['uuid'] = Uuid::uuid4()->getHex();
         $validatedData['created_by'] = Auth::user()->id;
         Penggunaans::create($validatedData);
@@ -308,5 +309,198 @@ class PenggunaansController extends Controller
         DB::table('penggunaan_bahans')->where('uuid', $validatedData['uuidPivot'])->delete();
 
         return redirect('/detail-penggunaanBahan/'.$validatedData['uuid'])->with('delete','Penggunaan Bahan hapus');
+    }
+
+    public function penggunaanBahanStatus1(Penggunaans $penggunaans, Request $request, $uuid)
+    {
+        $validatedDataUUID = $request->validate([
+            // 'namaUser' => 'string|required|max:255',
+            // 'namaAlat' => 'string|required|max:255',
+            'uuid' => 'string|required|max:255',
+            // 'uuidAlat' => 'string|required|max:255',
+            // 'uuidPivot' => 'string|required|max:255'
+        ]);
+        // dd($validatedDataUUID);
+        
+        $validatedData['status'] = "2";
+        // dd($validatedData);
+
+        DB::table('penggunaans')->where('uuid', $uuid)->update($validatedData);
+
+        // $log = [
+        //     'uuid' => Uuid::uuid4()->getHex(),
+        //     'user_id' => Auth::user()->id,
+        //     'description' => '<em>Mengubah</em> Status data Peminjaman Alat <strong>[' . $request->nama . ']</strong>', //name = nama tag di view (file index)
+        //     'category' => 'edit',
+        //     'created_at' => now(),
+        // ];
+
+        // DB::table('logs')->insert($log);
+        // // selesai
+
+        return redirect('/penggunaan')->with('success','Penggunaan Added');
+    }
+
+    public function penggunaanBahanStatus2(Penggunaans $penggunaans, Request $request, $uuid)
+    {
+        $validatedDataUUID = $request->validate([
+            // 'namaUser' => 'string|required|max:255',
+            // 'namaAlat' => 'string|required|max:255',
+            'uuid' => 'string|required|max:255',
+            // 'uuidAlat' => 'string|required|max:255',
+            // 'uuidPivot' => 'string|required|max:255'
+        ]);
+        // dd($validatedDataUUID);
+        
+        $validatedData['status'] = "3";
+        // dd($validatedData);
+
+        DB::table('penggunaans')->where('uuid', $uuid)->update($validatedData);
+
+        // $log = [
+        //     'uuid' => Uuid::uuid4()->getHex(),
+        //     'user_id' => Auth::user()->id,
+        //     'description' => '<em>Mengubah</em> Status data Peminjaman Alat <strong>[' . $request->nama . ']</strong>', //name = nama tag di view (file index)
+        //     'category' => 'edit',
+        //     'created_at' => now(),
+        // ];
+
+        // DB::table('logs')->insert($log);
+        // // selesai
+
+        return redirect('/penggunaan')->with('success','Peminjaman Added');
+    }
+
+    public function penggunaanBahanCheck(Penggunaans $penggunaans, Request $request, $uuid)
+    {
+        $validatedDataUUID = $request->validate([
+            'namaUser' => 'string|required|max:255',
+            'namaBahan' => 'string|required|max:255',
+            'uuid' => 'string|required|max:255',
+            'uuidBahan' => 'string|required|max:255',
+            'uuidPivot' => 'string|required|max:255'
+        ]);
+        // dd($validatedDataUUID);
+        
+        $data = PenggunaanBahans::get()->where('uuid', $uuid)->first();
+        // dd($data);
+
+        $dataBahan = Bahans::with('dataLabor')->get()->where('uuid', $request->uuidBahan)->first();
+        $kurangStok = $dataBahan->digunakan + $data->jumlah;
+        // dd($kurangStok);
+
+        $validateUpdateStok['digunakan'] = $kurangStok;
+        Bahans::where("uuid", $dataBahan->uuid)->update($validateUpdateStok);
+        
+        $validateUpdateStatus['status'] = "1";
+        DB::table('penggunaan_bahans')->where("uuid", $validatedDataUUID['uuidPivot'])->update($validateUpdateStatus);
+
+        // $log = [
+        //     'uuid' => Uuid::uuid4()->getHex(),
+        //     'user_id' => Auth::user()->id,
+        //     'description' => '<em>Mengubah</em> Status data Peminjaman Alat <strong>[' . $request->nama . ']</strong>', //name = nama tag di view (file index)
+        //     'category' => 'edit',
+        //     'created_at' => now(),
+        // ];
+
+        // DB::table('logs')->insert($log);
+        // // selesai
+
+        return redirect('/detail-penggunaanBahan/'.$validatedDataUUID['uuid'])->with('success','Peminjaman Added');
+    }
+
+    public function penggunaanBahanNote(Penggunaans $penggunaans, Request $request, $uuid)
+    {
+        // dd("tes pindah");
+
+        $validatedDataUUID = $request->validate([
+            // 'namaUser' => 'string|required|max:255',
+            // 'namaAlat' => 'string|required|max:255',
+            'uuid' => 'string|required|max:255',
+            // 'uuidAlat' => 'string|required|max:255',
+            // 'uuidPivot' => 'string|required|max:255'
+        ]);
+        // dd($validatedDataUUID);
+
+        $validatedData['note'] = $request->note;
+        $validatedData['status'] = "4";
+        // dd($validatedData);
+
+        DB::table('penggunaans')->where('uuid', $uuid)->update($validatedData);
+
+        // $log = [
+        //     'uuid' => Uuid::uuid4()->getHex(),
+        //     'user_id' => Auth::user()->id,
+        //     'description' => '<em>Mengubah</em> Status data Peminjaman Alat <strong>[' . $request->nama . ']</strong>', //name = nama tag di view (file index)
+        //     'category' => 'edit',
+        //     'created_at' => now(),
+        // ];
+
+        // DB::table('logs')->insert($log);
+        // // selesai
+
+        return redirect('/penggunaan')->with('success','Penggunaan Added');
+    }
+
+    public function penggunaanBahanStatus4(Penggunaans $penggunaans, Request $request, $uuid)
+    {
+        $validatedDataUUID = $request->validate([
+            // 'namaUser' => 'string|required|max:255',
+            // 'namaAlat' => 'string|required|max:255',
+            'uuid' => 'string|required|max:255',
+            // 'uuidAlat' => 'string|required|max:255',
+            // 'uuidPivot' => 'string|required|max:255'
+        ]);
+        // dd($validatedDataUUID);
+        
+        $validatedData['status'] = "5";
+        // dd($validatedData);
+
+        DB::table('penggunaans')->where('uuid', $uuid)->update($validatedData);
+
+        // $log = [
+        //     'uuid' => Uuid::uuid4()->getHex(),
+        //     'user_id' => Auth::user()->id,
+        //     'description' => '<em>Mengubah</em> Status data Peminjaman Alat <strong>[' . $request->nama . ']</strong>', //name = nama tag di view (file index)
+        //     'category' => 'edit',
+        //     'created_at' => now(),
+        // ];
+
+        // DB::table('logs')->insert($log);
+        // // selesai
+
+        return redirect('/penggunaan')->with('success','Penggunaan Added');
+    }
+
+    public function penggunaanBahanStatusTolak(Penggunaans $penggunaans, Request $request, $uuid)
+    {
+        $validatedDataUUID = $request->validate([
+            // 'namaUser' => 'string|required|max:255',
+            // 'namaAlat' => 'string|required|max:255',
+            'uuid' => 'string|required|max:255',
+            // 'uuidAlat' => 'string|required|max:255',
+            // 'uuidPivot' => 'string|required|max:255'
+        ]);
+        // dd($validatedDataUUID);
+
+        $validatedData['status'] = $request->status;
+        
+        // $validatedData['status'] = "2";
+        // dd($validatedData);
+
+        DB::table('penggunaans')->where('uuid', $uuid)->update($validatedData);
+
+        // $log = [
+        //     'uuid' => Uuid::uuid4()->getHex(),
+        //     'user_id' => Auth::user()->id,
+        //     'description' => '<em>Mengubah</em> Status data Peminjaman Alat <strong>[' . $request->nama . ']</strong>', //name = nama tag di view (file index)
+        //     'category' => 'edit',
+        //     'created_at' => now(),
+        // ];
+
+        // DB::table('logs')->insert($log);
+        // // selesai
+
+        return redirect('/penggunaan')->with('success','Penggunaan Added');
     }
 }

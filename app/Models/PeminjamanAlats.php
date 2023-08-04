@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Users;
+use App\Models\Peminjamans;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class PeminjamanAlats extends Model
 {
@@ -13,6 +15,12 @@ class PeminjamanAlats extends Model
 
     public function dataUser()
     {
-        return $this->belongsTo(Users::class, 'user_id', 'id');
+        return $this->belongsTo(Users::class, 'peminjaman_id', 'id');
+    }
+
+    public function dataUsers()
+    {
+        return $this->belongsToMany(Users::class, 'peminjaman_alats', 'peminjaman_id', 'user_id')
+        ->withPivot(['id','uuid','jumlah','status']);
     }
 }

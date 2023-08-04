@@ -86,6 +86,7 @@
 
     <!-- Page Specific JS File -->
     <script src="/assets/js/page/forms-advanced-forms.js"></script>
+    <script src="assets/js/page/bootstrap-modal.js"></script>
 
     <!-- Template JS File -->
     <script src="/assets/js/scripts.js"></script>

@@ -22,6 +22,6 @@ class Peminjamans extends Model
     public function dataAlat()
     {
         return $this->belongsToMany(Alats::class, 'peminjaman_alats', 'peminjaman_id', 'alat_id')
-        ->withPivot(['id','uuid','jumlah']);
+        ->withPivot(['id','uuid','jumlah','status']);
     }
 }

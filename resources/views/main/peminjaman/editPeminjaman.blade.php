@@ -71,7 +71,7 @@
                                             
                                             @foreach ($dataAlat as $alat)
                                                 <option value="{{ old('alat_id', $alat->id) }}" @if ($alat->id == $datas->alat_id) selected="selected" @endif>
-                                                    {{ old('alat_id', $alat->nama) }}
+                                                    {{ old('alat_id', $alat->dataLabor->nama) }} - {{ old('alat_id', $alat->nama) }} <strong>[ {{ old('alat_id', $alat->stok-$alat->dipinjam) }} ]</strong>
                                                 </option>
                                             @endforeach
                                         </select>

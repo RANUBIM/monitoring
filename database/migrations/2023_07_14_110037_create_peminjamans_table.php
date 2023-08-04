@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
             $table->string('kegiatan')->required();
             $table->string('tujuan')->nullable();
-            $table->string('status')->nullable();
+            $table->string('status')->default("1");
             $table->date('tgl_peminjaman')->nullable();
             $table->date('tgl_pengembalian')->nullable();
             $table->string('kondisi_peminjaman')->nullable();
