@@ -209,10 +209,10 @@
                                                    </div>
                                                 </div>
                                              @else
-                                                <h1>ERRORS NIH</h1>
+                                             <h1>ERRORS NIH</h1>
                                              @endif
                                           </td>
-                                          {{-- /Tombol Aksi Dropdown --}}
+                                          {{-- STATUS : DITOLAK --}}
                                        </tr>
                                        @endif
                                        @endforeach

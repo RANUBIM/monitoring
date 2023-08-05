@@ -305,7 +305,7 @@
                                                         @elseif ( $datas->status == "5")
                                                             {{-- output_if --}}
                                                         @elseif ( $datas->status == "6")
-                                                            @if ($item->pivot->status == "1")
+                                                            @if ( Auth::user()->role == "Laboran" && $item->pivot->status == "1")
                                                                 <form action="/check-pengembalianAlat/{{ $item->pivot->uuid }}"
                                                                     method="POST" class="d-inline">
                                                                     @method('GET')
@@ -360,25 +360,25 @@
                                     {{-- TOMBOL CHANGE STATUS --}}
                                     {{-- {{ $datas->dataAlat as $item }} --}}
                                     @if ( $datas->status == "1")
+                                    <div class="text-right">
                                         @if (Auth::user()->nama == $datas->dataUser->nama)
-                                            <div class="text-right">
-                                                <form action="/status1-peminjamanAlat/{{ $datas->uuid }}"
-                                                    method="POST" class="d-inline">
-                                                    @method('GET')
-                                                    @csrf
-                                                    {{-- <input type="hidden" name="namaAlat" value="{{ $datas->nama }}"> --}}
-                                                    <input type="hidden" name="uuid" value="{{ $datas->uuid }}">
-                                                    {{-- <input type="hidden" name="uuidAlat" value="{{ $item->uuid }}">
-                                                    <input type="hidden" name="uuidPivot" value="{{ $item->pivot->uuid }}"> --}}
-                                                    <button type="submit" class="btn btn-primary">Ajukan Peminjaman</button>
-                                                </form>
-                                                <button class="btn btn-light">Cancel</button>
-                                            </div>
-                                        @endif
+                                            <form action="/status1-peminjamanAlat/{{ $datas->uuid }}"
+                                                method="POST" class="d-inline">
+                                                @method('GET')
+                                                @csrf
+                                                {{-- <input type="hidden" name="namaAlat" value="{{ $datas->nama }}"> --}}
+                                                <input type="hidden" name="uuid" value="{{ $datas->uuid }}">
+                                                {{-- <input type="hidden" name="uuidAlat" value="{{ $item->uuid }}">
+                                                <input type="hidden" name="uuidPivot" value="{{ $item->pivot->uuid }}"> --}}
+                                                <button type="submit" class="btn btn-primary">Ajukan Peminjaman</button>
+                                            </form>
+                                            @endif
+                                            <a class="btn btn-light" href="/peminjaman">Cancel</a>
+                                        </div>
                                     @elseif ( $datas->status == "2")
                                         {{-- Status: Menunggu Persetujuan --}}
-                                        @if (Auth::user()->role == "Kepala Jurusan")
-                                            <div class="text-right">
+                                        <div class="text-right">
+                                            @if (Auth::user()->role == "Kepala Jurusan")
                                                 <form action="/status2-peminjamanAlat/{{ $datas->uuid }}"
                                                     method="POST" class="d-inline">
                                                     @method('GET')
@@ -390,8 +390,9 @@
                                                     <button type="submit" class="btn btn-primary">Terima</button>
                                                 </form>
                                                 <button class="btn btn-primary" data-toggle="modal" data-target="#ModalPenolakan">Tolak</button>
-                                            </div>
-                                        @endif
+                                            @endif
+                                            <a class="btn btn-light" href="/peminjaman">Cancel</a>
+                                        </div>
                                     @elseif ( $datas->status == "3")
                                     {{-- Status: Menunggu Penyediaan --}}
                                         @if (Auth::user()->role == "Kepala Jurusan")
@@ -406,11 +407,17 @@
                                         @endif
                                     @elseif ( $datas->status == "4")
                                     {{-- Status: Alat dapat diambil --}}
+                                        <div class="text-right">
+                                            <a class="btn btn-secondary" href="/peminjaman">Cancel</a>
+                                        </div>
                                     @elseif ( $datas->status == "5")
                                     {{-- Status: Alat dipinjam --}}
+                                        <div class="text-right">
+                                            <a class="btn btn-secondary" href="/peminjaman">Cancel</a>
+                                        </div>
                                     @elseif ( $datas->status == "6")
                                     {{-- Status: Proses pengecekan alat --}}
-                                        @if (Auth::user()->role == "Kepala Jurusan")
+                                        @if (Auth::user()->role == "Laboran")
                                             <div class="text-right">
                                                 <button class="btn btn-primary" data-toggle="modal" data-target="#ModalKondisiPengembalian">Kondisi Pengembalian</button>
                                                 <a class="btn btn-secondary" href="/peminjaman">Cancel</a>

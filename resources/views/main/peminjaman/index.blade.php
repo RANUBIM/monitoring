@@ -175,6 +175,7 @@
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                    <a href="/detail-peminjamanAlat/{{ $data->uuid }}" class="dropdown-item">Detail</a>
 
+                                                   @if (Auth::user()->role == "Kepala Jurusan")
                                                    <form action="/status4-peminjamanAlat/{{ $data->uuid }}"
                                                          method="POST" class="d-inline">
                                                          @method('GET')
@@ -189,6 +190,7 @@
                                                          value="{{ $item->pivot->uuid }}"> --}}
                                                       <button class="btn btn-success"  class="dropdown-item">Pinjam Alat</button>
                                                    </form>
+                                                   @endif
                                                    
                                                 </div>
                                              </div>
@@ -201,6 +203,8 @@
                                                    <a href="/detail-peminjamanAlat/{{ $data->uuid }}" class="dropdown-item">Detail</a>
                                                    {{-- @if (Auth::user()->id == $datas->namaUser) --}}
                                                    {{-- @endif --}}
+                                                   @if (Auth::user()->id == $data->dataUser->id)
+                                                   {{-- {{ dd($data->dataUser) }} --}}
                                                    <form action="/ajukanPengembalianAlat/{{ $data->uuid }}"
                                                          method="POST" class="d-inline">
                                                          @method('GET')
@@ -215,6 +219,7 @@
                                                          value="{{ $item->pivot->uuid }}"> --}}
                                                       <button class="btn btn-success"  class="dropdown-item">Kembalikan Alat</button>
                                                    </form>
+                                                   @endif
                                                 </div>
                                              </div>
                                           @elseif ( $data->status == "6")

@@ -68,6 +68,21 @@
                                                 <th scope="col">Dipinjam</th>
                                                 <th scope="col">Total</th>
                                              </tr>
+                                          @elseif (Auth::user()->role === 'Laboran')
+                                             <tr>
+                                                <th scope="col" rowspan="2">#</th>
+                                                <th scope="col" rowspan="2">Labor</th>
+                                                <th scope="col" rowspan="2">Nama</th>
+                                                <th scope="col" rowspan="2">Spesifikasi</th>
+                                                {{-- <th scope="col" rowspan="2">Keterangan</th> --}}
+                                                <th scope="col" colspan="3" class="text-center">Stok</th>
+                                                {{-- <th scope="col" rowspan="2">Aksi</th> --}}
+                                             </tr>
+                                             <tr>
+                                                <th scope="col">Tersedia</th>
+                                                <th scope="col">Dipinjam</th>
+                                                <th scope="col">Total</th>
+                                             </tr>
                                           @else
                                              <tr>
                                                 <th scope="col">#</th>
@@ -117,6 +132,10 @@
                                                          </div>
                                                       </div>
                                                    </td>
+                                                @elseif (Auth::user()->role === 'Laboran')
+                                                   <td>{{ $data->stok - $data->dipinjam }} {{ $data->satuan }}</td>
+                                                   <td>{{ $data->dipinjam }} {{ $data->satuan }}</td>
+                                                   <td>{{ $data->stok }} {{ $data->satuan }}</td>
                                                 @else
                                                    <td>{{ $data->stok - $data->dipinjam }} {{ $data->satuan }}</td>
                                                 @endif
