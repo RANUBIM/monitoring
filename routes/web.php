@@ -52,24 +52,22 @@ Route::get('/store-peminjamanAlat', [PeminjamansController::class, 'peminjamanAl
 Route::get('/edit-peminjamanAlat/{uuid}', [PeminjamansController::class, 'peminjamanAlatEdit'])->middleware('auth');
 Route::get('/update-peminjamanAlat/{uuid}', [PeminjamansController::class, 'peminjamanAlatUpdate'])->middleware('auth');
 Route::delete('/destroy-peminjamanAlat/{uuid}', [PeminjamansController::class, 'peminjamanAlatDestroy'])->middleware('auth');
+// Peminjaman Alat
 Route::get('/status1-peminjamanAlat/{uuid}', [PeminjamansController::class, 'peminjamanAlatStatus1'])->middleware('auth');
 Route::get('/status2-peminjamanAlat/{uuid}', [PeminjamansController::class, 'peminjamanAlatStatus2'])->middleware('auth');
-//  status 3
-Route::get('/check-peminjamanAlat/{uuid}', [PeminjamansController::class, 'peminjamanAlatCheck'])->middleware('auth');
-Route::get('/kondisiPeminjaman-peminjamanAlat/{uuid}', [PeminjamansController::class, 'peminjamanAlatKondisiPeminjaman'])->middleware('auth');
-// /status 3
 Route::get('/status3-peminjamanAlat/{uuid}', [PeminjamansController::class, 'peminjamanAlatStatus3'])->middleware('auth');
 Route::get('/status4-peminjamanAlat/{uuid}', [PeminjamansController::class, 'peminjamanAlatStatus4'])->middleware('auth');
-Route::get('/statusTolak-peminjamanAlat/{uuid}', [PeminjamansController::class, 'peminjamanAlatStatusTolak'])->middleware('auth');
-
 // Pengembalian Alat
-Route::get('/ajukanPengembalianAlat/{uuid}', [PeminjamansController::class, 'pengembalianAlatAjukan'])->middleware('auth');
-Route::get('/check-pengembalianAlat/{uuid}', [PeminjamansController::class, 'pengembalianAlatCheck'])->middleware('auth');
-Route::get('/kondisiPengembalian-peminjamanAlat/{uuid}', [PeminjamansController::class, 'peminjamanAlatKondisiPengembalian'])->middleware('auth');
 Route::get('/status5-peminjamanAlat/{uuid}', [PeminjamansController::class, 'peminjamanAlatStatus5'])->middleware('auth');
 Route::get('/status6-peminjamanAlat/{uuid}', [PeminjamansController::class, 'peminjamanAlatStatus6'])->middleware('auth');
-
-
+Route::get('/status7-peminjamanAlat/{uuid}', [PeminjamansController::class, 'peminjamanAlatStatus7'])->middleware('auth');
+Route::get('/status8-peminjamanAlat/{uuid}', [PeminjamansController::class, 'peminjamanAlatStatus8'])->middleware('auth');
+Route::get('/statusTolak-peminjamanAlat/{uuid}', [PeminjamansController::class, 'peminjamanAlatStatusTolak'])->middleware('auth');
+//  status cek dan pengurangan stok lama
+Route::get('/check-peminjamanAlat/{uuid}', [PeminjamansController::class, 'peminjamanAlatCheck'])->middleware('auth');
+Route::get('/kondisiPeminjaman-peminjamanAlat/{uuid}', [PeminjamansController::class, 'peminjamanAlatKondisiPeminjaman'])->middleware('auth');
+Route::get('/check-pengembalianAlat/{uuid}', [PeminjamansController::class, 'pengembalianAlatCheck'])->middleware('auth');
+Route::get('/kondisiPengembalian-peminjamanAlat/{uuid}', [PeminjamansController::class, 'peminjamanAlatKondisiPengembalian'])->middleware('auth');
 
 // Penggunaan
 Route::resource('penggunaan', PenggunaansController::class)->middleware('auth');

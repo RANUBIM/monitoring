@@ -91,8 +91,10 @@
                                           @elseif ( $data->status == "5")
                                              Alat dipinjam
                                           @elseif ( $data->status == "6")
-                                             Proses pengecekan alat
+                                             Menunggu persetujuan pengembalian
                                           @elseif ( $data->status == "7")
+                                             Proses pengecekan alat
+                                          @elseif ( $data->status == "8")
                                              Alat dikembalikan
                                           @else
                                              <p><div class=" p-2 alert alert-danger">{{ $data->status }}</div></p>
@@ -146,7 +148,7 @@
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                    <a href="/detail-peminjamanAlat/{{ $data->uuid }}" class="dropdown-item">Detail</a>
-                                                   @if (Auth::user()->role == "Kepala Jurusan" || Auth::user()->role == "Laboran")
+                                                   @if (Auth::user()->role == "Kepala Jurusan")
                                                       <a href="/peminjaman/{{ $data->uuid }}/edit" class="dropdown-item">Edit</a>
                                                       
                                                       <form action="/peminjaman/{{ $data->uuid }}" method="post"
@@ -205,7 +207,7 @@
                                                    {{-- @endif --}}
                                                    @if (Auth::user()->id == $data->dataUser->id)
                                                    {{-- {{ dd($data->dataUser) }} --}}
-                                                   <form action="/ajukanPengembalianAlat/{{ $data->uuid }}"
+                                                   <form action="/status5-peminjamanAlat/{{ $data->uuid }}"
                                                          method="POST" class="d-inline">
                                                          @method('GET')
                                                          @csrf
@@ -232,6 +234,15 @@
                                                 </div>
                                              </div>
                                           @elseif ( $data->status == "7")
+                                             <div class="dropdown">
+                                                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                   Aksi
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                   <a href="/detail-peminjamanAlat/{{ $data->uuid }}" class="dropdown-item">Detail</a>
+                                                </div>
+                                             </div>
+                                          @elseif ( $data->status == "8")
                                              <div class="dropdown">
                                                 <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                    Aksi

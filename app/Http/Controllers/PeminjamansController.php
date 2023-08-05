@@ -481,6 +481,61 @@ class PeminjamansController extends Controller
 
         return redirect('/peminjaman')->with('success','Peminjaman Added');
     }
+    
+    public function peminjamanAlatStatus3(Peminjamans $peminjamans, Request $request, $uuid)
+    {
+        // dd("tes pindah");
+
+        $validatedDataUUID = $request->validate([
+            'namaUser' => 'string|required|max:255',
+            // 'namaAlat' => 'string|required|max:255',
+            'peminjaman_id' => 'string|required|max:255',
+            'uuid' => 'string|required|max:255',
+            'kondisi_peminjaman' => 'string|required|max:255',
+            // 'uuidAlat' => 'string|required|max:255',
+            // 'uuidPivot' => 'string|required|max:255'
+        ]);
+        // dd($validatedDataUUID);
+        
+        // $data = Peminjamans::with(['dataUser','dataAlat.dataLabor'])->where('uuid', $request->uuid)->first();
+        $datas = PeminjamanAlats::get()->where('peminjaman_id', $validatedDataUUID['peminjaman_id']);
+        // dd($datas);
+        
+        foreach ($datas as $show){
+            // echo $show->id;
+            // dd($show->peminjaman_id);
+            
+            $dataAlat = Alats::with('dataLabor')->get()->where('id', $show->alat_id)->first();
+            // echo $dataAlat;
+            
+            $kurangStok = $dataAlat->dipinjam + $show->jumlah;
+            $validateUpdateStok['dipinjam'] = $kurangStok;
+            Alats::where("id", $show->alat_id)->update($validateUpdateStok);
+            
+            $validateUpdateStatus['status'] = "1";
+            DB::table('peminjaman_alats')->where("id", $show['id'])->update($validateUpdateStatus);
+        }
+        // dd($show);
+
+        $validatedData['kondisi_peminjaman'] = $validatedDataUUID['kondisi_peminjaman'];
+        $validatedData['status'] = "4";
+        // dd($validatedData);
+
+        DB::table('peminjamans')->where('uuid', $uuid)->update($validatedData);
+
+        // $log = [
+        //     'uuid' => Uuid::uuid4()->getHex(),
+        //     'user_id' => Auth::user()->id,
+        //     'description' => '<em>Mengubah</em> Status data Peminjaman Alat <strong>[' . $request->nama . ']</strong>', //name = nama tag di view (file index)
+        //     'category' => 'edit',
+        //     'created_at' => now(),
+        // ];
+
+        // DB::table('logs')->insert($log);
+        // // selesai
+
+        return redirect('/peminjaman')->with('success','Peminjaman Added');
+    }
 
     public function peminjamanAlatStatus4(Peminjamans $peminjamans, Request $request, $uuid)
     {
@@ -513,7 +568,7 @@ class PeminjamansController extends Controller
     }
 
     // ALUR PENGEMBALIAN 
-    public function pengembalianAlatAjukan(Peminjamans $peminjamans, Request $request, $uuid)
+    public function peminjamanAlatStatus5(Peminjamans $peminjamans, Request $request, $uuid)
     {
         $validatedDataUUID = $request->validate([
             // 'namaUser' => 'string|required|max:255',
@@ -525,6 +580,36 @@ class PeminjamansController extends Controller
         // dd($validatedDataUUID);
         
         $validatedData['status'] = "6";
+        // dd($validatedData);
+
+        DB::table('peminjamans')->where('uuid', $uuid)->update($validatedData);
+
+        // $log = [
+        //     'uuid' => Uuid::uuid4()->getHex(),
+        //     'user_id' => Auth::user()->id,
+        //     'description' => '<em>Mengubah</em> Status data Peminjaman Alat <strong>[' . $request->nama . ']</strong>', //name = nama tag di view (file index)
+        //     'category' => 'edit',
+        //     'created_at' => now(),
+        // ];
+
+        // DB::table('logs')->insert($log);
+        // // selesai
+
+        return redirect('/peminjaman')->with('success','Peminjaman Added');
+    }
+
+    public function peminjamanAlatStatus6(Peminjamans $peminjamans, Request $request, $uuid)
+    {
+        $validatedDataUUID = $request->validate([
+            // 'namaUser' => 'string|required|max:255',
+            // 'namaAlat' => 'string|required|max:255',
+            'uuid' => 'string|required|max:255',
+            // 'uuidAlat' => 'string|required|max:255',
+            // 'uuidPivot' => 'string|required|max:255'
+        ]);
+        // dd($validatedDataUUID);
+        
+        $validatedData['status'] = "7";
         // dd($validatedData);
 
         DB::table('peminjamans')->where('uuid', $uuid)->update($validatedData);
@@ -612,6 +697,63 @@ class PeminjamansController extends Controller
 
         return redirect('/peminjaman')->with('success','Peminjaman Added');
     }
+
+    public function peminjamanAlatStatus7(Peminjamans $peminjamans, Request $request, $uuid)
+    {
+        // dd("tes pindah");
+
+        $validatedDataUUID = $request->validate([
+            'namaUser' => 'string|required|max:255',
+            // 'namaAlat' => 'string|required|max:255',
+            'peminjaman_id' => 'string|required|max:255',
+            'uuid' => 'string|required|max:255',
+            'kondisi_pengembalian' => 'string|required|max:255',
+            // 'uuidAlat' => 'string|required|max:255',
+            // 'uuidPivot' => 'string|required|max:255'
+        ]);
+        // dd($validatedDataUUID);
+        
+        // $data = Peminjamans::with(['dataUser','dataAlat.dataLabor'])->where('uuid', $request->uuid)->first();
+        $datas = PeminjamanAlats::get()->where('peminjaman_id', $validatedDataUUID['peminjaman_id']);
+        // dd($datas);
+        
+        foreach ($datas as $show){
+            // echo $show->id;
+            // dd($show->peminjaman_id);
+            
+            $dataAlat = Alats::with('dataLabor')->get()->where('id', $show->alat_id)->first();
+            // echo $dataAlat;
+            
+            $kurangStok = $dataAlat->dipinjam - $show->jumlah;
+            $validateUpdateStok['dipinjam'] = $kurangStok;
+            Alats::where("id", $show->alat_id)->update($validateUpdateStok);
+            
+            $validateUpdateStatus['status'] = "2";
+            DB::table('peminjaman_alats')->where("id", $show['id'])->update($validateUpdateStatus);
+        }
+        // dd($show);
+
+        $validatedData['kondisi_pengembalian'] = $validatedDataUUID['kondisi_pengembalian'];
+        $validatedData['status'] = "8";
+        // dd($validatedData);
+
+        DB::table('peminjamans')->where('uuid', $uuid)->update($validatedData);
+
+        // $log = [
+        //     'uuid' => Uuid::uuid4()->getHex(),
+        //     'user_id' => Auth::user()->id,
+        //     'description' => '<em>Mengubah</em> Status data Peminjaman Alat <strong>[' . $request->nama . ']</strong>', //name = nama tag di view (file index)
+        //     'category' => 'edit',
+        //     'created_at' => now(),
+        // ];
+
+        // DB::table('logs')->insert($log);
+        // // selesai
+
+        return redirect('/peminjaman')->with('success','Peminjaman Added');
+    }
+
+    
 
     public function peminjamanAlatStatusTolak(Peminjamans $peminjamans, Request $request, $uuid)
     {

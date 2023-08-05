@@ -262,7 +262,7 @@
                                                             </form>
                                                             @endif
                                                         @elseif ( $datas->status == "2")
-                                                            @if (Auth::user()->role == "Kepala Jurusan" || Auth::user()->role == "Laboran")
+                                                            @if (Auth::user()->role == "Kepala Jurusan")
                                                                 <form action="/edit-peminjamanAlat/{{ $item->pivot->uuid }}"
                                                                     method="POST" class="d-inline">
                                                                     @method('GET')
@@ -279,7 +279,7 @@
                                                                 </form>
                                                             @endif
                                                         @elseif ( $datas->status == "3")
-                                                            @if (Auth::user()->role == "Kepala Jurusan" && $item->pivot->status == "0")
+                                                            {{-- @if (Auth::user()->role == "Kepala Jurusan" && $item->pivot->status == "0")
                                                                 <form action="/check-peminjamanAlat/{{ $item->pivot->uuid }}"
                                                                     method="POST" class="d-inline">
                                                                     @method('GET')
@@ -294,9 +294,9 @@
                                                                         value="{{ $item->pivot->uuid }}">
                                                                     <button type="submit" class="btn btn-primary">Check</button>
                                                                 </form>
-                                                            @elseif ($item->pivot->status == "1")
+                                                            @elseif (Auth::user()->role == "Kepala Jurusan" && $item->pivot->status == "1")
                                                                 <button class="btn btn-success">Checked!</button>
-                                                            @endif
+                                                            @endif --}}
                                                             {{-- @foreach ($datas->dataAlat as $items)
                                                                 {{ $items->nama }}
                                                             @endforeach --}}
@@ -305,7 +305,7 @@
                                                         @elseif ( $datas->status == "5")
                                                             {{-- output_if --}}
                                                         @elseif ( $datas->status == "6")
-                                                            @if ( Auth::user()->role == "Laboran" && $item->pivot->status == "1")
+                                                            {{-- @if ( Auth::user()->role == "Laboran" && $item->pivot->status == "1")
                                                                 <form action="/check-pengembalianAlat/{{ $item->pivot->uuid }}"
                                                                     method="POST" class="d-inline">
                                                                     @method('GET')
@@ -322,7 +322,7 @@
                                                                 </form>
                                                             @elseif ($item->pivot->status == "2")
                                                                 <button class="btn btn-success">Checked!</button>
-                                                            @endif
+                                                            @endif --}}
                                                         @elseif ( $datas->status == "7")
                                                             {{-- output_if --}}
                                                         @else
@@ -397,7 +397,11 @@
                                     {{-- Status: Menunggu Penyediaan --}}
                                         @if (Auth::user()->role == "Kepala Jurusan")
                                             <div class="text-right">
-                                                <button class="btn btn-primary" data-toggle="modal" data-target="#ModalKondisiPeminjaman">Kondisi Peminjaman</button>
+                                                {{-- BUTTON PEMINJAMAN BARU SEKALIAN CHECK --}}
+                                                <button class="btn btn-primary" data-toggle="modal" data-target="#ModalKondisiPeminjamanKomplit">Konfirmasi Peminjaman</button>
+
+                                                {{-- BUTTON PEMINJAMAN LAMA TANPA CHECK --}}
+                                                {{-- <button class="btn btn-primary" data-toggle="modal" data-target="#ModalKondisiPeminjaman">Kondisi Peminjaman</button> --}}
                                                 <a class="btn btn-secondary" href="/peminjaman">Cancel</a>
                                             </div>
                                         @else
@@ -416,10 +420,41 @@
                                             <a class="btn btn-secondary" href="/peminjaman">Cancel</a>
                                         </div>
                                     @elseif ( $datas->status == "6")
+                                    {{-- Status: Menunggu Persetujuan --}}
+                                        <div class="text-right">
+                                            @if (Auth::user()->role == "Kepala Jurusan")
+                                                <form action="/status6-peminjamanAlat/{{ $datas->uuid }}"
+                                                    method="POST" class="d-inline">
+                                                    @method('GET')
+                                                    @csrf
+                                                    {{-- <input type="hidden" name="namaAlat" value="{{ $datas->nama }}"> --}}
+                                                    <input type="hidden" name="uuid" value="{{ $datas->uuid }}">
+                                                    {{-- <input type="hidden" name="uuidAlat" value="{{ $item->uuid }}">
+                                                    <input type="hidden" name="uuidPivot" value="{{ $item->pivot->uuid }}"> --}}
+                                                    <button type="submit" class="btn btn-primary">Terima</button>
+                                                </form>
+                                                <form action="/status4-peminjamanAlat/{{ $datas->uuid }}"
+                                                    method="POST" class="d-inline">
+                                                    @method('GET')
+                                                    @csrf
+                                                    {{-- <input type="hidden" name="namaAlat" value="{{ $datas->nama }}"> --}}
+                                                    <input type="hidden" name="uuid" value="{{ $datas->uuid }}">
+                                                    {{-- <input type="hidden" name="uuidAlat" value="{{ $item->uuid }}">
+                                                    <input type="hidden" name="uuidPivot" value="{{ $item->pivot->uuid }}"> --}}
+                                                    <button type="submit" class="btn btn-primary">Tolak</button>
+                                                </form>
+                                            @endif
+                                            <a class="btn btn-light" href="/peminjaman">Cancel</a>
+                                        </div>
+                                    @elseif ( $datas->status == "7")
                                     {{-- Status: Proses pengecekan alat --}}
                                         @if (Auth::user()->role == "Laboran")
                                             <div class="text-right">
-                                                <button class="btn btn-primary" data-toggle="modal" data-target="#ModalKondisiPengembalian">Kondisi Pengembalian</button>
+                                                {{-- BUTTON PENGEMBALIAN BARU SEKALIAN CHECK --}}
+                                                <button class="btn btn-primary" data-toggle="modal" data-target="#ModalKondisiPengembalianKomplit">Konfirmasi Pengembalian</button>
+
+                                                {{-- BUTTON PENGEMBALIAN LAMA TANPA CHECK --}}
+                                                {{-- <button class="btn btn-primary" data-toggle="modal" data-target="#ModalKondisiPengembalian">Kondisi Pengembalian</button> --}}
                                                 <a class="btn btn-secondary" href="/peminjaman">Cancel</a>
                                             </div>
                                         @else
@@ -427,7 +462,7 @@
                                                 <a class="btn btn-secondary" href="/peminjaman">Cancel</a>
                                             </div>
                                         @endif
-                                    @elseif ( $datas->status == "7")
+                                    @elseif ( $datas->status == "8")
                                     {{-- Status: Alat dikembalikan --}}
                                         <div class="text-right">
                                             <a class="btn btn-primary" href="/peminjaman">Cancel</a>
@@ -510,6 +545,51 @@
     </div>
     {{-- /MODAL KONDISI PEMINJAMAN ALAT --}}
     
+    {{-- MODAL KONDISI PEMINJAMAN ALAT (KOMPLIT) --}}
+    <div class="modal fade" tabindex="-1" role="dialog" id="ModalKondisiPeminjamanKomplit">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal Kondisi Peminjaman Alat</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="/status3-peminjamanAlat/{{ $datas->uuid }}" method="POST" class="d-inline">
+                    <div class="modal-body">
+                        @method('GET')
+                        @csrf
+
+                        {{-- <form action="/status3-peminjamanAlat/{{ $item->pivot->uuid }}"
+                            method="POST" class="d-inline">
+                            @method('GET')
+                            @csrf
+                            <button type="submit" class="btn btn-primary">Komplit</button>
+                        </form> --}}
+                        <input type="hidden" name="namaUser" value="{{ $datas->dataUser->nama }}">
+                        <input type="hidden" name="peminjaman_id" value="{{ $datas->id }}">
+                        <input type="hidden" name="uuid"
+                            value="{{ $datas->uuid }}">
+                        {{-- <input type="hidden" name="uuidAlat"
+                            value="{{ $item->uuid }}">
+                        <input type="hidden" name="uuidPivot"
+                            value="{{ $item->pivot->uuid }}"> --}}
+
+                        <label for="kondisi_peminjaman"></label>
+                        <textarea class="form-control" name="kondisi_peminjaman" id="kondisi_peminjaman" cols="30" rows="10"></textarea>
+                        {{-- <input type="hidden" name="uuidAlat" value="{{ $item->uuid }}">
+                        <input type="hidden" name="uuidPivot" value="{{ $item->pivot->uuid }}"> --}}
+                    </div>
+                    <div class="modal-footer bg-whitesmoke br">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{-- /MODAL KONDISI PEMINJAMAN ALAT KOMPLIT--}}
+    
     {{-- MODAL KONDISI PENGEMBALIAN ALAT --}}
     <div class="modal fade" tabindex="-1" role="dialog" id="ModalKondisiPengembalian">
         <div class="modal-dialog" role="document">
@@ -540,4 +620,38 @@
         </div>
     </div>
     {{-- /MODAL KONDISI PEMINJAMAN ALAT --}}
+    
+    {{-- MODAL KONDISI PENGEMBALIAN ALAT KOMPLIT--}}
+    <div class="modal fade" tabindex="-1" role="dialog" id="ModalKondisiPengembalianKomplit">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal Kondisi Pengembalian Alat</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="/status7-peminjamanAlat/{{ $datas->uuid }}" method="POST" class="d-inline">
+                    <div class="modal-body">
+                        @method('GET')
+                        @csrf
+
+                        <input type="hidden" name="namaUser" value="{{ $datas->dataUser->nama }}">
+                        <input type="hidden" name="peminjaman_id" value="{{ $datas->id }}">
+                        <input type="hidden" name="uuid" value="{{ $datas->uuid }}">
+
+                        <label for="kondisi_pengembalian"></label>
+                        <textarea class="form-control" name="kondisi_pengembalian" id="kondisi_pengembalian" cols="30" rows="10"></textarea>
+                        {{-- <input type="hidden" name="uuidAlat" value="{{ $item->uuid }}">
+                        <input type="hidden" name="uuidPivot" value="{{ $item->pivot->uuid }}"> --}}
+                    </div>
+                    <div class="modal-footer bg-whitesmoke br">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{-- /MODAL KONDISI PEMINJAMAN ALAT KOMPLIT --}}
 @endsection
