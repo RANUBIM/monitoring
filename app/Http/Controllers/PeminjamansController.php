@@ -21,7 +21,14 @@ class PeminjamansController extends Controller
      */
     public function index()
     {
-        $datas = Peminjamans::with(['dataUser','dataAlat.dataLabor'])->get();
+        // $datas = Peminjamans::with(['dataUser','dataAlat.dataLabor'])->get();
+
+        if (Auth::user()->role == "Kepala Jurusan" || Auth::user()->role == "Laboran") :
+            $datas = Peminjamans::with(['dataUser','dataAlat.dataLabor'])->get();
+        else:
+            $datas = Peminjamans::with(['dataUser','dataAlat.dataLabor'])->where('user_id',Auth::user()->id)->get();
+        endif;
+
         return view('main.peminjaman.index', compact('datas'));
     }
 

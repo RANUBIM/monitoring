@@ -21,7 +21,14 @@ class PenggunaansController extends Controller
     public function index()
     {
         // $datas = Penggunaans::with(['dataUser','dataBahan.dataLabor'])->get();
-        $datas = Penggunaans::with(['dataUser'])->get();
+
+        if (Auth::user()->role == "Kepala Jurusan" || Auth::user()->role == "Laboran") :
+            $datas = Penggunaans::with(['dataUser','dataBahan.dataLabor'])->get();
+        else :
+            $datas = Penggunaans::with(['dataUser','dataBahan.dataLabor'])->where('user_id',Auth::user()->id)->get();
+        endif;
+        // dd($datas);
+
         return view('main.penggunaan.index', compact('datas'));
     }
 
