@@ -49,7 +49,7 @@
                            </div>
                            <div class="card-body">
                               {{-- <div class="section-title mt-0">Light</div> --}}
-                              <table class="table table-hover table-responsive-lg table-bordered">
+                              <table class="table table-hover table-responsive-lg table-bordered" id="example">
                                  <thead>
                                        <tr>
                                           <th scope="col">#</th>
@@ -131,6 +131,7 @@
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                    <a href="/detail-peminjamanAlat/{{ $data->uuid }}" class="dropdown-item">Detail</a>
+                                                   @if ($data->dataUser->id == Auth::user()->id || Auth::user()->role == "Kepala Jurusan" )
                                                    <a href="/peminjaman/{{ $data->uuid }}/edit" class="dropdown-item">Edit</a>
                                                    
                                                    <form action="/peminjaman/{{ $data->uuid }}" method="post"
@@ -139,6 +140,7 @@
                                                       @csrf
                                                       <button type="submit" class="a dropdown-item"><a>Hapus</a></button>
                                                    </form>
+                                                   @endif
                                                 </div>
                                              </div>
                                           @elseif ( $data->status == "2")

@@ -51,7 +51,7 @@
                               </div>
                               <div class="card-body">
                                  {{-- <div class="section-title mt-0">Light</div> --}}
-                                 <table class="table table-hover table-responsive-lg table-bordered">
+                                 <table class="table table-hover table-responsive-lg table-bordered" id="example">
                                     <thead>
                                           @if (Auth::user()->role === 'Kepala Jurusan')
                                              <tr>

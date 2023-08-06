@@ -49,7 +49,7 @@
                            </div>
                            <div class="card-body">
                               {{-- <div class="section-title mt-0">Light</div> --}}
-                              <table class="table table-hover table-responsive-lg table-bordered">
+                              <table class="table table-hover table-responsive-lg table-bordered" id="example">
                                  <thead>
                                        <tr>
                                           <th scope="col">#</th>
@@ -85,7 +85,7 @@
                                              @elseif ( $data->status == "5")
                                                 Bahan digunakan
                                              @else
-                                                <p><div class=" p-2 alert alert-danger">{{ $data->status }}</div></p>
+                                                <p><div class=" p-2 alert alert-danger">ditolak : {{ $data->status }}</div></p>
                                                 
                                              @endif
                                           </td>
@@ -132,14 +132,16 @@
                                                    </button>
                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                       <a href="/detail-penggunaanBahan/{{ $data->uuid }}" class="dropdown-item">Detail</a>
-                                                      <a href="/penggunaan/{{ $data->uuid }}/edit" class="dropdown-item">Edit</a>
-                                                      
-                                                      <form action="/penggunaan/{{ $data->uuid }}" method="post"
-                                                         class="d-inline">
-                                                         @method('delete')
-                                                         @csrf
-                                                         <button type="submit" class="a dropdown-item"><a>Hapus</a></button>
-                                                      </form>
+                                                      @if ($data->dataUser->id == Auth::user()->id || Auth::user()->role == "Kepala Jurusan" )
+                                                         <a href="/penggunaan/{{ $data->uuid }}/edit" class="dropdown-item">Edit</a>
+                                                         
+                                                         <form action="/penggunaan/{{ $data->uuid }}" method="post"
+                                                            class="d-inline">
+                                                            @method('delete')
+                                                            @csrf
+                                                            <button type="submit" class="a dropdown-item"><a>Hapus</a></button>
+                                                         </form>
+                                                      @endif
                                                    </div>
                                                 </div>
                                              @elseif ( $data->status == "2")
@@ -150,7 +152,7 @@
                                                    </button>
                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                       <a href="/detail-penggunaanBahan/{{ $data->uuid }}" class="dropdown-item">Detail</a>
-                                                      @if (Auth::user()->role == "Kepala Jurusan" || Auth::user()->role == "Laboran")
+                                                      @if (Auth::user()->role == "Kepala Jurusan")
                                                          <a href="/penggunaan/{{ $data->uuid }}/edit" class="dropdown-item">Edit</a>
                                                          
                                                          <form action="/penggunaan/{{ $data->uuid }}" method="post"
@@ -181,20 +183,22 @@
                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                       <a href="/detail-penggunaanBahan/{{ $data->uuid }}" class="dropdown-item">Detail</a>
    
-                                                      <form action="/status4-penggunaanBahan/{{ $data->uuid }}"
-                                                            method="POST" class="d-inline">
-                                                            @method('GET')
-                                                            @csrf
-                                                         {{-- <input type="hidden" name="namaUser" value="{{ $datas->dataUser->nama }}"> --}}
-                                                         {{-- <input type="hidden" name="namaAlat" value="{{ $item->nama }}"> --}}
-                                                         <input type="hidden" name="uuid"
-                                                            value="{{ $data->uuid }}">
-                                                         {{-- <input type="hidden" name="uuidAlat"
-                                                            value="{{ $item->uuid }}">
-                                                         <input type="hidden" name="uuidPivot"
-                                                            value="{{ $item->pivot->uuid }}"> --}}
-                                                         <button class="btn btn-success"  class="dropdown-item">Serahkan Bahan</button>
-                                                      </form>
+                                                      @if (Auth::user()->role == "Kepala Jurusan")
+                                                         <form action="/status4-penggunaanBahan/{{ $data->uuid }}"
+                                                               method="POST" class="d-inline">
+                                                               @method('GET')
+                                                               @csrf
+                                                            {{-- <input type="hidden" name="namaUser" value="{{ $datas->dataUser->nama }}"> --}}
+                                                            {{-- <input type="hidden" name="namaAlat" value="{{ $item->nama }}"> --}}
+                                                            <input type="hidden" name="uuid"
+                                                               value="{{ $data->uuid }}">
+                                                            {{-- <input type="hidden" name="uuidAlat"
+                                                               value="{{ $item->uuid }}">
+                                                            <input type="hidden" name="uuidPivot"
+                                                               value="{{ $item->pivot->uuid }}"> --}}
+                                                            <button class="btn btn-success"  class="dropdown-item">Serahkan Bahan</button>
+                                                         </form>
+                                                      @endif
                                                       
                                                    </div>
                                                 </div>
@@ -209,7 +213,7 @@
                                                    </div>
                                                 </div>
                                              @else
-                                             <h1>ERRORS NIH</h1>
+                                             {{-- <h1>ERRORS NIH</h1> --}}
                                              @endif
                                           </td>
                                           {{-- STATUS : DITOLAK --}}

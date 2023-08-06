@@ -442,6 +442,60 @@ class PenggunaansController extends Controller
         return redirect('/penggunaan')->with('success','Penggunaan Added');
     }
 
+    public function penggunaanBahanStatus3(Penggunaans $penggunaans, Request $request, $uuid)
+    {
+        // dd("tes pindah");
+
+        $validatedDataUUID = $request->validate([
+            'namaUser' => 'string|required|max:255',
+            // 'namaAlat' => 'string|required|max:255',
+            'penggunaan_id' => 'string|required|max:255',
+            'uuid' => 'string|required|max:255',
+            'note' => 'string|required|max:255',
+            // 'uuidAlat' => 'string|required|max:255',
+            // 'uuidPivot' => 'string|required|max:255'
+        ]);
+        // dd($validatedDataUUID);
+        
+        // $data = Peminjamans::with(['dataUser','dataAlat.dataLabor'])->where('uuid', $request->uuid)->first();
+        $datas = PenggunaanBahans::get()->where('penggunaan_id', $validatedDataUUID['penggunaan_id']);
+        // dd($datas);
+        
+        foreach ($datas as $show){
+            // echo $show->id;
+            
+            $dataBahan = Bahans::with('dataLabor')->get()->where('id', $show->bahan_id)->first();
+            // echo $dataBahan;
+            
+            $kurangStok = $dataBahan->digunakan + $show->jumlah;
+            $validateUpdateStok['digunakan'] = $kurangStok;
+            Bahans::where("id", $show->bahan_id)->update($validateUpdateStok);
+            
+            $validateUpdateStatus['status'] = "1";
+            DB::table('penggunaan_bahans')->where("id", $show['id'])->update($validateUpdateStatus);
+        }
+        // dd($show);
+
+        $validatedData['note'] = $validatedDataUUID['note'];
+        $validatedData['status'] = "4";
+        // dd($validatedData);
+
+        DB::table('penggunaans')->where('uuid', $uuid)->update($validatedData);
+
+        // $log = [
+        //     'uuid' => Uuid::uuid4()->getHex(),
+        //     'user_id' => Auth::user()->id,
+        //     'description' => '<em>Mengubah</em> Status data Peminjaman Alat <strong>[' . $request->nama . ']</strong>', //name = nama tag di view (file index)
+        //     'category' => 'edit',
+        //     'created_at' => now(),
+        // ];
+
+        // DB::table('logs')->insert($log);
+        // // selesai
+
+        return redirect('/penggunaan')->with('success','Penggunaan Added');
+    }
+
     public function penggunaanBahanStatus4(Penggunaans $penggunaans, Request $request, $uuid)
     {
         $validatedDataUUID = $request->validate([

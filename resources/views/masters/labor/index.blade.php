@@ -50,7 +50,7 @@ Examples for opt-in styling of tables (given their prevalent use in JavaScript p
                            </div>
                            <div class="card-body">
                               {{-- <div class="section-title mt-0">Light</div> --}}
-                              <table class="table table-hover table-responsive-lg table-bordered">
+                              <table class="table table-hover table-responsive-lg table-bordered" id="example">
                                  <thead>
                                        <tr>
                                           <th scope="col">#</th>

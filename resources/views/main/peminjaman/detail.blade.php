@@ -164,7 +164,7 @@
                     <div class="col-12 col-md-12 col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                @if ( $datas->status == "7")
+                                @if ( $datas->status == "8")
                                 @else
                                     <a href="/detail-peminjamanAlat/{{ $datas->uuid }}" class="btn btn-primary"><i
                                         class="fa fa-redo"></i></a>
@@ -186,6 +186,8 @@
                                     {{-- output_if --}}
                                 @elseif ( $datas->status == "7")
                                     {{-- output_if --}}
+                                @elseif ( $datas->status == "8")
+                                    {{-- output_if --}}
                                 @else
                                     {{-- output_if --}}
                                 @endif
@@ -198,6 +200,7 @@
                                             <th scope="col">#</th>
                                             <th scope="col">Labor</th>
                                             <th scope="col">Nama Alat</th>
+                                            <th scope="col">Spesifikasi</th>
                                             <th scope="col">Jumlah</th>
                                             @if ( $datas->status == "7")
                                             @else
@@ -212,6 +215,7 @@
                                                 <th scope="row">{{ $loop->iteration }}</th>
                                                 <td class="text-left">{{ $item->dataLabor->nama }}</td>
                                                 <td class="text-left">{{ $item->nama }}</td>
+                                                <td class="text-left">{{ $item->spesifikasi }}</td>
                                                 <td>{{ $item->pivot->jumlah }} {{ $item->satuan }}</td>
                                                 {{-- <td>
                                                 @foreach ($datas->dataAlat as $item)
@@ -325,6 +329,8 @@
                                                             @endif --}}
                                                         @elseif ( $datas->status == "7")
                                                             {{-- output_if --}}
+                                                        @elseif ( $datas->status == "8")
+                                                            {{-- output_if --}}
                                                         @else
                                                             {{-- output_if --}}
                                                         @endif
@@ -373,7 +379,7 @@
                                                 <button type="submit" class="btn btn-primary">Ajukan Peminjaman</button>
                                             </form>
                                             @endif
-                                            <a class="btn btn-light" href="/peminjaman">Cancel</a>
+                                            <a class="btn btn-secondary" href="/peminjaman">Cancel</a>
                                         </div>
                                     @elseif ( $datas->status == "2")
                                         {{-- Status: Menunggu Persetujuan --}}
@@ -391,7 +397,7 @@
                                                 </form>
                                                 <button class="btn btn-primary" data-toggle="modal" data-target="#ModalPenolakan">Tolak</button>
                                             @endif
-                                            <a class="btn btn-light" href="/peminjaman">Cancel</a>
+                                            <a class="btn btn-secondary" href="/peminjaman">Cancel</a>
                                         </div>
                                     @elseif ( $datas->status == "3")
                                     {{-- Status: Menunggu Penyediaan --}}
@@ -444,7 +450,7 @@
                                                     <button type="submit" class="btn btn-primary">Tolak</button>
                                                 </form>
                                             @endif
-                                            <a class="btn btn-light" href="/peminjaman">Cancel</a>
+                                            <a class="btn btn-secondary" href="/peminjaman">Cancel</a>
                                         </div>
                                     @elseif ( $datas->status == "7")
                                     {{-- Status: Proses pengecekan alat --}}

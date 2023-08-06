@@ -19,6 +19,9 @@
 
     <link rel="stylesheet" href="/assets/modules/bootstrap-daterangepicker/daterangepicker.css">
 
+    {{-- data table --}}
+    <link href="https://cdn.datatables.net/v/bs4/dt-1.13.6/b-2.4.1/datatables.min.css" rel="stylesheet">
+
     <!-- Start GA -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script>
     <script>
@@ -91,6 +94,9 @@
     <!-- Template JS File -->
     <script src="/assets/js/scripts.js"></script>
     <script src="/assets/js/custom.js"></script>
+
+    {{-- DATA TABLE --}}
+    <script src="https://cdn.datatables.net/v/bs4/dt-1.13.6/b-2.4.1/datatables.min.js"></script>
     <script>
         $("document").ready(function()
         {
@@ -105,6 +111,24 @@
             drops: 'down',
             opens: 'right'
             });
+    </script>
+    <script>
+        new DataTable('#example');
+    </script>
+    <script>
+        $('#selectRole').change(function (){
+            let selValue = $(this).val();
+            if(selValue == "Siswa")
+            {
+                $("#inputGuru").css("visibility", "hidden");
+                $("#inputSiswa").css("visibility", "visible");
+            }
+            else
+            {
+                $("#inputGuru").css("visibility", "visible");
+                $("#inputSiswa").css("visibility", "hidden");
+            }
+        });
     </script>
 </body>
 

@@ -100,16 +100,20 @@
                                             </div>
                                         @enderror
                                     </div>
-                                    {{-- <div class="form-group">
-                                            <label for="kondisi_peminjaman">Kondisi Peminjaman</label>
-                                            <textarea type="text" name="kondisi_peminjaman" class="form-control @error('kondisi_peminjaman') is-invalid @enderror" id="kondisi_peminjaman"
-                                                placeholder="kondisi_peminjaman" required autofocus value="{{ old('kondisi_peminjaman') }}"></textarea>
-                                            @error('kondisi_peminjaman')
+                                    @if ( $datas->status == "5" )
+                                        <div class="form-group">
+                                            <label for="note">Catatan</label>
+                                            <textarea type="text" name="note" class="form-control @error('note') is-invalid @enderror" id="note"
+                                                placeholder="note" autofocus value="" readonly>{{ old('note', $datas->note) }}</textarea>
+                                            @error('note')
                                                 <div class="invalid-feedback">
-                                                    {{ $message }}
+                                                    {{-- {{ $message }} --}}
+                                                    "Harap mengisi tujuan kegiatan"
                                                 </div>
                                             @enderror
-                                        </div> --}}
+                                        </div>
+                                    @else
+                                    @endif
                                     {{-- <button type="submit" class="btn btn-primary me-2">Submit</button>
                                         <button class="btn btn-light">Cancel</button> --}}
                                 </form>
@@ -125,9 +129,9 @@
                     <div class="col-12 col-md-12 col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                @if ( $datas->status == "7")
+                                @if ( $datas->status == "5")
                                 @else
-                                    <a href="/detail-penggunaan/{{ $datas->uuid }}" class="btn btn-primary"><i
+                                    <a href="/detail-penggunaanBahan/{{ $datas->uuid }}" class="btn btn-primary"><i
                                         class="fa fa-redo"></i></a>
                                 @endif
 
@@ -155,6 +159,7 @@
                                             <th scope="col">#</th>
                                             <th scope="col">Labor</th>
                                             <th scope="col">Nama Bahan</th>
+                                            <th scope="col">Spesifikasi</th>
                                             <th scope="col">Jumlah</th>
                                             @if ( $datas->status == "5")
                                             @else
@@ -169,7 +174,8 @@
                                                 <th scope="row">{{ $loop->iteration }}</th>
                                                 <td class="text-left">{{ $item->dataLabor->nama }}</td>
                                                 <td class="text-left">{{ $item->nama }}</td>
-                                                <td>{{ $item->pivot->jumlah }}</td>
+                                                <td class="text-left">{{ $item->spesifikasi }}</td>
+                                                <td>{{ $item->pivot->jumlah }} {{ $item->satuan }} </td>
                                                 {{-- <td>
                                                 @foreach ($datas->dataAlat as $item)
                                                 {{ $item['nama'] }}
@@ -303,7 +309,11 @@
                                                 <input type="hidden" name="uuidPivot" value="{{ $item->pivot->uuid }}"> --}}
                                                 <button type="submit" class="btn btn-primary">Ajukan Penggunaan</button>
                                             </form>
-                                            <button class="btn btn-light">Cancel</button>
+                                            <a class="btn btn-secondary" href="/penggunaan">Cancel</a>
+                                        </div>
+                                    @else
+                                        <div class="text-right">
+                                            <a class="btn btn-secondary" href="/penggunaan">Cancel</a>
                                         </div>
                                     @endif
                                 @elseif ( $datas->status == "2")
@@ -320,14 +330,19 @@
                                                 <input type="hidden" name="uuidPivot" value="{{ $item->pivot->uuid }}"> --}}
                                                 <button type="submit" class="btn btn-primary">Terima</button>
                                             </form>
-                                            <button class="btn btn-primary" data-toggle="modal" data-target="#ModalPenolakan">Tolak</button>
+                                            <button class="btn btn-danger" data-toggle="modal" data-target="#ModalPenolakan">Tolak</button>
+                                            <a class="btn btn-secondary" href="/penggunaan">Cancel</a>
+                                        </div>
+                                    @else
+                                        <div class="text-right">
+                                            <a class="btn btn-secondary" href="/penggunaan">Cancel</a>
                                         </div>
                                     @endif
                                 @elseif ( $datas->status == "3")
                                 {{-- Status: Menunggu Penyediaan --}}
                                     @if (Auth::user()->role == "Kepala Jurusan")
                                         <div class="text-right">
-                                            <button class="btn btn-primary" data-toggle="modal" data-target="#ModalKondisiPeminjaman">Note</button>
+                                            <button class="btn btn-primary" data-toggle="modal" data-target="#ModalNote">Konfirmasi Penggunaan</button>
                                             <a class="btn btn-secondary" href="/penggunaan">Cancel</a>
                                         </div>
                                     @else
@@ -337,6 +352,9 @@
                                     @endif
                                 @elseif ( $datas->status == "4")
                                 {{-- Status: Alat dapat diambil --}}
+                                    <div class="text-right">
+                                        <a class="btn btn-secondary" href="/penggunaan">Cancel</a>
+                                    </div>
                                 @elseif ( $datas->status == "5")
                                 {{-- Status: Alat dipinjam --}}
                                     <div class="text-right">
@@ -356,7 +374,7 @@
             </div>
         </section>
     </div>
-    {{-- MODAL PENOLAKAN PEMINJAMAN --}}
+    {{-- MODAL PENOLAKAN PENGGUNAAN --}}
     <div class="modal fade" tabindex="-1" role="dialog" id="ModalPenolakan">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -385,9 +403,9 @@
             </div>
         </div>
     </div>
-    {{-- /MODAL PENOLAKAN PEMINJAMAN --}}
+    {{-- /MODAL PENOLAKAN PENGGUNAAN --}}
     
-    {{-- MODAL KONDISI PEMINJAMAN ALAT --}}
+    {{-- MODAL KONDISI PENGGUNAAN BAHAN --}}
     <div class="modal fade" tabindex="-1" role="dialog" id="ModalKondisiPeminjaman">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -416,26 +434,40 @@
             </div>
         </div>
     </div>
-    {{-- /MODAL KONDISI PEMINJAMAN ALAT --}}
+    {{-- /MODAL KONDISI PENGGUNAAN BAHAN --}}
     
-    {{-- MODAL KONDISI PENGEMBALIAN ALAT --}}
-    <div class="modal fade" tabindex="-1" role="dialog" id="ModalKondisiPengembalian">
+    {{-- MODAL KONDISI PENGGUNAAN BAHAN (KOMPLIT) --}}
+    <div class="modal fade" tabindex="-1" role="dialog" id="ModalNote">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Modal Kondisi Pengembalian Alat</h5>
+                    <h5 class="modal-title">Modal Kondisi Peminjaman Alat</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="/kondisiPengembalian-peminjamanAlat/{{ $datas->uuid }}" method="POST" class="d-inline">
+                <form action="/status3-penggunaanBahan/{{ $datas->uuid }}" method="POST" class="d-inline">
                     <div class="modal-body">
                         @method('GET')
                         @csrf
-                        {{-- <input type="hidden" name="namaAlat" value="{{ $datas->nama }}"> --}}
-                        <input type="hidden" name="uuid" value="{{ $datas->uuid }}">
-                        <label for="kondisi_pengembalian"></label>
-                        <textarea class="form-control" name="kondisi_pengembalian" id="kondisi_pengembalian" cols="30" rows="10"></textarea>
+
+                        {{-- <form action="/status3-peminjamanAlat/{{ $item->pivot->uuid }}"
+                            method="POST" class="d-inline">
+                            @method('GET')
+                            @csrf
+                            <button type="submit" class="btn btn-primary">Komplit</button>
+                        </form> --}}
+                        <input type="hidden" name="namaUser" value="{{ $datas->dataUser->nama }}">
+                        <input type="hidden" name="penggunaan_id" value="{{ $datas->id }}">
+                        <input type="hidden" name="uuid"
+                            value="{{ $datas->uuid }}">
+                        {{-- <input type="hidden" name="uuidAlat"
+                            value="{{ $item->uuid }}">
+                        <input type="hidden" name="uuidPivot"
+                            value="{{ $item->pivot->uuid }}"> --}}
+
+                        <label for="note"></label>
+                        <textarea class="form-control" name="note" id="note" cols="30" rows="10"></textarea>
                         {{-- <input type="hidden" name="uuidAlat" value="{{ $item->uuid }}">
                         <input type="hidden" name="uuidPivot" value="{{ $item->pivot->uuid }}"> --}}
                     </div>
@@ -447,5 +479,6 @@
             </div>
         </div>
     </div>
-    {{-- /MODAL KONDISI PEMINJAMAN ALAT --}}
+    {{-- /MODAL KONDISI PENGGUNAAN BAHAN KOMPLIT--}}
+
 @endsection

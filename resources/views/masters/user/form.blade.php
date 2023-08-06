@@ -31,7 +31,7 @@
                                     @csrf
                                     <div class="form-group">
                                         <label>Role</label>
-                                        <select class="form-control" name="role" id="role" required>
+                                        <select class="form-control" name="role" id="selectRole" required>
                                             <option value="{{ old('role',"") }}">{{ old('role',"Pilih Role") }}</option>
                                             <option value="Kepala Jurusan">Kepala Jurusan</option>
                                             <option value="Laboran">Laboran</option>
@@ -76,10 +76,10 @@
                                             </div>
                                         @enderror
                                     </div>
-                                    <div class="row">
+                                    <div class="row" id="inputSiswa">
                                         <div class="form-group col-6">
                                             <label for="kelas">Kelas</label>
-                                            <input type="text" name="kelas" class="form-control @error('kelas') is-invalid @enderror" id="kelas"
+                                            <input type="text" name="kelas" class="form-control @error('kelas') is-invalid @enderror"
                                                 placeholder="kelas" required autofocus value="{{ old('kelas') }}">
                                             @error('kelas')
                                                 <div class="invalid-feedback">
@@ -98,15 +98,17 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="mapel">Mata Pelajaran</label>
-                                        <input type="text" name="mapel" class="form-control @error('mapel') is-invalid @enderror" id="mapel"
-                                            placeholder="mapel" required autofocus value="{{ old('mapel') }}">
-                                        @error('mapel')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
+                                    <div class="" id="inputGuru">
+                                        <div class="form-group">
+                                            <label for="mapel">Mata Pelajaran</label>
+                                            <input type="text" name="mapel" class="form-control @error('mapel') is-invalid @enderror" id="mapel"
+                                                placeholder="mapel" required autofocus value="{{ old('mapel') }}">
+                                            @error('mapel')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="kontak">Kontak</label>

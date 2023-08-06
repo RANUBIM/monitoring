@@ -50,40 +50,40 @@
                            </div>
                            <div class="card-body">
                               {{-- <div class="section-title mt-0">Light</div> --}}
-                              <table class="table table-hover table-responsive-lg table-bordered">
+                              <table class="table table-hover table-responsive-lg table-bordered" id="example">
                                  <thead>
                                     @if (Auth::user()->role === 'Kepala Jurusan')
                                        <tr>
                                           <th scope="col" rowspan="2">#</th>
+                                          <th scope="col" rowspan="2">Tanggal Pengadaan</th>
                                           <th scope="col" rowspan="2">No. Inventaris</th>
                                           <th scope="col" rowspan="2">Labor</th>
                                           <th scope="col" rowspan="2">Nama</th>
                                           <th scope="col" rowspan="2">Spesifikasi</th>
                                           {{-- <th scope="col" rowspan="2">Keterangan</th> --}}
                                           <th scope="col" colspan="3" class="text-center">Stok</th>
-                                          <th scope="col" rowspan="2">Tanggal Pengadaan</th>
                                           <th scope="col" rowspan="2">Aksi</th>
                                        </tr>
                                        <tr>
                                           <th scope="col">Tersedia</th>
-                                          <th scope="col">Dipinjam</th>
+                                          <th scope="col">Digunakan</th>
                                           <th scope="col">Total</th>
                                        </tr>
                                     @elseif (Auth::user()->role === 'Laboran')
                                        <tr>
                                           <th scope="col" rowspan="2">#</th>
+                                          <th scope="col" rowspan="2">Tanggal Pengadaan</th>
                                           <th scope="col" rowspan="2">No. Inventaris</th>
                                           <th scope="col" rowspan="2">Labor</th>
                                           <th scope="col" rowspan="2">Nama</th>
                                           <th scope="col" rowspan="2">Spesifikasi</th>
                                           {{-- <th scope="col" rowspan="2">Keterangan</th> --}}
                                           <th scope="col" colspan="3" class="text-center">Stok</th>
-                                          <th scope="col" rowspan="2">Tanggal Pengadaan</th>
                                           {{-- <th scope="col" rowspan="2">Aksi</th> --}}
                                        </tr>
                                        <tr>
                                           <th scope="col">Tersedia</th>
-                                          <th scope="col">Dipinjam</th>
+                                          <th scope="col">Digunakan</th>
                                           <th scope="col">Total</th>
                                        </tr>
                                     @else
@@ -103,6 +103,7 @@
                                        <tr>
                                           <th scope="row">{{ $loop->iteration }}</th>
                                           @if (Auth::user()->role === 'Kepala Jurusan' || Auth::user()->role === 'Laboran' )    
+                                             <td>{{ $data->tgl_pengadaan->isoFormat("D MMMM Y") }}</td>   
                                              <td>{{ $data->no_inv }}</td>
                                           @endif
                                           <td>{{ $data->dataLabor->nama }}</td>
@@ -113,32 +114,30 @@
                                              <td>{{ $data->stok - $data->digunakan }} {{ $data->satuan }}</td>
                                              <td>{{ $data->digunakan }} {{ $data->satuan }}</td>
                                              <td>{{ $data->stok }} {{ $data->satuan }}</td>
-                                             <td>{{ $data->tgl_pengadaan->isoFormat("D MMMM Y") }}</td>
                                              {{-- Tombol Aksi Dropdown --}}
-                                                <td>
-                                                   <div class="dropdown">
-                                                      <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                         Aksi
-                                                      </button>
-                                                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                         {{-- <a href="/bahan/{{ $data->uuid }}" class="dropdown-item">Detail</a> --}}
-                                                         <a href="/bahan/{{ $data->uuid }}/edit" class="dropdown-item">Edit</a>
-                                                         
-                                                         <form action="/bahan/{{ $data->uuid }}" method="post"
-                                                            class="d-inline">
-                                                            @method('delete')
-                                                            @csrf
-                                                            <button type="submit" class="a dropdown-item"><a>Hapus</a></button>
-                                                         </form>
-                                                      </div>
+                                             <td>
+                                                <div class="dropdown">
+                                                   <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                      Aksi
+                                                   </button>
+                                                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                      {{-- <a href="/bahan/{{ $data->uuid }}" class="dropdown-item">Detail</a> --}}
+                                                      <a href="/bahan/{{ $data->uuid }}/edit" class="dropdown-item">Edit</a>
+                                                      
+                                                      <form action="/bahan/{{ $data->uuid }}" method="post"
+                                                         class="d-inline">
+                                                         @method('delete')
+                                                         @csrf
+                                                         <button type="submit" class="a dropdown-item"><a>Hapus</a></button>
+                                                      </form>
                                                    </div>
-                                                </td>
-                                                {{-- /Tombol Aksi Dropdown --}}
+                                                </div>
+                                             </td>
+                                             {{-- /Tombol Aksi Dropdown --}}
                                           @elseif (Auth::user()->role === 'Laboran')    
                                              <td>{{ $data->stok - $data->digunakan }} {{ $data->satuan }}</td>
                                              <td>{{ $data->digunakan }} {{ $data->satuan }}</td>
                                              <td>{{ $data->stok }} {{ $data->satuan }}</td>
-                                             <td>{{ $data->tgl_pengadaan->isoFormat("D MMMM Y") }}</td>
                                              {{-- Tombol Aksi Dropdown --}}
                                                 {{-- <td>
                                                    <div class="dropdown">
