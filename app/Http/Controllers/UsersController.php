@@ -50,13 +50,13 @@ class UsersController extends Controller
             'password' => 'string|required|max:255',
             'role' => 'string|required|max:255',
             'nama' => 'string|required|max:255',
-            'kelas' => 'string|max:255',
-            'jurusan' => 'string|max:255',
-            'mapel' => 'string|max:255',
+            'kelas' => 'max:255',
+            'jurusan' => 'max:255',
+            'mapel' => 'max:255',
             'kontak' => 'string|required|max:255',
         ]);
 
-        // $validatedData['password'] = bcrypt($validatedData['password']);
+        $validatedData['password'] = bcrypt($validatedData['password']);
         $validatedData['uuid'] = Uuid::uuid4()->getHex();
         $validatedData['created_by'] = Auth::user()->id;
 
@@ -124,7 +124,9 @@ class UsersController extends Controller
             'kontak' => 'string|required|max:255',
 
         ]);
-        // $validatedData['password'] = bcrypt($validatedData['password']);
+        // dd($validatedData);
+
+        $validatedData['password'] = bcrypt($validatedData['password']);
         $validatedData['updated_by'] = Auth::user()->id;
 
         Users::where('uuid', $uuid)->first()->update($validatedData);

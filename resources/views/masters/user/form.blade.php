@@ -80,7 +80,7 @@
                                         <div class="form-group col-6">
                                             <label for="kelas">Kelas</label>
                                             <input type="text" name="kelas" class="form-control @error('kelas') is-invalid @enderror"
-                                                placeholder="kelas" required autofocus value="{{ old('kelas') }}">
+                                                placeholder="kelas" autofocus value="{{ old('kelas') }}">
                                             @error('kelas')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -90,7 +90,7 @@
                                         <div class="form-group col-6">
                                             <label for="jurusan">Jurusan</label>
                                             <input type="text" name="jurusan" class="form-control @error('jurusan') is-invalid @enderror" id="jurusan"
-                                                placeholder="jurusan" required autofocus value="{{ old('jurusan') }}">
+                                                placeholder="jurusan" autofocus value="{{ old('jurusan') }}">
                                             @error('jurusan')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -102,7 +102,7 @@
                                         <div class="form-group">
                                             <label for="mapel">Mata Pelajaran</label>
                                             <input type="text" name="mapel" class="form-control @error('mapel') is-invalid @enderror" id="mapel"
-                                                placeholder="mapel" required autofocus value="{{ old('mapel') }}">
+                                                placeholder="mapel" autofocus value="{{ old('mapel') }}">
                                             @error('mapel')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}

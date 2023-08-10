@@ -35,58 +35,48 @@ class LoginController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+  private function passwordCorrect($suppliedPassword)
+  {
+      return Hash::check($suppliedPassword, User::get()->password, []);
+      // dd('tested');
+  }
+
   public function authenticate(Request $request)
   {
       $credentials = $request->validate([
         'niknis'=> 'required',
         'password' => 'required',
     ]);
-    // dd($credentials);
-    // dd(User::get()->where('niknis', $request->niknis)->firstOrFail());
-
-
-    $user = User::where('niknis',$request->niknis)->first();
-    // dd($user->password);
-    
-    $pass1 = $request['password'];
-    // dd($pass1);
-
-    // $pass2 = ($user->password);
-    // if(Hash::check($request->password, $user->password)){
-    //   dd("puri puri prisoner");
-    // }else{
-    //   dd("gagal");
-    // }
 
     // LOGIN BIASA
-    if($user && $request->password == $user->password){
-      // dd("sukses");
-      Auth::login($user);
-      if(Auth::check()){
+    // if($user && $request->password == $user->password){
+    //   // dd("sukses");
+    //   Auth::login($user);
+    //   if(Auth::check()){
 
-      $request->session()->regenerate();
+    //   $request->session()->regenerate();
 
-      $data = User::get()->where('niknis', $request->niknis)->firstOrFail();
+    //   $data = User::get()->where('niknis', $request->niknis)->firstOrFail();
 
-      $log = [
-          'uuid' => Uuid::uuid4()->getHex(),
-          'user_id' => Auth::user()->id,
-          'description' => '<em>Login</em> akun <strong>[' . $data->nama . ']</strong>',
-          'category' => 'login',
-          'created_at' => now(),
-      ];
+    //   $log = [
+    //       'uuid' => Uuid::uuid4()->getHex(),
+    //       'user_id' => Auth::user()->id,
+    //       'description' => '<em>Login</em> akun <strong>[' . $data->nama . ']</strong>',
+    //       'category' => 'login',
+    //       'created_at' => now(),
+    //   ];
 
-      DB::table('logs')->insert($log);
+    //   DB::table('logs')->insert($log);
 
-      return redirect()->intended('/');
+    //   return redirect()->intended('/');
 
-      }
-    }else{
-      return back()->with('loginError', 'Username atau Password salah');
-    }
+    //   }
+    // }else{
+    //   return back()->with('loginError', 'Username atau Password salah');
+    // }
     // /LOGIN BIASA
 
-      
+    // COBA RESEARCH LOGIN  
     //   Auth::login($user);
     //   if(Auth::check()){
     //     return "success";
@@ -97,26 +87,27 @@ class LoginController extends Controller
     // }else{
     //   return "Error";
     // }
-
+    // COBA RESEARCH LOGIN  
+          
     
-    // if (Auth::attempt($credentials)) {
+    if (Auth::attempt($credentials)) {
 
-    //   $request->session()->regenerate();
+      $request->session()->regenerate();
 
-    //   $data = User::get()->where('niknis', $request->niknis)->firstOrFail();
+      $data = User::get()->where('niknis', $request->niknis)->firstOrFail();
 
-    //   // $log = [
-    //   //     'uuid' => Uuid::uuid4()->getHex(),
-    //   //     'user_id' => Auth::user()->id,
-    //   //     'description' => '<em>Login</em> akun <strong>[' . $data->name . ']</strong>',
-    //   //     'category' => 'login',
-    //   //     'created_at' => now(),
-    //   // ];
+      $log = [
+          'uuid' => Uuid::uuid4()->getHex(),
+          'user_id' => Auth::user()->id,
+          'description' => '<em>Login</em> akun <strong>[' . $data->name . ']</strong>',
+          'category' => 'login',
+          'created_at' => now(),
+      ];
 
-    //   // DB::table('logs')->insert($log);
+      DB::table('logs')->insert($log);
 
-    //   return redirect()->intended('/');
-    // }
+      return redirect()->intended('/');
+    }
 
 
     return back()->with('loginError', 'Username atau Password salah');
