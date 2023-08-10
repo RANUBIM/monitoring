@@ -34,7 +34,6 @@
                                         <div class="form-group">
                                             <label>Labor</label>
                                             <select id="labor_id" class="form-control @error('labor_id') is-invalid @enderror select2" name="labor_id" style="width: 100%;" >
-                                                
                                                 @foreach ($dataLabor as $labor)
                                                     <option value="{{ old('labor_id', $datas->labor_id) }}" @if ($datas->labor_id == $labor->id) selected="selected" @endif>
                                                         {{ old('labor_id', $labor->nama) }}
@@ -101,7 +100,7 @@
                                             @enderror
                                         </div>
                                         <button type="submit" class="btn btn-primary me-2">Submit</button>
-                                        <button class="btn btn-light">Cancel</button>
+                                        <a href="{{ url('alat') }}" class="btn btn-light">Cancel</a>
                                     </form>  
                                 {{-- @endforeach--}}
                             </div>

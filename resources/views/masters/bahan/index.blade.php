@@ -47,6 +47,9 @@
                                  <a href="/bahan" class="btn btn-primary"><i class="fa fa-redo"></i></a>
                                  <a href="/bahan/create" class="btn btn-primary ">Tambah</a>
                               @endif
+                              @if (Auth::user()->role == "Kepala Jurusan")
+                                 <a href="/printAlat" class="btn btn-primary float-right" style="display: block;margin-left: auto;margin-right: 0;">Print</a>
+                              @endif
                            </div>
                            <div class="card-body">
                               {{-- <div class="section-title mt-0">Light</div> --}}

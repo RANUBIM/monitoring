@@ -81,24 +81,24 @@
                                              </td> --}}
                                              <td>
                                                 @if ( $data->status == "1")
-                                                   Pilih alat yang ingin dipinjam
+                                                   <div class="badge m-0 badge-white">Pilih Alat yang ingin dipinjam</div>
                                                 @elseif ( $data->status == "2")
-                                                   Menunggu persetujuan
+                                                   <div class="badge m-0 badge-secondary">Menunggu penyetujuan Peminjaman</div>
                                                 @elseif ( $data->status == "3")
-                                                   Menunggu penyediaan
+                                                   <div class="badge m-0 badge-secondary">Menunggu penyediaan</div>
                                                 @elseif ( $data->status == "4")
-                                                   Alat dapat diambil
+                                                   <div class="badge m-0 badge-warning">Alat dapat diambil</div>
                                                 @elseif ( $data->status == "5")
-                                                   Alat dipinjam
+                                                   <div class="badge m-0 badge-info">Alat dipinjam</div>
                                                 @elseif ( $data->status == "6")
-                                                   Menunggu persetujuan pengembalian
+                                                   <div class="badge m-0 badge-secondary">Menunggu penyetujuan pengembalian</div>
                                                 @elseif ( $data->status == "7")
-                                                   Proses pengecekan alat
+                                                   <div class="badge m-0 badge-secondary">Proses pengecekan alat</div>
                                                 @elseif ( $data->status == "8")
-                                                   Alat dikembalikan
+                                                   <div class="badge m-0 badge-success">Alat dikembalikan</div>
                                                 @else
-                                                   <p><div class=" p-2 alert alert-danger">{{ $data->status }}</div></p>
-                                                   
+                                                   <div class="badge m-0 badge-danger">Ditolak</div>
+                                                   {{-- <p class="alert alert-danger m-0 p-1">{{ $data->status }}</p> --}}
                                                 @endif
                                              </td>
                                              {{-- <td>{{ $data->dataAlat }}</td> --}}
@@ -254,6 +254,14 @@
                                                       </div>
                                                    </div>
                                                 @else
+                                                   <div class="dropdown">
+                                                      <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                         Aksi
+                                                      </button>
+                                                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                         <a href="/detail-peminjamanAlat/{{ $data->uuid }}" class="dropdown-item">Detail</a>
+                                                      </div>
+                                                   </div>
                                                 @endif
                                              </td>
                                              {{-- /Tombol Aksi Dropdown --}}

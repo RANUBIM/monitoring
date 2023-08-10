@@ -75,18 +75,18 @@
                                              <td>
                                                 {{-- {{ $data->status }} --}}
                                                 @if ( $data->status == "1")
-                                                   Pilih alat yang ingin digunakan
+                                                   <div class="badge m-0 badge-white">Pilih Alat yang ingin dipinjam</div>
                                                 @elseif ( $data->status == "2")
-                                                   Menunggu persetujuan
+                                                   <div class="badge m-0 badge-secondary">Menunggu penyetujuan</div>
                                                 @elseif ( $data->status == "3")
-                                                   Menunggu penyediaan
+                                                   <div class="badge m-0 badge-secondary">Menunggu penyediaan</div>
                                                 @elseif ( $data->status == "4")
-                                                   Bahan dapat diambil
+                                                   <div class="badge m-0 badge-warning">Bahan dapat diambil</div>
                                                 @elseif ( $data->status == "5")
-                                                   Bahan digunakan
+                                                <div class="badge m-0 badge-success">Bahan digunakan</div>
                                                 @else
-                                                   <p><div class=" p-2 alert alert-danger">ditolak : {{ $data->status }}</div></p>
-                                                   
+                                                   {{-- <p><div class=" p-2 alert alert-danger">ditolak : {{ $data->status }}</div></p> --}}
+                                                   <div class="badge m-0 badge-danger">Ditolak</div>
                                                 @endif
                                              </td>
                                              
@@ -214,6 +214,14 @@
                                                    </div>
                                                 @else
                                                 {{-- <h1>ERRORS NIH</h1> --}}
+                                                   <div class="dropdown">
+                                                      <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                         Aksi
+                                                      </button>
+                                                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                         <a href="/detail-penggunaanBahan/{{ $data->uuid }}" class="dropdown-item">Detail</a>
+                                                      </div>
+                                                   </div>
                                                 @endif
                                              </td>
                                              {{-- STATUS : DITOLAK --}}

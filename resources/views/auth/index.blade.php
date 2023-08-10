@@ -64,11 +64,11 @@
                                 <form method="POST" action="/login" class="needs-validation">
                                     @csrf
                                     <div class="form-group">
-                                        <label for="niknis">NIK / NIS</label>
+                                        <label for="niknis">NIP / NIS</label>
                                         <input type="text" name="niknis" value="{{ old('niknis') }}"
                                             autocomplete="niknis"
                                             class="form-control @error('niknis') is-invalid @enderror"
-                                            placeholder="niknis" autofocus required>
+                                            placeholder="nip / nis" autofocus required>
                                         @error('niknis')
                                             <div class="input-group">
                                                 <span class="invalid-feedback" role="alert">
@@ -93,12 +93,12 @@
                                     </div>
                                     {{-- <div class="form-group">
                                         <div class="d-block">
-                                            <label for="password" class="control-label">Password</label> --}}
-                                    {{-- <div class="float-right">
-                        <a href="auth-forgot-password.html" class="text-small">
-                          Forgot Password?
-                        </a>
-                      </div> --}}
+                                            <label for="password" class="control-label">Password</label>
+                                    <div class="float-right">
+                                        <a href="auth-forgot-password.html" class="text-small">
+                                        Forgot Password?
+                                        </a>
+                                    </div> --}}
                                     {{-- </div>
                                         <input id="password" type="password" class="form-control" name="password"
                                             tabindex="2" required>

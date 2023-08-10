@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Log;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreLogRequest;
 use App\Http\Requests\UpdateLogRequest;
 
@@ -15,10 +16,11 @@ class LogController extends Controller
      */
     public function index()
     {
-        $datas = Log::latest()->cari(request(['search']))->paginate(20);
+        $datas = DB::table('Log')->get();
 
         // $datas = Log::latest()->paginate(10);
         // $datasCounted = Log::latest()->take(5)->get();
+        // return view('transactions.log.index', compact('datas'));
         return view('transactions.log.index', compact('datas'));
     }
 

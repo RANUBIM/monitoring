@@ -50,12 +50,12 @@ Examples for opt-in styling of tables (given their prevalent use in JavaScript p
                            </div>
                            <div class="card-body">
                               {{-- <div class="section-title mt-0">Light</div> --}}
-                              <table class="table table-hover table-responsive-lg table-bordered" id="example">
+                              <table class="table table-hover table-responsive-lg table-bordered text-center" id="example">
                                  <thead>
                                        <tr>
                                           <th scope="col">#</th>
                                           <th scope="col">Nama Labor</th>
-                                          <th scope="col">Data</th>
+                                          {{-- <th scope="col">Data</th> --}}
                                           <th scope="col">Aksi</th>
                                        </tr>
                                  </thead>
@@ -63,15 +63,15 @@ Examples for opt-in styling of tables (given their prevalent use in JavaScript p
                                        @foreach ($datas as $data)
                                           <tr>
                                              <th scope="row">{{ $loop->iteration }}</th>
-                                             <td>{{ $data->nama }}</td>
-                                             <td>
+                                             <td class="text-left">{{ $data->nama }}</td>
+                                             {{-- <td>
                                                 @foreach ($data->dataAlat as $dataAlat)
                                                    {{ $dataAlat['nama'] }} <br>
                                                 @endforeach
-                                             </td>
+                                             </td> --}}
 
                                              {{-- Tombol Aksi Dropdown --}}
-                                          <td>
+                                          <td class="text-right">
                                              <div class="dropdown">
                                                 <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                    Aksi

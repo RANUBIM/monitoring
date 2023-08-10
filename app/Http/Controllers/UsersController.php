@@ -56,7 +56,7 @@ class UsersController extends Controller
             'kontak' => 'string|required|max:255',
         ]);
 
-        $validatedData['password'] = bcrypt($validatedData['password']);
+        // $validatedData['password'] = bcrypt($validatedData['password']);
         $validatedData['uuid'] = Uuid::uuid4()->getHex();
         $validatedData['created_by'] = Auth::user()->id;
 
@@ -124,8 +124,7 @@ class UsersController extends Controller
             'kontak' => 'string|required|max:255',
 
         ]);
-        // $validatedData['updated_by'] = Auth::user()->id;
-        $validatedData['password'] = bcrypt($validatedData['password']);
+        // $validatedData['password'] = bcrypt($validatedData['password']);
         $validatedData['updated_by'] = Auth::user()->id;
 
         Users::where('uuid', $uuid)->first()->update($validatedData);

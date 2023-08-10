@@ -78,40 +78,45 @@
                                                 </div>
                                             @enderror
                                         </div>
-                                        <div class="row" id="inputSiswa">
-                                            <div class="form-group col-6">
-                                                <label for="kelas">Kelas</label>
-                                                <input type="text" name="kelas" class="form-control @error('kelas') is-invalid @enderror" id="kelas"
-                                                    placeholder="kelas" required autofocus value="{{ old('kelas', $data->kelas) }}">
-                                                @error('kelas')
-                                                    <div class="invalid-feedback">
-                                                        {{ $message }}
-                                                    </div>
-                                                @enderror
+                                        @if ($data->role == "Siswa")
+                                            <div class="row" id="inputSiswa">
+                                                <div class="form-group col-6">
+                                                    <label for="kelas">Kelas</label>
+                                                    <input type="text" name="kelas" class="form-control @error('kelas') is-invalid @enderror" id="kelas"
+                                                        placeholder="kelas" required autofocus value="{{ old('kelas', $data->kelas) }}">
+                                                    @error('kelas')
+                                                        <div class="invalid-feedback">
+                                                            {{ $message }}
+                                                        </div>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group col-6">
+                                                    <label for="jurusan">Jurusan</label>
+                                                    <input type="text" name="jurusan" class="form-control @error('jurusan') is-invalid @enderror" id="jurusan"
+                                                        placeholder="jurusan" required autofocus value="{{ old('jurusan', $data->jurusan) }}">
+                                                    @error('jurusan')
+                                                        <div class="invalid-feedback">
+                                                            {{ $message }}
+                                                        </div>
+                                                    @enderror
+                                                </div>
                                             </div>
-                                            <div class="form-group col-6">
-                                                <label for="jurusan">Jurusan</label>
-                                                <input type="text" name="jurusan" class="form-control @error('jurusan') is-invalid @enderror" id="jurusan"
-                                                    placeholder="jurusan" required autofocus value="{{ old('jurusan', $data->jurusan) }}">
-                                                @error('jurusan')
-                                                    <div class="invalid-feedback">
-                                                        {{ $message }}
-                                                    </div>
-                                                @enderror
+                                        @else
+                                            <div class="" id="inputGuru">
+                                                <div class="form-group">
+                                                    <label for="mapel">Mata Pelajaran</label>
+                                                    <input type="text" name="mapel" class="form-control @error('mapel') is-invalid @enderror" id="mapel"
+                                                        placeholder="mapel" required autofocus value="{{ old('mapel', $data->mapel) }}">
+                                                    @error('mapel')
+                                                        <div class="invalid-feedback">
+                                                            {{ $message }}
+                                                        </div>
+                                                    @enderror
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="" id="inputGuru">
-                                            <div class="form-group">
-                                                <label for="mapel">Mata Pelajaran</label>
-                                                <input type="text" name="mapel" class="form-control @error('mapel') is-invalid @enderror" id="mapel"
-                                                    placeholder="mapel" required autofocus value="{{ old('mapel', $data->mapel) }}">
-                                                @error('mapel')
-                                                    <div class="invalid-feedback">
-                                                        {{ $message }}
-                                                    </div>
-                                                @enderror
-                                            </div>
-                                        </div>
+                                        @endif
+                                        
+                                        
                                         <div class="form-group">
                                             <label for="kontak">Kontak</label>
                                             <input type="text" name="kontak" class="form-control @error('kontak') is-invalid @enderror" id="kontak"
@@ -133,7 +138,7 @@
                                             @enderror
                                         </div> --}}
                                         <button type="submit" class="btn btn-primary me-2">Submit</button>
-                                        <button class="btn btn-light">Cancel</button>
+                                        <a href="{{ url('user') }}" class="btn btn-light">Cancel</a>
                                     </form>  
                                 @endforeach                              
                             </div>

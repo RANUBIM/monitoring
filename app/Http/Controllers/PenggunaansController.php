@@ -544,7 +544,8 @@ class PenggunaansController extends Controller
         ]);
         // dd($validatedDataUUID);
 
-        $validatedData['status'] = $request->status;
+        $validatedData['status'] = "tolak";
+        $validatedData['note'] = $request->note;
         
         // $validatedData['status'] = "2";
         // dd($validatedData);

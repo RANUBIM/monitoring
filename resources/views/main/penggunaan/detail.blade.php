@@ -112,6 +112,18 @@
                                                 </div>
                                             @enderror
                                         </div>
+                                    @elseif ( $datas->status == "tolak" )
+                                        <div class="form-group">
+                                            <label for="note">Alasan Penolakan</label>
+                                            <textarea type="text" name="note" class="form-control @error('note') is-invalid @enderror" id="note"
+                                                placeholder="note" autofocus value="" readonly>{{ old('note', $datas->note) }}</textarea>
+                                            @error('note')
+                                                <div class="invalid-feedback">
+                                                    {{-- {{ $message }} --}}
+                                                    "Harap mengisi tujuan kegiatan"
+                                                </div>
+                                            @enderror
+                                        </div>
                                     @else
                                     @endif
                                     {{-- <button type="submit" class="btn btn-primary me-2">Submit</button>
@@ -128,29 +140,32 @@
                 <div class="row">
                     <div class="col-12 col-md-12 col-lg-12">
                         <div class="card">
-                            <div class="card-header">
-                                @if ( $datas->status == "5")
-                                @else
-                                    <a href="/detail-penggunaanBahan/{{ $datas->uuid }}" class="btn btn-primary"><i
-                                        class="fa fa-redo"></i></a>
-                                @endif
-
-                                @if ( $datas->status == "1")
-                                    @if (Auth::user()->nama == $datas->dataUser->nama)
-                                        <a href="/create-penggunaanBahan/{{ $datas->uuid }}" class="btn btn-primary ">Tambah</a>
+                            @if ( $datas->status == "5" || $datas->status == "tolak")
+                            @else
+                                <div class="card-header">
+                                    @if ( $datas->status == "5")
+                                    @else
+                                        <a href="/detail-penggunaanBahan/{{ $datas->uuid }}" class="btn btn-primary"><i
+                                            class="fa fa-redo"></i></a>
                                     @endif
-                                @elseif ( $datas->status == "2")
-                                    {{-- output_if --}}
-                                @elseif ( $datas->status == "3")
-                                    {{-- output_if --}}
-                                @elseif ( $datas->status == "4")
-                                    {{-- output_if --}}
-                                @elseif ( $datas->status == "5")
-                                    {{-- output_if --}}
-                                @else
-                                    {{-- output_if --}}
-                                @endif
-                            </div>
+
+                                    @if ( $datas->status == "1")
+                                        @if (Auth::user()->nama == $datas->dataUser->nama)
+                                            <a href="/create-penggunaanBahan/{{ $datas->uuid }}" class="btn btn-primary ">Tambah</a>
+                                        @endif
+                                    @elseif ( $datas->status == "2")
+                                        {{-- output_if --}}
+                                    @elseif ( $datas->status == "3")
+                                        {{-- output_if --}}
+                                    @elseif ( $datas->status == "4")
+                                        {{-- output_if --}}
+                                    @elseif ( $datas->status == "5")
+                                        {{-- output_if --}}
+                                    @else
+                                        {{-- output_if --}}
+                                    @endif
+                                </div>
+                            @endif
                             <div class="card-body">
                                 {{-- <div class="section-title mt-0">Light</div> --}}
                                 <table class="table table-hover table-responsive-lg table-bordered text-center">
@@ -242,7 +257,7 @@
                                                                 </form>
                                                             @endif
                                                         @elseif ($datas->status == "3")
-                                                            @if (Auth::user()->role == "Kepala Jurusan" && $item->pivot->status == "0")
+                                                            {{-- @if (Auth::user()->role == "Kepala Jurusan" && $item->pivot->status == "0")
                                                                 <form action="/check-penggunaanBahan/{{ $item->pivot->uuid }}"
                                                                     method="POST" class="d-inline">
                                                                     @method('GET')
@@ -259,7 +274,7 @@
                                                                 </form>
                                                             @elseif ($item->pivot->status == "1")
                                                                 <button class="btn btn-success">Checked!</button>
-                                                            @endif
+                                                            @endif --}}
                                                         @elseif ($datas->status == "4")
                                                             
                                                         @else
@@ -390,8 +405,8 @@
                         @csrf
                         {{-- <input type="hidden" name="namaAlat" value="{{ $datas->nama }}"> --}}
                         <input type="hidden" name="uuid" value="{{ $datas->uuid }}">
-                        <label for="status"></label>
-                        <textarea class="form-control" name="status" id="status" cols="30" rows="10"></textarea>
+                        <label for="note"></label>
+                        <textarea class="form-control" name="note" id="note" cols="30" rows="10"></textarea>
                         {{-- <input type="hidden" name="uuidAlat" value="{{ $item->uuid }}">
                         <input type="hidden" name="uuidPivot" value="{{ $item->pivot->uuid }}"> --}}
                     </div>

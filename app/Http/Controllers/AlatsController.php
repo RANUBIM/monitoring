@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 
-use Ramsey\Uuid\Uuid;
 use App\Models\Alats;
+use Ramsey\Uuid\Uuid;
 use App\Models\Labors;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 // use App
@@ -176,5 +178,24 @@ class AlatsController extends Controller
         $data->delete();
 
         return redirect()->route('alat.index')->with('delete', 'Data alat berhasil dihapus');
+    }
+
+    public function printAlat(request $request)
+    {
+        $datas = Alats::with('dataLabor')->get();
+
+        
+        // $datas = DB::table('alats')->get();
+        // $datas = DB::table('alats.*','labors.*')
+        // ->where('alats.deleted_by',null)
+        // ->join('labors','labors.id','=','alats.labor_id')->get();
+        // dd($datas);
+        
+        // print halaman
+        // $pdf = Pdf::loadView('pdf.print-alat', ['datas'=>$datas]);
+        // return $pdf->download('Data Alat'.Carbon::now()->timestamp.'.pdf');
+
+        // lihat halaman
+        return view('pdf.print-alat', compact('datas'));
     }
 }

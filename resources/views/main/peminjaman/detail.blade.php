@@ -114,7 +114,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    @if ( $datas->status == "7" )
+                                    @if ( $datas->status == "8" )
                                         <div class="row">
                                             <div class="form-group col-6">
                                                 <label for="kondisi_peminjaman">Kondisi Peminjaman</label>
@@ -139,6 +139,18 @@
                                                 @enderror
                                             </div>
                                         </div>
+                                    @elseif ( $datas->status == "tolak" )
+                                        <div class="form-group">
+                                            <label for="kondisi_peminjaman">Alasan Penolakan</label>
+                                            <textarea type="text" name="kondisi_peminjaman" class="form-control @error('kondisi_peminjaman') is-invalid @enderror" id="kondisi_peminjaman"
+                                                placeholder="kondisi_peminjaman" autofocus value="" readonly>{{ old('kondisi_peminjaman', $datas->kondisi_peminjaman) }}</textarea>
+                                            @error('kondisi_peminjaman')
+                                                <div class="invalid-feedback">
+                                                    {{-- {{ $message }} --}}
+                                                    "Harap mengisi tujuan kegiatan"
+                                                </div>
+                                            @enderror
+                                        </div>
                                     @else
                                     @endif
                                     {{-- <div class="form-group">
@@ -159,39 +171,66 @@
                 </div>
                 {{-- /DATA DETAIL PEMINJAMAN --}}
 
+                {{-- Notif --}}
+                @if (session()->has('success'))
+                    <div class="alert alert-primary alert-dismissible show fade">
+                        <div class="alert-body">
+                        <button class="close" data-dismiss="alert">
+                            <span>&times;</span>
+                        </button>
+                        {{ session('success') }}
+                        </div>
+                    </div>
+                @endif
+                @if (session()->has('delete'))
+                    <div class="alert alert-danger alert-dismissible show fade">
+                        <div class="alert-body">
+                        <button class="close" data-dismiss="alert">
+                            <span>&times;</span>
+                        </button>
+                        {{ session('delete') }}
+                        </div>
+                    </div>
+                @endif
+                {{-- /Notif --}}
+
                 {{-- DATA PEMINJAMAN ALAT --}}
                 <div class="row">
                     <div class="col-12 col-md-12 col-lg-12">
                         <div class="card">
-                            <div class="card-header">
-                                @if ( $datas->status == "8")
-                                @else
-                                    <a href="/detail-peminjamanAlat/{{ $datas->uuid }}" class="btn btn-primary"><i
-                                        class="fa fa-redo"></i></a>
-                                @endif
-
-                                @if ( $datas->status == "1")
-                                    @if (Auth::user()->nama == $datas->dataUser->nama)
-                                        <a href="/create-peminjamanAlat/{{ $datas->uuid }}" class="btn btn-primary ">Tambah</a>
+                            @if ( $datas->status == "8" || $datas->status == "tolak")
+                            @else
+                                <div class="card-header">
+                                    @if ( $datas->status == "8" || $datas->status == "tolak")
+                                    @else
+                                        <a href="/detail-peminjamanAlat/{{ $datas->uuid }}" class="btn btn-primary"><i
+                                            class="fa fa-redo"></i></a>
                                     @endif
-                                @elseif ( $datas->status == "2")
-                                    {{-- output_if --}}
-                                @elseif ( $datas->status == "3")
-                                    {{-- output_if --}}
-                                @elseif ( $datas->status == "4")
-                                    {{-- output_if --}}
-                                @elseif ( $datas->status == "5")
-                                    {{-- output_if --}}
-                                @elseif ( $datas->status == "6")
-                                    {{-- output_if --}}
-                                @elseif ( $datas->status == "7")
-                                    {{-- output_if --}}
-                                @elseif ( $datas->status == "8")
-                                    {{-- output_if --}}
-                                @else
-                                    {{-- output_if --}}
-                                @endif
-                            </div>
+
+                                    @if ( $datas->status == "1")
+                                        @if (Auth::user()->nama == $datas->dataUser->nama)
+                                            <a href="/create-peminjamanAlat/{{ $datas->uuid }}" class="btn btn-primary ">Tambah</a>
+                                        @endif
+                                    @elseif ( $datas->status == "2")
+                                        {{-- output_if --}}
+                                    @elseif ( $datas->status == "3")
+                                        {{-- output_if --}}
+                                    @elseif ( $datas->status == "4")
+                                        {{-- output_if --}}
+                                    @elseif ( $datas->status == "5")
+                                        {{-- output_if --}}
+                                    @elseif ( $datas->status == "6")
+                                        {{-- output_if --}}
+                                    @elseif ( $datas->status == "7")
+                                        {{-- output_if --}}
+                                    @elseif ( $datas->status == "8")
+                                        {{-- output_if --}}
+                                    @else
+                                        {{-- output_if --}}
+                                    @endif
+                                </div>
+                            @endif
+
                             <div class="card-body">
                                 {{-- <div class="section-title mt-0">Light</div> --}}
                                 <table class="table table-hover table-responsive-lg table-bordered text-center">
@@ -366,18 +405,18 @@
                                     {{-- TOMBOL CHANGE STATUS --}}
                                     {{-- {{ $datas->dataAlat as $item }} --}}
                                     @if ( $datas->status == "1")
-                                    <div class="text-right">
-                                        @if (Auth::user()->nama == $datas->dataUser->nama)
-                                            <form action="/status1-peminjamanAlat/{{ $datas->uuid }}"
-                                                method="POST" class="d-inline">
-                                                @method('GET')
-                                                @csrf
-                                                {{-- <input type="hidden" name="namaAlat" value="{{ $datas->nama }}"> --}}
-                                                <input type="hidden" name="uuid" value="{{ $datas->uuid }}">
-                                                {{-- <input type="hidden" name="uuidAlat" value="{{ $item->uuid }}">
-                                                <input type="hidden" name="uuidPivot" value="{{ $item->pivot->uuid }}"> --}}
-                                                <button type="submit" class="btn btn-primary">Ajukan Peminjaman</button>
-                                            </form>
+                                        <div class="text-right">
+                                            @if (Auth::user()->nama == $datas->dataUser->nama)
+                                                <form action="/status1-peminjamanAlat/{{ $datas->uuid }}"
+                                                    method="POST" class="d-inline">
+                                                    @method('GET')
+                                                    @csrf
+                                                    {{-- <input type="hidden" name="namaAlat" value="{{ $datas->nama }}"> --}}
+                                                    <input type="hidden" name="uuid" value="{{ $datas->uuid }}">
+                                                    {{-- <input type="hidden" name="uuidAlat" value="{{ $item->uuid }}">
+                                                    <input type="hidden" name="uuidPivot" value="{{ $item->pivot->uuid }}"> --}}
+                                                    <button type="submit" class="btn btn-primary">Ajukan Peminjaman</button>
+                                                </form>
                                             @endif
                                             <a class="btn btn-secondary" href="/peminjaman">Cancel</a>
                                         </div>
@@ -475,6 +514,9 @@
                                         </div>
                                     @else
                                     {{-- output_if --}}
+                                        <div class="text-right">
+                                            <a class="btn btn-primary" href="/peminjaman">Cancel</a>
+                                        </div>
                                     @endif
                                     {{-- @endforeach --}}
                                     {{-- TOMBOL CHANGE STATUS --}}
@@ -494,7 +536,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Modal title</h5>
+                    <h5 class="modal-title">Modal Tolak Pengajuan Peminjaman</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -505,8 +547,8 @@
                         @csrf
                         {{-- <input type="hidden" name="namaAlat" value="{{ $datas->nama }}"> --}}
                         <input type="hidden" name="uuid" value="{{ $datas->uuid }}">
-                        <label for="status"></label>
-                        <textarea class="form-control" name="status" id="status" cols="30" rows="10"></textarea>
+                        <label for="kondisi_peminjaman"></label>
+                        <textarea class="form-control" name="kondisi_peminjaman" id="kondisi_peminjaman" cols="30" rows="10"></textarea>
                         {{-- <input type="hidden" name="uuidAlat" value="{{ $item->uuid }}">
                         <input type="hidden" name="uuidPivot" value="{{ $item->pivot->uuid }}"> --}}
                     </div>

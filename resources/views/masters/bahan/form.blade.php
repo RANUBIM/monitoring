@@ -116,7 +116,7 @@
                                         @enderror
                                     </div>
                                     <button type="submit" class="btn btn-primary me-2">Submit</button>
-                                    <button class="btn btn-light">Cancel</button>
+                                    <a href="{{ url('bahan') }}" class="btn btn-light">Cancel</a>
                                 </form>                                
                             </div>
                         </div>

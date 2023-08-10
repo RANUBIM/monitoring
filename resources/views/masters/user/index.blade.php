@@ -56,9 +56,10 @@
                                           <th scope="col">Role</th>
                                           <th scope="col">NIK/NIS</th>
                                           <th scope="col">Nama</th>
-                                          <th scope="col">Kelas</th>
+                                          <th scope="col">Keterangan</th>
+                                          {{-- <th scope="col">Kelas</th>
                                           <th scope="col">Jurusan</th>
-                                          <th scope="col">Mata Pelajaran</th>
+                                          <th scope="col">Mata Pelajaran</th> --}}
                                           <th scope="col">Kontak</th>
                                           <th scope="col">Aksi</th>
                                        </tr>
@@ -70,9 +71,11 @@
                                           <td>{{ $data->role }}</td>
                                           <td>{{ $data->niknis }}</td>
                                           <td>{{ $data->nama }}</td>
-                                          <td>{{ $data->kelas }}</td>
-                                          <td>{{ $data->jurusan }}</td>
-                                          <td>{{ $data->mapel }}</td>
+                                          @if ($data->role != "Siswa")
+                                             <td>{{ $data->mapel }}</td>
+                                          @else
+                                             <td>{{ $data->kelas }} {{ $data->jurusan }}</td>
+                                          @endif
                                           <td>{{ $data->kontak }}</td>
                                           {{-- Tombol Aksi Dropdown --}}
                                           <td>

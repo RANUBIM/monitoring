@@ -13,6 +13,7 @@ use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Crypt;
 
 class LoginController extends Controller
 {
@@ -34,35 +35,91 @@ class LoginController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function authenticate(Request $request)
-    {
-      // dd(User::get()->where('username', $request->username)->firstOrFail());
+  public function authenticate(Request $request)
+  {
       $credentials = $request->validate([
-          'niknis'=> 'required',
-          'password' => 'required',
-      ]);
+        'niknis'=> 'required',
+        'password' => 'required',
+    ]);
+    // dd($credentials);
+    // dd(User::get()->where('niknis', $request->niknis)->firstOrFail());
 
-      if (Auth::attempt($credentials)) {
 
-          $request->session()->regenerate();
+    $user = User::where('niknis',$request->niknis)->first();
+    // dd($user->password);
+    
+    $pass1 = $request['password'];
+    // dd($pass1);
 
-          $data = User::get()->where('niknis', $request->niknis)->firstOrFail();
+    // $pass2 = ($user->password);
+    // if(Hash::check($request->password, $user->password)){
+    //   dd("puri puri prisoner");
+    // }else{
+    //   dd("gagal");
+    // }
 
-          $log = [
-            'uuid' => Uuid::uuid4()->getHex(),
-            'user_id' => Auth::user()->id,
-            'description' => '<em>Login</em> akun <strong>[' . $data->nama . ']</strong>',
-            'category' => 'login',
-            'created_at' => now(),
-          ];
+    // LOGIN BIASA
+    if($user && $request->password == $user->password){
+      // dd("sukses");
+      Auth::login($user);
+      if(Auth::check()){
 
-          DB::table('logs')->insert($log);
+      $request->session()->regenerate();
 
-          return redirect()->intended('/');
+      $data = User::get()->where('niknis', $request->niknis)->firstOrFail();
+
+      $log = [
+          'uuid' => Uuid::uuid4()->getHex(),
+          'user_id' => Auth::user()->id,
+          'description' => '<em>Login</em> akun <strong>[' . $data->nama . ']</strong>',
+          'category' => 'login',
+          'created_at' => now(),
+      ];
+
+      DB::table('logs')->insert($log);
+
+      return redirect()->intended('/');
+
       }
-      
-      // dd('gagal login');
+    }else{
       return back()->with('loginError', 'Username atau Password salah');
+    }
+    // /LOGIN BIASA
+
+      
+    //   Auth::login($user);
+    //   if(Auth::check()){
+    //     return "success";
+    //   }else{
+    //       return "not logged in";
+    //   }
+    // // return "Success";
+    // }else{
+    //   return "Error";
+    // }
+
+    
+    // if (Auth::attempt($credentials)) {
+
+    //   $request->session()->regenerate();
+
+    //   $data = User::get()->where('niknis', $request->niknis)->firstOrFail();
+
+    //   // $log = [
+    //   //     'uuid' => Uuid::uuid4()->getHex(),
+    //   //     'user_id' => Auth::user()->id,
+    //   //     'description' => '<em>Login</em> akun <strong>[' . $data->name . ']</strong>',
+    //   //     'category' => 'login',
+    //   //     'created_at' => now(),
+    //   // ];
+
+    //   // DB::table('logs')->insert($log);
+
+    //   return redirect()->intended('/');
+    // }
+
+
+    return back()->with('loginError', 'Username atau Password salah');
   }
 
 
