@@ -729,4 +729,24 @@ class PenggunaansController extends Controller
 
         return redirect('/penggunaan')->with('delete','Status penggunaan bahan ditolak');
     }
+
+    public function penggunaanBahanPrint(request $request, $uuid)
+    {
+        $datas = Penggunaans::with(['dataUser','dataBahan.dataLabor'])->where('uuid', $uuid)->first();
+
+        
+        // $datas = DB::table('alats')->get();
+        // $datas = DB::table('alats.*','labors.*')
+        // ->where('alats.deleted_by',null)
+        // ->join('labors','labors.id','=','alats.labor_id')->get();
+        // dd($datas);
+        
+        // print halaman
+        // $pdf = Pdf::loadView('pdf.print-alat', ['datas'=>$datas]);
+        // return $pdf->download('Data Alat'.Carbon::now()->timestamp.'.pdf');
+
+        // lihat halaman
+        // return view('Alat', compact('datas'));
+        return view('main.penggunaan.print', compact('datas'));
+    }
 }

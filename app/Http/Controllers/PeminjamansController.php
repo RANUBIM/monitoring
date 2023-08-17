@@ -959,4 +959,24 @@ class PeminjamansController extends Controller
 
         return redirect('/peminjaman')->with('delete','Status Peminjaman ditolak');
     }
+
+    public function peminjamanAlatPrint(request $request, $uuid)
+    {
+        $datas = Peminjamans::with(['dataUser','dataAlat.dataLabor'])->where('uuid', $uuid)->first();
+
+        
+        // $datas = DB::table('alats')->get();
+        // $datas = DB::table('alats.*','labors.*')
+        // ->where('alats.deleted_by',null)
+        // ->join('labors','labors.id','=','alats.labor_id')->get();
+        // dd($datas);
+        
+        // print halaman
+        // $pdf = Pdf::loadView('pdf.print-alat', ['datas'=>$datas]);
+        // return $pdf->download('Data Alat'.Carbon::now()->timestamp.'.pdf');
+
+        // lihat halaman
+        // return view('Alat', compact('datas'));
+        return view('main.peminjaman.print', compact('datas'));
+    }
 }

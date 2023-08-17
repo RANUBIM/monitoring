@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Data Alat</title>
+    <title>Data BAHAN</title>
     <meta name="description" content="">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
@@ -90,7 +90,7 @@
                                 <center>
                                     <font style="font-weight: bold; text-decoration: underline;">
                                         {{-- {{ strtoupper($data->letter_name) }}</font> --}}
-                                        DATA ALAT
+                                        DATA BAHAN
                                     <br>
                                     {{-- Nomor : Index Surat --}}
                                     {{-- {{ $data->letter_index }} --}}
@@ -158,7 +158,7 @@
                     </tr>
                     <tr>
                         <th scope="col">Tersedia</th>
-                        <th scope="col">Dipinjam</th>
+                        <th scope="col">Digunakan</th>
                         <th scope="col">Total</th>
                     </tr>
                 </thead>
@@ -169,8 +169,8 @@
                             <td>{{ $data->dataLabor['nama'] }}</td>
                             <td>{{ $data->nama }}</td>
                             <td>{{ $data->spesifikasi }}</td>
-                            <td>{{ $data->stok - $data->dipinjam }} {{ $data->satuan }}</td>
-                            <td>{{ $data->dipinjam }} {{ $data->satuan }}</td>
+                            <td>{{ $data->stok - $data->digunakan }} {{ $data->satuan }}</td>
+                            <td>{{ $data->digunakan }} {{ $data->satuan }}</td>
                             <td>{{ $data->stok }} {{ $data->satuan }}</td>
                             </tr>
                         @endforeach

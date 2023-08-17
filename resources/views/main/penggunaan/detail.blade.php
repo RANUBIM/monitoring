@@ -6,9 +6,9 @@
             <div class="section-header">
                 <h1>Penggunaan</h1>
                 <div class="section-header-breadcrumb">
-                    <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-                    <div class="breadcrumb-item"><a href="#">Forms</a></div>
-                    <div class="breadcrumb-item">Advanced Forms</div>
+                    <div class="breadcrumb-item active"><a href="#">Main Data</a></div>
+                    <div class="breadcrumb-item"><a href="#">Detail Penggunaan</a></div>
+                    <div class="breadcrumb-item">Data Penggunaan Bahan</div>
                 </div>
             </div>
 
@@ -373,6 +373,17 @@
                                 @elseif ( $datas->status == "5")
                                 {{-- Status: Alat dipinjam --}}
                                     <div class="text-right">
+                                        <form action="/print-penggunaanBahan/{{ $datas->uuid }}"
+                                            method="POST" class="d-inline">
+                                            @method('GET')
+                                            @csrf
+                                            {{-- <input type="hidden" name="namaAlat" value="{{ $datas->nama }}"> --}}
+                                            <input type="hidden" name="uuid" value="{{ $datas->uuid }}">
+                                            {{-- <input type="hidden" name="uuidAlat" value="{{ $item->uuid }}">
+                                            <input type="hidden" name="uuidPivot" value="{{ $item->pivot->uuid }}"> --}}
+                                            <button type="submit" class="btn btn-primary">Print</button>
+                                        </form>
+
                                         <a class="btn btn-primary" href="/penggunaan">Cancel</a>
                                     </div>
                                 @else

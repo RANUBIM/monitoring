@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Data Alat</title>
+    <title>Data Bahan</title>
     <meta name="description" content="">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
@@ -69,7 +69,7 @@
                 </div>
                 <br>
                 <div class="detail-judul" style="font-size: 15px;">
-                    <strong>DAFTAR INVENTARIS FASILITAS RUANG</strong>
+                    <strong>BUKTI PENGAMBILAN BAHAN PRAKTEK</strong>
                 </div>
                 </center>
             </div>
@@ -90,7 +90,7 @@
                                 <center>
                                     <font style="font-weight: bold; text-decoration: underline;">
                                         {{-- {{ strtoupper($data->letter_name) }}</font> --}}
-                                        DATA ALAT
+                                        DATA PENGGUNAAN BAHAN
                                     <br>
                                     {{-- Nomor : Index Surat --}}
                                     {{-- {{ $data->letter_index }} --}}
@@ -110,70 +110,123 @@
             <table align="justify" style="line-height: 1.5;">
                 <tr>
                     <td>
-                        <span>&nbsp;&nbsp;&nbsp;&nbsp;</span> Kepala Desa [Nama Desa] Kecamatan [Kecamatan] Kabupaten /Kota [Kota] dengan ini menerangkan bahwa:
+                        <span>&nbsp;&nbsp;&nbsp;&nbsp;</span> Kondisi alat sebelum peminjamaan <strong>{{ $datas->kondisi_peminjaman }}</strong>, kondisi alat saat dikembalikan <strong>{{ $datas->kondisi_pengembalian }}</strong>
                     </td>
                 </tr>
             </table>
         </div> --}}
         {{-- /KATA PEMBUKA --}}
 
-        {{-- <div class="text-intro">
+        {{-- DATA --}}
+        <div class="row">
             <div style="line-height: 1; margin-top: 10px;">
-                <table align="left" width="540">
-                    <tr>
-                        <td width="180"><span style="display:inline-block; width: 35 px;"></span>Nama </td>
-                        <td width="2">: </td>
-                        <td>
-                            <font style="font-weight: bold; "> 
-                                Name
-                            </font>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="180"><span style="display:inline-block; width: 35 px;"></span>NIK</td>
-                        <td width="2">: </td>
-                        <td>NIK</td>
-                    </tr>
-                    <tr>
-                        <td width="180"><span style="display:inline-block; width: 35 px;"></span>Jenis Kelamin</td>
-                        <td width="2">: </td>
-                        <td>Gender</td>
-                    </tr>
-                </table>
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-4">
+                            Pengguna
+                        </div>
+                        <div class="col-8">
+                            : {{ $datas->dataUser->nama }}
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-4">
+                            Mata Pelajaran/Kegiatan
+                        </div>
+                        <div class="col-8">
+                            : {{ $datas->kegiatan }}
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-4">
+                            Tujuan
+                        </div>
+                        <div class="col-8">
+                            : {{ $datas->tujuan }}
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-4">
+                            Tanggal Penggunaan
+                        </div>
+                        <div class="col-8">
+                            : {{ \Carbon\Carbon::parse($datas->tgl_permintaan)->translatedFormat('d M Y') }} 
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-4">
+                            Kondisi Bahan
+                        </div>
+                        <div class="col-8">
+                            : {{ $datas->note }}
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div> --}}
+        </div>
+        {{-- DATA --}}
         
         <br>
         
         {{-- DATA --}}
         <div class="col-12">
-            <table class="table table-hover table-responsive-lg table-bordered">
+            <table class="table table-hover table-responsive-lg table-bordered text-center">
                 <thead>
-                    <tr class="align-middle text-center">
-                        <th scope="col" rowspan="2">#</th>
-                        <th scope="col" rowspan="2">Labor</th>
-                        <th scope="col" rowspan="2">Nama</th>
-                        <th scope="col" rowspan="2">Spesifikasi</th>
-                        <th scope="col" colspan="3" class="text-center">Stok</th>
-                    </tr>
                     <tr>
-                        <th scope="col">Tersedia</th>
-                        <th scope="col">Dipinjam</th>
-                        <th scope="col">Total</th>
+                        <th scope="col">#</th>
+                        <th scope="col">Labor</th>
+                        <th scope="col">Nama Bahan</th>
+                        <th scope="col">Spesifikasi</th>
+                        <th scope="col">Jumlah</th>
                     </tr>
                 </thead>
                 <tbody>
-                        @foreach ($datas as $data)
-                            <tr>
+                    {{-- @foreach ($datas as $data) --}}
+                    @foreach ($datas->dataBahan as $item)
+                        <tr>
                             <th scope="row">{{ $loop->iteration }}</th>
-                            <td>{{ $data->dataLabor['nama'] }}</td>
-                            <td>{{ $data->nama }}</td>
-                            <td>{{ $data->spesifikasi }}</td>
-                            <td>{{ $data->stok - $data->dipinjam }} {{ $data->satuan }}</td>
-                            <td>{{ $data->dipinjam }} {{ $data->satuan }}</td>
-                            <td>{{ $data->stok }} {{ $data->satuan }}</td>
-                            </tr>
-                        @endforeach
+                            <td class="text-left">{{ $item->dataLabor->nama }}</td>
+                            <td class="text-left">{{ $item->nama }}</td>
+                            <td class="text-left">{{ $item->spesifikasi }}</td>
+                            <td>{{ $item->pivot->jumlah }} {{ $item->satuan }}</td>
+                            {{-- <td>
+                            @foreach ($datas->dataAlat as $item)
+                            {{ $item['nama'] }}
+                            @endforeach
+                        </td>
+                        <td>
+                            @foreach ($datas->dataAlat as $item)
+                            {{ $item->pivot->jumlah }}
+                            @endforeach
+                        </td> --}}
+
+                            {{-- Tombol Aksi Dropdown --}}
+                            {{-- <td>
+                                <div class="dropdown">
+                                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Dropdown button
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a href="/detail-peminjaman/{{ $datas->uuid }}" class="dropdown-item">Detail</a>
+                                        <a href="/peminjaman/{{ $datas->uuid }}/edit" class="dropdown-item">Edit</a>
+                                        
+                                        <form action="/peminjaman/{{ $datas->uuid }}" method="post"
+                                            class="d-inline">
+                                            @method('delete')
+                                            @csrf
+                                            <button type="submit" class="a dropdown-item"><a>Hapus</a></button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </td> --}}
+                            {{-- /Tombol Aksi Dropdown --}}
+                        </tr>
+                    @endforeach
+                    {{-- @endforeach --}}
                 </tbody>
             </table>
         </div>
@@ -205,7 +258,7 @@
                             <td></td>
                         </tr>
                         <tr>
-                            <td style=" border-bottom: 1px solid #000; ">Waka Sarana</td>
+                            <td style=" border-bottom: 1px solid #000; ">Kepala Bagian/Unit Kerja</td>
                             {{-- <td style=" border-bottom: 1px solid #000;">: </td>
                             <td style=" border-bottom: 1px solid #000;"> --}}
                                 {{-- {{ \Carbon\Carbon::now()->translatedFormat('d MM Y') }} --}}
@@ -226,7 +279,7 @@
         
                         </tr>
                         <tr>
-                            <td style=" border-bottom: 1px solid #000; ">Ketua Unit Kompetensi Keahlian</td>
+                            <td style=" border-bottom: 1px solid #000; ">Pengguna</td>
                             {{-- <td style=" border-bottom: 1px solid #000;">: </td>
                             <td style=" border-bottom: 1px solid #000;"> --}}
                                 
@@ -249,7 +302,7 @@
                 <tr>
                     <td width=""> </td>
                     <td>
-                        <center><u><b> Sri Hartanti </b></u></center>
+                        <center><u><b> Riki Arso, S.Kom </b></u></center>
                     </td>
                 </tr>
             </table>
@@ -265,7 +318,7 @@
                 <tr>
                     <td width=""> </td>
                     <td>
-                        <center><u><b> Riki Arso, S.Kom </b></u></center>
+                        <center><u><b> {{ $datas->dataUser->nama }} </b></u></center>
                     </td>
                 </tr>
             </table>

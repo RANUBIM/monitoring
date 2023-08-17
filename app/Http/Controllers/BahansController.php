@@ -218,4 +218,24 @@ class BahansController extends Controller
 
         return redirect()->route('bahan.index')->with('delete', 'Data bahan berhasil dihapus');
     }
+
+    public function printBahan(request $request)
+    {
+        $datas = Bahans::with('dataLabor')->get();
+
+        
+        // $datas = DB::table('alats')->get();
+        // $datas = DB::table('alats.*','labors.*')
+        // ->where('alats.deleted_by',null)
+        // ->join('labors','labors.id','=','alats.labor_id')->get();
+        // dd($datas);
+        
+        // print halaman
+        // $pdf = Pdf::loadView('pdf.print-alat', ['datas'=>$datas]);
+        // return $pdf->download('Data Alat'.Carbon::now()->timestamp.'.pdf');
+
+        // lihat halaman
+        // return view('Alat', compact('datas'));
+        return view('masters.bahan.print', compact('datas'));
+    }
 }

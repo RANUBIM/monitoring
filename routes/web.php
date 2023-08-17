@@ -51,7 +51,7 @@ Route::resource('bahan', BahansController::class)->middleware('auth');
 
 //Print
 Route::get('/printAlat', [AlatsController::class, 'printAlat'])->middleware('auth');
-Route::get('/printBahan', [AlatsController::class, 'printBahan'])->middleware('auth');
+Route::get('/printBahan', [BahansController::class, 'printBahan'])->middleware('auth');
 
 // Peminjaman
 Route::resource('peminjaman', PeminjamansController::class)->middleware('auth');
@@ -77,6 +77,7 @@ Route::get('/check-peminjamanAlat/{uuid}', [PeminjamansController::class, 'pemin
 Route::get('/kondisiPeminjaman-peminjamanAlat/{uuid}', [PeminjamansController::class, 'peminjamanAlatKondisiPeminjaman'])->middleware('auth');
 Route::get('/check-pengembalianAlat/{uuid}', [PeminjamansController::class, 'pengembalianAlatCheck'])->middleware('auth');
 Route::get('/kondisiPengembalian-peminjamanAlat/{uuid}', [PeminjamansController::class, 'peminjamanAlatKondisiPengembalian'])->middleware('auth');
+Route::get('/print-peminjamanAlat/{uuid}', [PeminjamansController::class, 'peminjamanAlatPrint'])->middleware('auth');
 
 // Penggunaan
 Route::resource('penggunaan', PenggunaansController::class)->middleware('auth');
@@ -95,3 +96,4 @@ Route::get('/note-penggunaanBahan/{uuid}', [PenggunaansController::class, 'pengg
 Route::get('/status3-penggunaanBahan/{uuid}', [PenggunaansController::class, 'penggunaanBahanStatus3'])->middleware('auth');
 Route::get('/status4-penggunaanBahan/{uuid}', [PenggunaansController::class, 'penggunaanBahanStatus4'])->middleware('auth');
 Route::get('/statusTolak-penggunaanBahan/{uuid}', [PenggunaansController::class, 'penggunaanBahanStatusTolak'])->middleware('auth');
+Route::get('/print-penggunaanBahan/{uuid}', [PenggunaansController::class, 'penggunaanBahanPrint'])->middleware('auth');
