@@ -195,4 +195,6 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
 
+    'MyLibrary'      => App\MyLibrary::class,
+
 ];

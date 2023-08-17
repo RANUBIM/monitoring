@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use App\MyLibrary;
 
-use Ramsey\Uuid\Uuid;
 use App\Models\Users;
-use Illuminate\Support\Facades\DB;
+use Ramsey\Uuid\Uuid;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class UsersController extends Controller
@@ -19,8 +20,11 @@ class UsersController extends Controller
      */
     public function index()
     {
+        $user = ['role' => Auth::user()->role, 'id' => Auth::user()->id];
+        $dataNotif = MyLibrary::ambilNotif($user);
+
         $datas = Users::all();
-        return view('masters.user.index', compact('datas'));
+        return view('masters.user.index', compact('datas','dataNotif'));
     }
 
     /**
@@ -29,10 +33,13 @@ class UsersController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
+    {   
+        $user = ['role' => Auth::user()->role, 'id' => Auth::user()->id];
+        $dataNotif = MyLibrary::ambilNotif($user);
+
         $datas = Users::first();
 
-        return view('masters.user.form', compact('datas'));
+        return view('masters.user.form', compact('datas','dataNotif'));
     }
 
     /**
@@ -98,10 +105,13 @@ class UsersController extends Controller
      */
     public function edit(Users $users, $uuid)
     {
+        $user = ['role' => Auth::user()->role, 'id' => Auth::user()->id];
+        $dataNotif = MyLibrary::ambilNotif($user);
+
         $datas = Users::where('uuid', $uuid)->get();
 
         
-        return view('masters.user.edit', compact('datas'));
+        return view('masters.user.edit', compact('datas','dataNotif'));
     }
 
     /**

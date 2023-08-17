@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
+use App\MyLibrary;
 
+use Carbon\Carbon;
 use App\Models\Alats;
 use Ramsey\Uuid\Uuid;
 use App\Models\Labors;
@@ -24,6 +25,9 @@ class AlatsController extends Controller
      */
     public function index(request $request)
     {
+        $user = ['role' => Auth::user()->role, 'id' => Auth::user()->id];
+        $dataNotif = MyLibrary::ambilNotif($user);
+
         // $datas = Alats::with('dataLabor');
         $datas = Alats::with('dataLabor')->get();
 
@@ -40,7 +44,7 @@ class AlatsController extends Controller
         // $keterangan =  $request->get('$keterangan');
 
         // dd($datas);
-        return view('masters.alat.index', compact('datas'));
+        return view('masters.alat.index', compact('datas','dataNotif'));
     }
 
     /**
@@ -50,10 +54,13 @@ class AlatsController extends Controller
      */
     public function create()
     {
+        $user = ['role' => Auth::user()->role, 'id' => Auth::user()->id];
+        $dataNotif = MyLibrary::ambilNotif($user);
+
         $datas = Alats::all();
         $dataLabor = Labors::all();
 
-        return view('masters.alat.form', compact('datas','dataLabor'));
+        return view('masters.alat.form', compact('datas','dataLabor','dataNotif'));
     }
 
     /**
@@ -81,7 +88,7 @@ class AlatsController extends Controller
         $log = [
             'uuid' => Uuid::uuid4()->getHex(),
             'user_id' => Auth::user()->id,
-            'description' => '<em>Menambah</em> data Alat <strong>[' . $request->nama . ']</strong>', //name = nama tag di view (file index)
+            'description' => '<em>Menambah</em> data Alat <strong>[' . $request->nama." ".$request->spesifikasi . ']</strong>', //name = nama tag di view (file index)
             'category' => 'tambah',
             'created_at' => now(),
         ];
@@ -113,10 +120,13 @@ class AlatsController extends Controller
      */
     public function edit(Alats $alats, $uuid)
     {
+        $user = ['role' => Auth::user()->role, 'id' => Auth::user()->id];
+        $dataNotif = MyLibrary::ambilNotif($user);
+
         $datas = Alats::where('uuid', $uuid)->where("uuid", $uuid)->first();
         $dataLabor = Labors::all();
 
-        return view('masters.alat.edit', compact('datas','dataLabor'));
+        return view('masters.alat.edit', compact('datas','dataLabor','dataNotif'));
     }
 
     /**
@@ -143,7 +153,7 @@ class AlatsController extends Controller
         $log = [
             'uuid' => Uuid::uuid4()->getHex(),
             'user_id' => Auth::user()->id,
-            'description' => '<em>Mengubah</em> data Alat <strong>[' . $request->nama . ']</strong>', //name = nama tag di view (file index)
+            'description' => '<em>Mengubah</em> data Alat <strong>[' . $request->nama." ".$request->spesifikasi . ']</strong>', //name = nama tag di view (file index)
             'category' => 'edit',
             'created_at' => now(),
         ];
@@ -169,7 +179,7 @@ class AlatsController extends Controller
         $log = [
             'uuid' => Uuid::uuid4()->getHex(),
             'user_id' => Auth::user()->id,
-            'description' => '<em>Menghapus</em> data Alat <strong>[' . $data->nama . ']</strong>', //name = nama tag di view (file index)
+            'description' => '<em>Menghapus</em> data Alat <strong>[' . $data->nama." ".$data->spesifikasi . ']</strong>', //name = nama tag di view (file index)
             'category' => 'hapus',
             'created_at' => now(),
         ];
@@ -196,6 +206,7 @@ class AlatsController extends Controller
         // return $pdf->download('Data Alat'.Carbon::now()->timestamp.'.pdf');
 
         // lihat halaman
-        return view('pdf.print-alat', compact('datas'));
+        // return view('Alat', compact('datas'));
+        return view('masters.alat.print', compact('datas'));
     }
 }

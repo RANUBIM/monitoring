@@ -4,6 +4,9 @@
         <section class="section">
             <div class="section-header">
                 <h1>Dashboard</h1>
+                <div class="section-header-breadcrumb">
+                    <div class="breadcrumb-item">Dashboard</div>
+                </div>
             </div>
             <div class="row">
                 <div class="col-lg-3 col-md-6 col-sm-6 col-12">
@@ -58,7 +61,7 @@
                         </div>
                         <div class="card-wrap">
                             <div class="card-header">
-                                <h4>Pengembalian</h4>
+                                <h4>Penggunaan</h4>
                             </div>
                             <div class="card-body">
                                 {{ $jumlahPenggunaan }}
@@ -115,7 +118,7 @@
                         <div class="card-header">
                             <h4>Activities</h4>
                             <div class="card-header-action">
-                                <a href="#" class="btn btn-primary">View All</a>
+                                <a href="/activities" class="btn btn-primary">View All</a>
                             </div>
                         </div>
                         <div class="card-body p-0">
@@ -138,7 +141,7 @@
                                                 {{-- <a href="#" class="font-weight-600"><img
                                                         src="assets/img/avatar/avatar-1.png" alt="avatar"
                                                         width="30" class="rounded-circle mr-1"> {{ $show->user_id }}</a> --}}
-                                                {{ $show->nama }}
+                                                {{ $show->dataUser->nama }}
                                             </td>
                                             <td>
                                                 {{$show->category}}

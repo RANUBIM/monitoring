@@ -33,6 +33,7 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 // })->middleware('auth');
 
 Route::get('/', [DashboardController::class,'index'])->middleware('auth');
+Route::get('/activities', [DashboardController::class,'log'])->middleware('auth');
 
 // Login
 Route::get('/login',[LoginController::class, 'index'])->name('login')->middleware('guest');

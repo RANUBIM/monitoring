@@ -40,10 +40,10 @@ class LogController extends Controller
      * @param  \App\Http\Requests\StoreLogRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreLogRequest $request)
-    {
-        //
-    }
+    // public function store(StoreLogRequest $request)
+    // {
+    //     //
+    // }
 
     /**
      * Display the specified resource.
@@ -51,10 +51,10 @@ class LogController extends Controller
      * @param  \App\Models\Log  $log
      * @return \Illuminate\Http\Response
      */
-    public function show(Log $log)
-    {
-        //
-    }
+    // public function show(Log $log)
+    // {
+    //     //
+    // }
 
     /**
      * Show the form for editing the specified resource.
@@ -62,10 +62,10 @@ class LogController extends Controller
      * @param  \App\Models\Log  $log
      * @return \Illuminate\Http\Response
      */
-    public function edit(Log $log)
-    {
-        //
-    }
+    // public function edit(Log $log)
+    // {
+    //     //
+    // }
 
     /**
      * Update the specified resource in storage.
@@ -74,10 +74,10 @@ class LogController extends Controller
      * @param  \App\Models\Log  $log
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateLogRequest $request, Log $log)
-    {
-        //
-    }
+    // public function update(UpdateLogRequest $request, Log $log)
+    // {
+    //     //
+    // }
 
     /**
      * Remove the specified resource from storage.
@@ -85,8 +85,8 @@ class LogController extends Controller
      * @param  \App\Models\Log  $log
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Log $log)
-    {
-        //
-    }
+    // public function destroy(Log $log)
+    // {
+    //     //
+    // }
 }

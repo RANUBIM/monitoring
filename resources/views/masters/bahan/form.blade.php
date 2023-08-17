@@ -6,9 +6,9 @@
             <div class="section-header">
                 <h1>Bahan</h1>
                 <div class="section-header-breadcrumb">
-                    <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-                    <div class="breadcrumb-item"><a href="#">Forms</a></div>
-                    <div class="breadcrumb-item">Advanced Forms</div>
+                    <div class="breadcrumb-item"><a href="#">Master Data</a></div>
+                    <div class="breadcrumb-item"><a href="#">Bahan</a></div>
+                    <div class="breadcrumb-item">Tambah Data Bahan</div>
                 </div>
             </div>
 
@@ -86,7 +86,7 @@
                                     <div class="row">
                                         <div class="form-group col-6">
                                             <label for="stok">Stok</label>
-                                            <input type="text" name="stok" class="form-control @error('stok') is-invalid @enderror" id="stok"
+                                            <input type="number" name="stok" class="form-control @error('stok') is-invalid @enderror" id="stok"
                                                 placeholder="stok" required autofocus value="{{ old('stok') }}">
                                             @error('stok')
                                                 <div class="invalid-feedback">

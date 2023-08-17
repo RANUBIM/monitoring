@@ -6,12 +6,11 @@
             <div class="section-header">
                 <h1>Alat</h1>
                 <div class="section-header-breadcrumb">
-                    <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-                    <div class="breadcrumb-item"><a href="#">Forms</a></div>
-                    <div class="breadcrumb-item">Advanced Forms</div>
+                    <div class="breadcrumb-item"><a href="#">Master Data</a></div>
+                    <div class="breadcrumb-item"><a href="#">Alat</a></div>
+                    <div class="breadcrumb-item">Tambah Data Alat</div>
                 </div>
             </div>
-
             <div class="section-body">
                 {{-- <h2 class="section-title">Advanced Forms</h2>
                 <p class="section-lead">We provide advanced input fields, such as date picker, color picker, and so on.</p> --}}

@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use App\MyLibrary;
 
 use Ramsey\Uuid\Uuid;
 use App\Models\Labors;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class LaborsController extends Controller
@@ -19,8 +20,11 @@ class LaborsController extends Controller
      */
     public function index()
     {
+        $user = ['role' => Auth::user()->role, 'id' => Auth::user()->id];
+        $dataNotif = MyLibrary::ambilNotif($user);
+        
         $datas = Labors::with('dataAlat')->get();
-        return view('masters.labor.index', compact('datas'));
+        return view('masters.labor.index', compact('datas','dataNotif'));
     }
 
     /**
@@ -30,8 +34,11 @@ class LaborsController extends Controller
      */
     public function create()
     {
+        $user = ['role' => Auth::user()->role, 'id' => Auth::user()->id];
+        $dataNotif = MyLibrary::ambilNotif($user);
+
         $datas = Labors::all();
-        return view('masters.labor.form', compact('datas'));
+        return view('masters.labor.form', compact('datas','dataNotif'));
     }
 
     /**
@@ -86,8 +93,11 @@ class LaborsController extends Controller
      */
     public function edit(Labors $labors, $uuid)
     {
+        $user = ['role' => Auth::user()->role, 'id' => Auth::user()->id];
+        $dataNotif = MyLibrary::ambilNotif($user);
+
         $datas = Labors::where('uuid', $uuid)->get();
-        return view('masters.labor.edit', compact('datas'));
+        return view('masters.labor.edit', compact('datas','dataNotif'));
     }
 
     /**

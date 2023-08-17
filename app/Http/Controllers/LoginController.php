@@ -99,7 +99,7 @@ class LoginController extends Controller
       $log = [
           'uuid' => Uuid::uuid4()->getHex(),
           'user_id' => Auth::user()->id,
-          'description' => '<em>Login</em> akun <strong>[' . $data->name . ']</strong>',
+          'description' => '<em>Login</em> akun <strong>[' . $data->nama . ']</strong>',
           'category' => 'login',
           'created_at' => now(),
       ];
@@ -116,12 +116,12 @@ class LoginController extends Controller
 
   public function logout(Request $request)
   {
-      // $data = User::get()->where('uuid',)->firstOrFail();
+      $data = User::get()->where('uuid', Auth::user()->uuid)->firstOrFail();
       $log = [
         'uuid' => Uuid::uuid4()->getHex(),
         'user_id' => Auth::user()->id,
-        // 'description' => '<em>Log out</em> akun <strong>[' . $data->nama . ']</strong>',
-        'description' => '<em>Log out</em> akun',
+        'description' => '<em>Log out</em> akun <strong>[' . $data->nama . ']</strong>',
+        // 'description' => '<em>Log out</em> akun',
         'category' => 'logout',
         'created_at' => now(),
       ];

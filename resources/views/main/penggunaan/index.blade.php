@@ -56,7 +56,7 @@
                                           <th scope="col">Pengguna</th>
                                           <th scope="col">Kegiatan</th>
                                           {{-- <th scope="col">Tujuan</th> --}}
-                                          <th scope="col">Tanggal Permintaan</th>
+                                          <th scope="col">Tanggal Penggunaan</th>
                                           <th scope="col">Status</th>
                                           <th scope="col">Aksi</th>
                                        </tr>
@@ -75,7 +75,7 @@
                                              <td>
                                                 {{-- {{ $data->status }} --}}
                                                 @if ( $data->status == "1")
-                                                   <div class="badge m-0 badge-white">Pilih Alat yang ingin dipinjam</div>
+                                                   <div class="badge m-0 badge-white">Pilih Bahan yang ingin digunakan</div>
                                                 @elseif ( $data->status == "2")
                                                    <div class="badge m-0 badge-secondary">Menunggu penyetujuan</div>
                                                 @elseif ( $data->status == "3")

@@ -6,9 +6,9 @@
             <div class="section-header">
                 <h1>Bahan</h1>
                 <div class="section-header-breadcrumb">
-                    <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-                    <div class="breadcrumb-item"><a href="#">Forms</a></div>
-                    <div class="breadcrumb-item">Advanced Forms</div>
+                    <div class="breadcrumb-item"><a href="#">Master Data</a></div>
+                    <div class="breadcrumb-item"><a href="#">Bahan</a></div>
+                    <div class="breadcrumb-item">Edit Data Bahan</div>
                 </div>
             </div>
 
@@ -60,9 +60,9 @@
                                                 @enderror
                                             </div>
                                             <div class="form-group col-6">
-                                                <label for="tgl_pengadaan">Tagnggal Pengadaan</label>
+                                                <label for="tgl_pengadaan">Tanggal Pengadaan</label>
                                                 <input type="date" name="tgl_pengadaan" class="form-control @error('tgl_pengadaan') is-invalid @enderror" id="tgl_pengadaan"
-                                                    placeholder="tgl_pengadaan" required autofocus value="{{ old('tgl_pengadaan', $datas->tgl_pengadaan) }}">
+                                                    placeholder="tgl_pengadaan" required autofocus value="{{ old('tgl_pengadaan', $datas->tgl_pengadaan->format('Y-m-d')) }}">
                                                 @error('tgl_pengadaan')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Ramsey\Uuid\Uuid;
+use App\MyLibrary;
 
+use Ramsey\Uuid\Uuid;
 use App\Models\Bahans;
 use App\Models\Labors;
 use Illuminate\Http\Request;
@@ -20,8 +21,11 @@ class BahansController extends Controller
      */
     public function index()
     {
+        $user = ['role' => Auth::user()->role, 'id' => Auth::user()->id];
+        $dataNotif = MyLibrary::ambilNotif($user);
+
         $datas = Bahans::with('dataLabor')->get();
-        return view('masters.bahan.index', compact('datas'));
+        return view('masters.bahan.index', compact('datas','dataNotif'));
     }
 
     /**
@@ -31,10 +35,13 @@ class BahansController extends Controller
      */
     public function create()
     {
+        $user = ['role' => Auth::user()->role, 'id' => Auth::user()->id];
+        $dataNotif = MyLibrary::ambilNotif($user);
+
         $datas = Bahans::all();
         $dataLabor = Labors::all();
 
-        return view('masters.bahan.form', compact('datas','dataLabor'));
+        return view('masters.bahan.form', compact('datas','dataLabor','dataNotif'));
     }
 
     /**
@@ -64,8 +71,8 @@ class BahansController extends Controller
         // LOG
         $log = [
             'uuid' => Uuid::uuid4()->getHex(),
-            // 'user_id' => Auth::user()->id,
-            'description' => '<em>Menambah</em> data Bahan <strong>[' . $request->name . ']</strong>', //name = nama tag di view (file index)
+            'user_id' => Auth::user()->id,
+            'description' => '<em>Menambah</em> data Bahan <strong>[' . $request->nama." ".$request->spesifikasi . ']</strong>', //name = nama tag di view (file index)
             'category' => 'tambah',
             'created_at' => now(),
         ];
@@ -97,10 +104,13 @@ class BahansController extends Controller
      */
     public function edit(Bahans $bahans, $uuid)
     {
+        $user = ['role' => Auth::user()->role, 'id' => Auth::user()->id];
+        $dataNotif = MyLibrary::ambilNotif($user);
+
         $datas = Bahans::where('uuid', $uuid)->where("uuid", $uuid)->first();
         $dataLabor = Labors::all();
 
-        return view('masters.bahan.edit', compact('datas','dataLabor'));
+        return view('masters.bahan.edit', compact('datas','dataLabor','dataNotif'));
     }
 
     /**
@@ -129,8 +139,8 @@ class BahansController extends Controller
 
         $log = [
             'uuid' => Uuid::uuid4()->getHex(),
-            // 'user_id' => Auth::user()->id,
-            'description' => '<em>Mengubah</em> data Bahan <strong>[' . $request->name . ']</strong>', //name = nama tag di view (file index)
+            'user_id' => Auth::user()->id,
+            'description' => '<em>Mengubah</em> data Bahan <strong>[' . $request->nama." ".$request->spesifikasi . ']</strong>', //name = nama tag di view (file index)
             'category' => 'edit',
             'created_at' => now(),
         ];
@@ -155,8 +165,8 @@ class BahansController extends Controller
         $data->save();
         $log = [
             'uuid' => Uuid::uuid4()->getHex(),
-            // 'user_id' => Auth::user()->id,
-            'description' => '<em>Menghapus</em> data Bahan <strong>[' . $data->name . ']</strong>', //name = nama tag di view (file index)
+            'user_id' => Auth::user()->id,
+            'description' => '<em>Menghapus</em> data Bahan <strong>[' . $data->nama." ".$data->spesifikasi . ']</strong>', //name = nama tag di view (file index)
             'category' => 'hapus',
             'created_at' => now(),
         ];

@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Bahans;
-use App\Models\PenggunaanBahans;
+use App\MyLibrary;
 use App\Models\Users;
 use Ramsey\Uuid\Uuid;
+use App\Models\Bahans;
 use App\Models\Penggunaans;
 use Illuminate\Http\Request;
+use App\Models\PenggunaanBahans;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,6 +21,10 @@ class PenggunaansController extends Controller
      */
     public function index()
     {
+        // Notif
+        $user = ['role' => Auth::user()->role, 'id' => Auth::user()->id];
+        $dataNotif = MyLibrary::ambilNotif($user);
+        
         // $datas = Penggunaans::with(['dataUser','dataBahan.dataLabor'])->get();
 
         if (Auth::user()->role == "Kepala Jurusan" || Auth::user()->role == "Laboran") :
@@ -29,7 +34,7 @@ class PenggunaansController extends Controller
         endif;
         // dd($datas);
 
-        return view('main.penggunaan.index', compact('datas'));
+        return view('main.penggunaan.index', compact('datas','dataNotif'));
     }
 
     /**
@@ -39,10 +44,14 @@ class PenggunaansController extends Controller
      */
     public function create()
     {
+        // Notif
+        $user = ['role' => Auth::user()->role, 'id' => Auth::user()->id];
+        $dataNotif = MyLibrary::ambilNotif($user);
+
         $datas = Penggunaans::with('dataUser')->get();
         $dataUser = Users::all();
 
-        return view('main.penggunaan.form', compact('datas','dataUser'));
+        return view('main.penggunaan.form', compact('datas','dataUser','dataNotif'));
     }
 
     /**
@@ -70,7 +79,7 @@ class PenggunaansController extends Controller
         $log = [
             'uuid' => Uuid::uuid4()->getHex(),
             'user_id' => Auth::user()->id,
-            'description' => '<em>Menambah</em> data penggunaan <strong>[' . $request->nama . ']</strong>', //name = nama tag di view (file index)
+            'description' => '<em>Menambah</em> data penggunaan <strong>[' . $request->kegiatan . ']</strong>', //name = nama tag di view (file index)
             'category' => 'tambah',
             'created_at' => now(),
         ];
@@ -102,11 +111,15 @@ class PenggunaansController extends Controller
      */
     public function edit(Penggunaans $penggunaans, Request $request, $uuid)
     {
+        // Notif
+        $user = ['role' => Auth::user()->role, 'id' => Auth::user()->id];
+        $dataNotif = MyLibrary::ambilNotif($user);
+
         $datas = Penggunaans::with(['dataUser'])->where("uuid", $uuid)->first();
         $dataUser = Users::all();
         // dd($datas);
 
-        return view('main.penggunaan.edit', compact('datas','dataUser'));
+        return view('main.penggunaan.edit', compact('datas','dataUser','dataNotif'));
     }
 
     /**
@@ -131,7 +144,7 @@ class PenggunaansController extends Controller
         $log = [
             'uuid' => Uuid::uuid4()->getHex(),
             'user_id' => Auth::user()->id,
-            'description' => '<em>Mengubah</em> data Penggunaan <strong>[' . $request->nama . ']</strong>', //name = nama tag di view (file index)
+            'description' => '<em>Mengubah</em> data Penggunaan <strong>[' . $request->kegiatan . ']</strong>', //name = nama tag di view (file index)
             'category' => 'edit',
             'created_at' => now(),
         ];
@@ -157,7 +170,7 @@ class PenggunaansController extends Controller
         $log = [
             'uuid' => Uuid::uuid4()->getHex(),
             'user_id' => Auth::user()->id,
-            'description' => '<em>Menghapus</em> data Penggunaan <strong>[' . $data->nama . ']</strong>', //name = nama tag di view (file index)
+            'description' => '<em>Menghapus</em> data Penggunaan <strong>[' . $data->kegiatan . ']</strong>', //name = nama tag di view (file index)
             'category' => 'hapus',
             'created_at' => now(),
         ];
@@ -170,6 +183,10 @@ class PenggunaansController extends Controller
 
     public function detail(Penggunaans $penggunaans, $uuid)
     {
+        // Notif
+        $user = ['role' => Auth::user()->role, 'id' => Auth::user()->id];
+        $dataNotif = MyLibrary::ambilNotif($user);
+
         $datas = Penggunaans::with(['dataUser','dataBahan.dataLabor'])->where('uuid', $uuid)->first();
         // $dataPeminjamanAlat = DB::table('peminjaman_alats')
                                 // ->join('peminjamans','peminjaman_alats.peminjaman_id','=','peminjamans.id')
@@ -177,38 +194,46 @@ class PenggunaansController extends Controller
         $dataUser = Users::all();
 
         // LOG
-        $log = [
-            'uuid' => Uuid::uuid4()->getHex(),
-            'user_id' => Auth::user()->id,
-            'description' => '<em>Melihat</em> detail data Penggunaan <strong>[' . $datas->kegiatan . ']</strong>', //name = nama tag di view (file index)
-            'category' => 'detail',
-            'created_at' => now(),
-        ];
+        // $log = [
+        //     'uuid' => Uuid::uuid4()->getHex(),
+        //     'user_id' => Auth::user()->id,
+        //     'description' => '<em>Melihat</em> detail data Penggunaan <strong>[' . $datas->kegiatan . ']</strong>', //name = nama tag di view (file index)
+        //     'category' => 'detail',
+        //     'created_at' => now(),
+        // ];
 
-        DB::table('logs')->insert($log);
+        // DB::table('logs')->insert($log);
         // /LOG
 
         // dd($datas);
         // dd($dataPeminjamanAlat);
-        return view('main.penggunaan.detail', compact('datas','dataUser'));
+        return view('main.penggunaan.detail', compact('datas','dataUser','dataNotif'));
     }
 
     public function penggunaanBahanCreate(Penggunaans $penggunaans, $uuid)
     {
+        // Notif
+        $user = ['role' => Auth::user()->role, 'id' => Auth::user()->id];
+        $dataNotif = MyLibrary::ambilNotif($user);
+
         // $datas = Peminjamans::with(['dataUser','dataAlat.dataLabor'])->where('uuid', $uuid)->first();
         $datas = Penggunaans::with('dataUser')->where('uuid',$uuid)->first();
         // $dataUser = Users::get();
         $dataBahan = Bahans::with('dataLabor')->get();
 
-        return view('main.penggunaan.formPenggunaanBahan', compact('datas','dataBahan'));
+        return view('main.penggunaan.formPenggunaanBahan', compact('datas','dataBahan','dataNotif'));
     }
 
     public function penggunaanBahanStore(Request $request)
     {   
+        $dataBahan = Bahans::with('dataLabor')->get()->where("id", $request->bahan_id)->first();
+        $tersedia = $dataBahan->stok - $dataBahan->dipinjam;
+        // dd($dataBahan);
+
         $validatedData = $request->validate([
             'penggunaan_id' => 'string|required|max:255',
             'bahan_id' => 'string|required|max:255',
-            'jumlah' => 'integer|required|max:255'
+            'jumlah' => 'integer|required|max:'.$tersedia
         ]);
 
         $validatedData['uuid'] = Uuid::uuid4()->getHex();
@@ -219,20 +244,25 @@ class PenggunaansController extends Controller
         $log = [
             'uuid' => Uuid::uuid4()->getHex(),
             'user_id' => Auth::user()->id,
-            'description' => '<em>Menambah</em> data Penggunaan <strong>[' . $request->nama . ']</strong>', //name = nama tag di view (file index)
-            'category' => 'tambah',
+            'description' => '<em>Menambah</em> data Penggunaan Bahan <strong>[' . $dataBahan->nama .' '. $dataBahan->spesifikasi .' - '. $request->jumlah .' '. $dataBahan->satuan . ']</strong>', //name = nama tag di view (file index)
+            'category' => 'Penggunaan',
             'created_at' => now(),
         ];
         
         DB::table('logs')->insert($log);
         // /LOG
         
-        return redirect('/detail-penggunaanBahan/'.$request['uuid'])->with('flash_messaga','Peminjaman Added');
+        return redirect('/detail-penggunaanBahan/'.$request['uuid'])->with('success','Data penggunaan bahan berhasil ditambah');
     }
 
     public function penggunaanBahanEdit(Penggunaans $penggunaans, Request $request, $uuid)
     {
         // dd("Masuk Ke EDIT");
+
+        // Notif
+        $user = ['role' => Auth::user()->role, 'id' => Auth::user()->id];
+        $dataNotif = MyLibrary::ambilNotif($user);
+        
 
         $validatedData = $request->validate([
             'namaUser' => 'string|required|max:255',
@@ -250,7 +280,7 @@ class PenggunaansController extends Controller
         $dataUser = Users::get();
         // dd($datas);
 
-        return view('main.penggunaan.editPenggunaan', compact('datas','datass','dataBahan','dataUser','validatedData'));
+        return view('main.penggunaan.editPenggunaan', compact('dataNotif','datas','datass','dataBahan','dataUser','validatedData'));
     }
 
     public function penggunaanBahanUpdate(Penggunaans $penggunaans, Request $request, $uuid)
@@ -263,6 +293,7 @@ class PenggunaansController extends Controller
             'uuidPivot' => 'string|required|max:255'
         ]);
         // dd($validatedDataUUID);
+        $dataBahan = Bahans::with('dataLabor')->get()->where("uuid",$validatedDataUUID['uuidBahan'])->first();
 
         $validatedData = $request->validate([
             // 'peminjaman_id' => 'string|required|max:255',
@@ -276,15 +307,15 @@ class PenggunaansController extends Controller
         $log = [
             'uuid' => Uuid::uuid4()->getHex(),
             'user_id' => Auth::user()->id,
-            'description' => '<em>Mengubah</em> data Penggunaan Bahan <strong>[' . $request->nama . ']</strong>', //name = nama tag di view (file index)
-            'category' => 'edit',
+            'description' => '<em>Mengubah</em> data Penggunaan Bahan <strong>[' . $dataBahan->nama .' '. $dataBahan->spesifikasi .' - '. $request->jumlah .' '. $dataBahan->satuan . ']</strong>', //name = nama tag di view (file index)
+            'category' => 'Penggunaan',
             'created_at' => now(),
         ];
 
         DB::table('logs')->insert($log);
         // selesai
 
-        return redirect('/detail-penggunaanBahan/'.$validatedDataUUID['uuid'])->with('success','Peminjaman Added');
+        return redirect('/detail-penggunaanBahan/'.$validatedDataUUID['uuid'])->with('success','Data penggunaan bahan berhasil diubah');
     }
 
     public function penggunaanBahanDestroy(Request $request, $uuid)
@@ -298,6 +329,7 @@ class PenggunaansController extends Controller
             'uuidPivot' => 'string|required|max:255'
         ]);
         // dd($validatedData);
+        $dataBahan = Bahans::with('dataLabor')->get()->where("uuid",$validatedData['uuidBahan'])->first();
 
         $data = DB::table('penggunaan_bahans')->get()->where('uuid', $validatedData['uuidPivot'])->first();
         // $data->deleted_by = Auth::user()->id;
@@ -306,8 +338,8 @@ class PenggunaansController extends Controller
         $log = [
             'uuid' => Uuid::uuid4()->getHex(),
             'user_id' => Auth::user()->id,
-            'description' => '<em>Menghapus</em> data Penggunaan Bahan <strong>[' . $validatedData['namaBahan'] . ']</strong>', //name = nama tag di view (file index)
-            'category' => 'hapus',
+            'description' => '<em>Menghapus</em> data Penggunaan Bahan <strong>[' . $dataBahan->nama .' '. $dataBahan->spesifikasi .' - '. $data->jumlah .' '. $dataBahan->satuan . ']</strong>', //name = nama tag di view (file index)
+            'category' => 'Penggunaan',
             'created_at' => now(),
         ];
         DB::table('logs')->insert($log);
@@ -315,7 +347,7 @@ class PenggunaansController extends Controller
         // dd($data);
         DB::table('penggunaan_bahans')->where('uuid', $validatedData['uuidPivot'])->delete();
 
-        return redirect('/detail-penggunaanBahan/'.$validatedData['uuid'])->with('delete','Penggunaan Bahan hapus');
+        return redirect('/detail-penggunaanBahan/'.$validatedData['uuid'])->with('delete','Data penggunaan bahan berhasil dihapus');
     }
 
     public function penggunaanBahanStatus1(Penggunaans $penggunaans, Request $request, $uuid)
@@ -334,18 +366,22 @@ class PenggunaansController extends Controller
 
         DB::table('penggunaans')->where('uuid', $uuid)->update($validatedData);
 
-        // $log = [
-        //     'uuid' => Uuid::uuid4()->getHex(),
-        //     'user_id' => Auth::user()->id,
-        //     'description' => '<em>Mengubah</em> Status data Peminjaman Alat <strong>[' . $request->nama . ']</strong>', //name = nama tag di view (file index)
-        //     'category' => 'edit',
-        //     'created_at' => now(),
-        // ];
+        $data = Penggunaans::with('dataUser','dataBahan')->where('uuid', $uuid)->first();
+        // dd($data->dataUser->nama);
 
-        // DB::table('logs')->insert($log);
-        // // selesai
+        // LOG
+        $log = [
+            'uuid' => Uuid::uuid4()->getHex(),
+            'user_id' => $data->dataUser->id,
+            'description' => '<strong>[' . Auth::user()->nama . ']</strong> <em>Mengubah</em> status penggunaan <strong>[Menunggu Penyetujuan]</strong>', //name = nama tag di view (file index)
+            'category' => 'Penggunaan',
+            'created_at' => now(),
+        ];
 
-        return redirect('/penggunaan')->with('success','Penggunaan Added');
+        DB::table('logs')->insert($log);
+        // /LOG
+
+        return redirect('/penggunaan')->with('success','Status penggunaan bahan berhasil diubah');
     }
 
     public function penggunaanBahanStatus2(Penggunaans $penggunaans, Request $request, $uuid)
@@ -364,18 +400,22 @@ class PenggunaansController extends Controller
 
         DB::table('penggunaans')->where('uuid', $uuid)->update($validatedData);
 
-        // $log = [
-        //     'uuid' => Uuid::uuid4()->getHex(),
-        //     'user_id' => Auth::user()->id,
-        //     'description' => '<em>Mengubah</em> Status data Peminjaman Alat <strong>[' . $request->nama . ']</strong>', //name = nama tag di view (file index)
-        //     'category' => 'edit',
-        //     'created_at' => now(),
-        // ];
+        $data = Penggunaans::with('dataUser','dataBahan')->where('uuid', $uuid)->first();
+        // dd($data->dataUser->nama);
 
-        // DB::table('logs')->insert($log);
-        // // selesai
+        // LOG
+        $log = [
+            'uuid' => Uuid::uuid4()->getHex(),
+            'user_id' => $data->dataUser->id,
+            'description' => '<strong>[' . Auth::user()->nama . ']</strong> <em>Mengubah</em> status penggunaan <strong>[Menunggu Penyediaan]</strong>', //name = nama tag di view (file index)
+            'category' => 'Penggunaan',
+            'created_at' => now(),
+        ];
 
-        return redirect('/penggunaan')->with('success','Peminjaman Added');
+        DB::table('logs')->insert($log);
+        // /LOG
+
+        return redirect('/penggunaan')->with('success','Status penggunaan bahan berhasil diubah');
     }
 
     public function penggunaanBahanCheck(Penggunaans $penggunaans, Request $request, $uuid)
@@ -402,18 +442,22 @@ class PenggunaansController extends Controller
         $validateUpdateStatus['status'] = "1";
         DB::table('penggunaan_bahans')->where("uuid", $validatedDataUUID['uuidPivot'])->update($validateUpdateStatus);
 
-        // $log = [
-        //     'uuid' => Uuid::uuid4()->getHex(),
-        //     'user_id' => Auth::user()->id,
-        //     'description' => '<em>Mengubah</em> Status data Peminjaman Alat <strong>[' . $request->nama . ']</strong>', //name = nama tag di view (file index)
-        //     'category' => 'edit',
-        //     'created_at' => now(),
-        // ];
+        $data = Penggunaans::with('dataUser','dataBahan')->where('uuid', $uuid)->first();
+        // dd($data->dataUser->nama);
 
-        // DB::table('logs')->insert($log);
-        // // selesai
+        // LOG
+        $log = [
+            'uuid' => Uuid::uuid4()->getHex(),
+            'user_id' => $data->dataUser->id,
+            'description' => '<strong>[' . Auth::user()->nama . ']</strong> <em>Mengubah</em> status penggunaan <strong>[Pilih Bahan Yang Ingin Digunakan]</strong>', //name = nama tag di view (file index)
+            'category' => 'Penggunaan',
+            'created_at' => now(),
+        ];
 
-        return redirect('/detail-penggunaanBahan/'.$validatedDataUUID['uuid'])->with('success','Peminjaman Added');
+        DB::table('logs')->insert($log);
+        // /LOG
+
+        return redirect('/detail-penggunaanBahan/'.$validatedDataUUID['uuid'])->with('success','Status penggunaan bahan berhasil diubah');
     }
 
     public function penggunaanBahanNote(Penggunaans $penggunaans, Request $request, $uuid)
@@ -435,18 +479,22 @@ class PenggunaansController extends Controller
 
         DB::table('penggunaans')->where('uuid', $uuid)->update($validatedData);
 
-        // $log = [
-        //     'uuid' => Uuid::uuid4()->getHex(),
-        //     'user_id' => Auth::user()->id,
-        //     'description' => '<em>Mengubah</em> Status data Peminjaman Alat <strong>[' . $request->nama . ']</strong>', //name = nama tag di view (file index)
-        //     'category' => 'edit',
-        //     'created_at' => now(),
-        // ];
+        $data = Penggunaans::with('dataUser','dataBahan')->where('uuid', $uuid)->first();
+        // dd($data->dataUser->nama);
 
-        // DB::table('logs')->insert($log);
-        // // selesai
+        // LOG
+        $log = [
+            'uuid' => Uuid::uuid4()->getHex(),
+            'user_id' => $data->dataUser->id,
+            'description' => '<strong>[' . Auth::user()->nama . ']</strong> <em>Mengubah</em> status penggunaan <strong>[Bahan Dapat Diambil]</strong>', //name = nama tag di view (file index)
+            'category' => 'Penggunaan',
+            'created_at' => now(),
+        ];
 
-        return redirect('/penggunaan')->with('success','Penggunaan Added');
+        DB::table('logs')->insert($log);
+        // /LOG
+
+        return redirect('/penggunaan')->with('success','Status penggunaan bahan berhasil diubah');
     }
 
     public function penggunaanBahanStatus3(Penggunaans $penggunaans, Request $request, $uuid)
@@ -489,18 +537,22 @@ class PenggunaansController extends Controller
 
         DB::table('penggunaans')->where('uuid', $uuid)->update($validatedData);
 
-        // $log = [
-        //     'uuid' => Uuid::uuid4()->getHex(),
-        //     'user_id' => Auth::user()->id,
-        //     'description' => '<em>Mengubah</em> Status data Peminjaman Alat <strong>[' . $request->nama . ']</strong>', //name = nama tag di view (file index)
-        //     'category' => 'edit',
-        //     'created_at' => now(),
-        // ];
+        $data = Penggunaans::with('dataUser','dataBahan')->where('uuid', $uuid)->first();
+        // dd($data->dataUser->nama);
 
-        // DB::table('logs')->insert($log);
-        // // selesai
+        // LOG
+        $log = [
+            'uuid' => Uuid::uuid4()->getHex(),
+            'user_id' => $data->dataUser->id,
+            'description' => '<strong>[' . Auth::user()->nama . ']</strong> <em>Mengubah</em> status penggunaan <strong>[Bahan Dapat Diambil]</strong>', //name = nama tag di view (file index)
+            'category' => 'Penggunaan',
+            'created_at' => now(),
+        ];
 
-        return redirect('/penggunaan')->with('success','Penggunaan Added');
+        DB::table('logs')->insert($log);
+        // /LOG
+
+        return redirect('/penggunaan')->with('success','Status penggunaan bahan berhasil diubah');
     }
 
     public function penggunaanBahanStatus4(Penggunaans $penggunaans, Request $request, $uuid)
@@ -519,18 +571,22 @@ class PenggunaansController extends Controller
 
         DB::table('penggunaans')->where('uuid', $uuid)->update($validatedData);
 
-        // $log = [
-        //     'uuid' => Uuid::uuid4()->getHex(),
-        //     'user_id' => Auth::user()->id,
-        //     'description' => '<em>Mengubah</em> Status data Peminjaman Alat <strong>[' . $request->nama . ']</strong>', //name = nama tag di view (file index)
-        //     'category' => 'edit',
-        //     'created_at' => now(),
-        // ];
+        $data = Penggunaans::with('dataUser','dataBahan')->where('uuid', $uuid)->first();
+        // dd($data->dataUser->nama);
 
-        // DB::table('logs')->insert($log);
-        // // selesai
+        // LOG
+        $log = [
+            'uuid' => Uuid::uuid4()->getHex(),
+            'user_id' => $data->dataUser->id,
+            'description' => '<strong>[' . Auth::user()->nama . ']</strong> <em>Mengubah</em> status penggunaan <strong>[Bahan Digunakan]</strong>', //name = nama tag di view (file index)
+            'category' => 'Penggunaan',
+            'created_at' => now(),
+        ];
 
-        return redirect('/penggunaan')->with('success','Penggunaan Added');
+        DB::table('logs')->insert($log);
+        // /LOG
+
+        return redirect('/penggunaan')->with('success','Status penggunaan bahan berhasil diubah');
     }
 
     public function penggunaanBahanStatusTolak(Penggunaans $penggunaans, Request $request, $uuid)
@@ -552,17 +608,21 @@ class PenggunaansController extends Controller
 
         DB::table('penggunaans')->where('uuid', $uuid)->update($validatedData);
 
-        // $log = [
-        //     'uuid' => Uuid::uuid4()->getHex(),
-        //     'user_id' => Auth::user()->id,
-        //     'description' => '<em>Mengubah</em> Status data Peminjaman Alat <strong>[' . $request->nama . ']</strong>', //name = nama tag di view (file index)
-        //     'category' => 'edit',
-        //     'created_at' => now(),
-        // ];
+        $data = Penggunaans::with('dataUser','dataBahan')->where('uuid', $uuid)->first();
+        // dd($data->dataUser->nama);
 
-        // DB::table('logs')->insert($log);
-        // // selesai
+        // LOG
+        $log = [
+            'uuid' => Uuid::uuid4()->getHex(),
+            'user_id' => $data->dataUser->id,
+            'description' => '<strong>[' . Auth::user()->nama . ']</strong> <em>Mengubah</em> status penggunaan <strong>[Ditolak]</strong>', //name = nama tag di view (file index)
+            'category' => 'Penggunaan',
+            'created_at' => now(),
+        ];
 
-        return redirect('/penggunaan')->with('success','Penggunaan Added');
+        DB::table('logs')->insert($log);
+        // /LOG
+
+        return redirect('/penggunaan')->with('delete','Status penggunaan bahan ditolak');
     }
 }

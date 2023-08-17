@@ -33,14 +33,20 @@
                                         @csrf
                                         <div class="form-group">
                                             <label>Peminjam</label>
-                                            <select id="user_id" class="form-control @error('user_id') is-invalid @enderror select2" name="user_id" style="width: 100%;" >
+                                            {{-- <select id="user_id" class="form-control @error('user_id') is-invalid @enderror select2" name="user_id" style="width: 100%;" >
                                                 
                                                 @foreach ($dataUser as $user)
                                                     <option value="{{ old('user_id', $datas->user_id) }}" @if ($datas->user_id == $user->id) selected="selected" @endif>
                                                         {{ old('user_id', $user->nama) }}
                                                     </option>
                                                 @endforeach
-                                            </select>
+                                            </select> --}}
+                                            <input type="hidden" name="user_id"
+                                                class="form-control @error('user_id') is-invalid @enderror" id="user_id"
+                                                placeholder="user_id" autofocus value="{{ $datas->dataUser->id }}">
+                                            <input type="text" name="user_id"
+                                                class="form-control @error('user_id') is-invalid @enderror" id="user_id"
+                                                placeholder="user_id" autofocus value="{{ $datas->dataUser->nama }}" disabled>
                                             @error('user_id')
                                                 <div class="invalid-feedback">
                                                     {{-- {{ $message }} --}}
@@ -82,7 +88,7 @@
                                         <div class="form-group">
                                             <label for="tgl_permintaan">Tanggal Permintaan</label>
                                             <input type="date" name="tgl_permintaan" class="form-control @error('tgl_permintaan') is-invalid @enderror" id="tgl_permintaan"
-                                                placeholder="tgl_permintaan" autofocus value="{{ old('tgl_permintaan', $datas->tgl_permintaan) }}">
+                                                placeholder="tgl_permintaan" autofocus value="{{ old('tgl_permintaan', $datas->tgl_permintaan->format('Y-m-d')) }}">
                                             @error('tgl_permintaan')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
