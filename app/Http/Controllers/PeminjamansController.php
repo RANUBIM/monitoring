@@ -21,19 +21,125 @@ class PeminjamansController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         // Notif
         $user = ['role' => Auth::user()->role, 'id' => Auth::user()->id];
         $dataNotif = MyLibrary::ambilNotif($user);
+
+        $validateFilter = $request->filter;
+        // dd($validateFilter);
         
         // $datas = Peminjamans::with(['dataUser','dataAlat.dataLabor'])->get();
+        if($validateFilter == '1')
+        {
+            if (Auth::user()->role == "Kepala Jurusan" || Auth::user()->role == "Laboran") :
+                $datas = Peminjamans::with(['dataUser','dataAlat.dataLabor'])
+                ->where('status','1')->get();
+            else:
+                $datas = Peminjamans::with(['dataUser','dataAlat.dataLabor'])
+                ->where('user_id',Auth::user()->id)
+                ->where('status','1')->get();
+            endif;
+        }
+        elseif($validateFilter == '2')
+        {
+            if (Auth::user()->role == "Kepala Jurusan" || Auth::user()->role == "Laboran") :
+                $datas = Peminjamans::with(['dataUser','dataAlat.dataLabor'])
+                ->where('status','2')->get();
+            else:
+                $datas = Peminjamans::with(['dataUser','dataAlat.dataLabor'])
+                ->where('user_id',Auth::user()->id)
+                ->where('status','2')->get();
+            endif;
+        }
+        elseif($validateFilter == '3')
+        {
+            if (Auth::user()->role == "Kepala Jurusan" || Auth::user()->role == "Laboran") :
+                $datas = Peminjamans::with(['dataUser','dataAlat.dataLabor'])
+                ->where('status','3')->get();
+            else:
+                $datas = Peminjamans::with(['dataUser','dataAlat.dataLabor'])
+                ->where('user_id',Auth::user()->id)
+                ->where('status','3')->get();
+            endif;
+        }
+        elseif($validateFilter == '4')
+        {
+            if (Auth::user()->role == "Kepala Jurusan" || Auth::user()->role == "Laboran") :
+                $datas = Peminjamans::with(['dataUser','dataAlat.dataLabor'])
+                ->where('status','4')->get();
+            else:
+                $datas = Peminjamans::with(['dataUser','dataAlat.dataLabor'])
+                ->where('user_id',Auth::user()->id)
+                ->where('status','4')->get();
+            endif;
+        }
+        elseif($validateFilter == '5')
+        {
+            if (Auth::user()->role == "Kepala Jurusan" || Auth::user()->role == "Laboran") :
+                $datas = Peminjamans::with(['dataUser','dataAlat.dataLabor'])
+                ->where('status','5')->get();
+            else:
+                $datas = Peminjamans::with(['dataUser','dataAlat.dataLabor'])
+                ->where('user_id',Auth::user()->id)
+                ->where('status','5')->get();
+            endif;
+        }
+        elseif($validateFilter == '6')
+        {
+            if (Auth::user()->role == "Kepala Jurusan" || Auth::user()->role == "Laboran") :
+                $datas = Peminjamans::with(['dataUser','dataAlat.dataLabor'])
+                ->where('status','6')->get();
+            else:
+                $datas = Peminjamans::with(['dataUser','dataAlat.dataLabor'])
+                ->where('user_id',Auth::user()->id)
+                ->where('status','6')->get();
+            endif;
+        }
+        elseif($validateFilter == '7')
+        {
+            if (Auth::user()->role == "Kepala Jurusan" || Auth::user()->role == "Laboran") :
+                $datas = Peminjamans::with(['dataUser','dataAlat.dataLabor'])
+                ->where('status','7')->get();
+            else:
+                $datas = Peminjamans::with(['dataUser','dataAlat.dataLabor'])
+                ->where('user_id',Auth::user()->id)
+                ->where('status','7')->get();
+            endif;
+        }
+        elseif($validateFilter == '8')
+        {
+            if (Auth::user()->role == "Kepala Jurusan" || Auth::user()->role == "Laboran") :
+                $datas = Peminjamans::with(['dataUser','dataAlat.dataLabor'])
+                ->where('status','8')->get();
+            else:
+                $datas = Peminjamans::with(['dataUser','dataAlat.dataLabor'])
+                ->where('user_id',Auth::user()->id)
+                ->where('status','8')->get();
+            endif;
+        }
+        elseif($validateFilter == 'tolak')
+        {
+            if (Auth::user()->role == "Kepala Jurusan" || Auth::user()->role == "Laboran") :
+                $datas = Peminjamans::with(['dataUser','dataAlat.dataLabor'])
+                ->where('status','tolak')->get();
+            else:
+                $datas = Peminjamans::with(['dataUser','dataAlat.dataLabor'])
+                ->where('user_id',Auth::user()->id)
+                ->where('status','tolak')->get();
+            endif;
+        }
+        else
+        {
+            if (Auth::user()->role == "Kepala Jurusan" || Auth::user()->role == "Laboran") :
+                $datas = Peminjamans::with(['dataUser','dataAlat.dataLabor'])->get();
+            else:
+                $datas = Peminjamans::with(['dataUser','dataAlat.dataLabor'])->where('user_id',Auth::user()->id)->get();
+            endif;
+        }
 
-        if (Auth::user()->role == "Kepala Jurusan" || Auth::user()->role == "Laboran") :
-            $datas = Peminjamans::with(['dataUser','dataAlat.dataLabor'])->get();
-        else:
-            $datas = Peminjamans::with(['dataUser','dataAlat.dataLabor'])->where('user_id',Auth::user()->id)->get();
-        endif;
+        
 
         return view('main.peminjaman.index', compact('datas','dataNotif'));
     }

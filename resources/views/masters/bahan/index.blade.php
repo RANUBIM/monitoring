@@ -11,6 +11,28 @@
                </div>
          </div>
 
+         {{-- Filter --}}
+         <div class=" mb-2 ">   
+            <form action="/bahan/" method="post"
+               class="d-inline">
+               @method('get')
+               @csrf
+               <input type="hidden" name="filter" value="">
+               <button type="submit" class="btn btn-behance"><a>All</a></button>
+            </form>
+
+            @foreach ($dataLabor as $item)
+               <form action="/bahan/" method="post"
+                  class="d-inline">
+                  @method('get')
+                  @csrf
+                  <input type="hidden" name="filter" value="{{ $item->id }}">
+                  <button type="submit" class="btn btn-behance"><a>{{ $item->nama }}</a></button>
+               </form>
+            @endforeach  
+         </div>
+         {{-- /Filter --}}
+
          {{-- Notif --}}
          @if (session()->has('success'))
             <div class="alert alert-primary alert-dismissible show fade">
@@ -48,7 +70,7 @@
                                  <a href="/bahan/create" class="btn btn-primary ">Tambah</a>
                               @endif
                               @if (Auth::user()->role == "Kepala Jurusan")
-                                 <a href="/printAlat" class="btn btn-primary float-right" style="display: block;margin-left: auto;margin-right: 0;">Print</a>
+                                 <a href="/printBahan" class="btn btn-primary float-right" style="display: block;margin-left: auto;margin-right: 0;">Print</a>
                               @endif
                            </div>
                            <div class="card-body">

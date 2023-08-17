@@ -19,13 +19,55 @@ class BahansController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = ['role' => Auth::user()->role, 'id' => Auth::user()->id];
         $dataNotif = MyLibrary::ambilNotif($user);
 
         $datas = Bahans::with('dataLabor')->get();
-        return view('masters.bahan.index', compact('datas','dataNotif'));
+        $dataLabor = Labors::all();
+        
+        $validateFilter = $request->filter;
+        // dd($validateFilter);
+
+        foreach($dataLabor as $nilaiLabor){
+            
+            if($validateFilter == $nilaiLabor->id)
+            {
+                $datas = Bahans::with('dataLabor')->where('labor_id',$nilaiLabor->id)->get();
+            }
+        }
+        
+        if($validateFilter == "")
+        {
+            $datas = Bahans::with('dataLabor')->get();
+        }
+        // if($validateFilter == '1')
+        // {
+        //     $datas = Bahans::with('dataLabor')->where('labor_id','1')->get();
+        // }
+        // elseif($validateFilter == '2')
+        // {
+        //     $datas = Bahans::with('dataLabor')->where('labor_id','2')->get();
+        // }
+        // elseif($validateFilter == '3')
+        // {
+        //     $datas = Bahans::with('dataLabor')->where('labor_id','3')->get();
+        // }
+        // elseif($validateFilter == '4')
+        // {
+        //     $datas = Bahans::with('dataLabor')->where('labor_id','4')->get();
+        // }
+        // elseif($validateFilter == '5')
+        // {
+        //     $datas = Bahans::with('dataLabor')->where('labor_id','5')->get();
+        // }
+        // else
+        // {
+        //     $datas = Bahans::with('dataLabor')->get();
+        // }
+
+        return view('masters.bahan.index', compact('datas','dataNotif','dataLabor'));
     }
 
     /**

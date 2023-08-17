@@ -30,21 +30,50 @@ class AlatsController extends Controller
 
         // $datas = Alats::with('dataLabor');
         $datas = Alats::with('dataLabor')->get();
+        $dataLabor = Labors::all();
+        
+        $validateFilter = $request->filter;
+        // dd($validateFilter);
 
-        // $datas = DB::table('alats')->get();
-        // $datas = DB::table('alats.*','labors.*')
-                        // ->where('alats.deleted_by',null)
-                        // ->join('labors','labors.id','=','alats.labor_id')->get();
-        // dd($datas);
+        foreach($dataLabor as $nilaiLabor){
+            
+            if($validateFilter == $nilaiLabor->id)
+            {
+                $datas = Alats::with('dataLabor')->where('labor_id',$nilaiLabor->id)->get();
+            }
+        }
+        
+        if($validateFilter == "")
+        {
+            $datas = Alats::with('dataLabor')->get();
+        }
 
-        // $labor_id =  $request->get('$labor_id');
-        // $nama =  $request->get('$nama');
-        // $spesifikasi =  $request->get('$spesifikasi');
-        // $stok =  $request->get('$stok');
-        // $keterangan =  $request->get('$keterangan');
+        // if($validateFilter == '1')
+        // {
+        //     $datas = Alats::with('dataLabor')->where('labor_id','1')->get();
+        // }
+        // elseif($validateFilter == '2')
+        // {
+        //     $datas = Alats::with('dataLabor')->where('labor_id','2')->get();
+        // }
+        // elseif($validateFilter == '3')
+        // {
+        //     $datas = Alats::with('dataLabor')->where('labor_id','3')->get();
+        // }
+        // elseif($validateFilter == '4')
+        // {
+        //     $datas = Alats::with('dataLabor')->where('labor_id','4')->get();
+        // }
+        // elseif($validateFilter == '5')
+        // {
+        //     $datas = Alats::with('dataLabor')->where('labor_id','5')->get();
+        // }
+        // else
+        // {
+        //     $datas = Alats::with('dataLabor')->get();
+        // }
 
-        // dd($datas);
-        return view('masters.alat.index', compact('datas','dataNotif'));
+        return view('masters.alat.index', compact('datas','dataNotif','dataLabor'));
     }
 
     /**

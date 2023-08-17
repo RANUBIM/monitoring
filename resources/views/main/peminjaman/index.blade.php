@@ -5,11 +5,94 @@
          <div class="section-header">
                <h1>Peminjaman</h1>
                <div class="section-header-breadcrumb">
-                  <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-                  <div class="breadcrumb-item"><a href="#">Bootstrap Components</a></div>
-                  <div class="breadcrumb-item">Table</div>
+                  <div class="breadcrumb-item active"><a href="#">Main Data</a></div>
+                  <div class="breadcrumb-item">Peminjaman</div>
                </div>
          </div>
+
+         {{-- Filter --}}
+         <div class=" mb-2 ">            
+            <form action="/peminjaman/" method="post"
+               class="d-inline">
+               @method('get')
+               @csrf
+               <input type="hidden" name="filter" value="">
+               <button type="submit" class="btn btn-behance"><a>All</a></button>
+            </form>
+            
+            <form action="/peminjaman/" method="post"
+               class="d-inline">
+               @method('get')
+               @csrf
+               <input type="hidden" name="filter" value="1">
+               <button type="submit" class="btn btn-behance"><a>Belum diajukan</a></button>
+            </form>
+            
+            <form action="/peminjaman/" method="post"
+               class="d-inline">
+               @method('get')
+               @csrf
+               <input type="hidden" name="filter" value="2">
+               <button type="submit" class="btn "><a>Persetujuan</a></button>
+            </form>
+
+            <form action="/peminjaman/" method="post"
+               class="d-inline">
+               @method('get')
+               @csrf
+               <input type="hidden" name="filter" value="3">
+               <button type="submit" class="btn "><a>Penyediaan</a></button>
+            </form>
+
+            <form action="/peminjaman/" method="post"
+               class="d-inline">
+               @method('get')
+               @csrf
+               <input type="hidden" name="filter" value="4">
+               <button type="submit" class="btn "><a>Dapat Diambil</a></button>
+            </form>
+
+            <form action="/peminjaman/" method="post"
+               class="d-inline">
+               @method('get')
+               @csrf
+               <input type="hidden" name="filter" value="5">
+               <button type="submit" class="btn "><a>Dipinjam</a></button>
+            </form>
+            
+            <form action="/peminjaman/" method="post"
+               class="d-inline">
+               @method('get')
+               @csrf
+               <input type="hidden" name="filter" value="6">
+               <button type="submit" class="btn "><a>Persetujuan</a></button>
+            </form>
+
+            <form action="/peminjaman/" method="post"
+               class="d-inline">
+               @method('get')
+               @csrf
+               <input type="hidden" name="filter" value="7">
+               <button type="submit" class="btn "><a>Pengecekan</a></button>
+            </form>
+
+            <form action="/peminjaman/" method="post"
+               class="d-inline">
+               @method('get')
+               @csrf
+               <input type="hidden" name="filter" value="8">
+               <button type="submit" class="btn "><a>Dikembalikan</a></button>
+            </form>
+            
+            <form action="/peminjaman/" method="post"
+               class="d-inline">
+               @method('get')
+               @csrf
+               <input type="hidden" name="filter" value="tolak">
+               <button type="submit" class="btn "><a>Ditolak</a></button>
+            </form>
+         </div>
+         {{-- /Filter --}}
          
          {{-- Notif --}}
          @if (session()->has('success'))

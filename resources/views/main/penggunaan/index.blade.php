@@ -10,6 +10,66 @@
                   <div class="breadcrumb-item">Table</div>
                </div>
          </div>
+
+         {{-- Filter --}}
+         <div class=" mb-2 ">            
+            <form action="/penggunaan/" method="post"
+               class="d-inline">
+               @method('get')
+               @csrf
+               <input type="hidden" name="filter" value="">
+               <button type="submit" class="btn btn-behance"><a>All</a></button>
+            </form>
+            
+            <form action="/penggunaan/" method="post"
+               class="d-inline">
+               @method('get')
+               @csrf
+               <input type="hidden" name="filter" value="1">
+               <button type="submit" class="btn btn-behance"><a>Belum diajukan</a></button>
+            </form>
+            
+            <form action="/penggunaan/" method="post"
+               class="d-inline">
+               @method('get')
+               @csrf
+               <input type="hidden" name="filter" value="2">
+               <button type="submit" class="btn "><a>Persetujuan</a></button>
+            </form>
+
+            <form action="/penggunaan/" method="post"
+               class="d-inline">
+               @method('get')
+               @csrf
+               <input type="hidden" name="filter" value="3">
+               <button type="submit" class="btn "><a>Penyediaan</a></button>
+            </form>
+
+            <form action="/penggunaan/" method="post"
+               class="d-inline">
+               @method('get')
+               @csrf
+               <input type="hidden" name="filter" value="4">
+               <button type="submit" class="btn "><a>Dapat Diambil</a></button>
+            </form>
+
+            <form action="/penggunaan/" method="post"
+               class="d-inline">
+               @method('get')
+               @csrf
+               <input type="hidden" name="filter" value="5">
+               <button type="submit" class="btn "><a>Digunakan</a></button>
+            </form>
+            
+            <form action="/penggunaan/" method="post"
+               class="d-inline">
+               @method('get')
+               @csrf
+               <input type="hidden" name="filter" value="tolak">
+               <button type="submit" class="btn "><a>Ditolak</a></button>
+            </form>
+         </div>
+         {{-- /Filter --}}
          
          {{-- Notif --}}
          @if (session()->has('success'))

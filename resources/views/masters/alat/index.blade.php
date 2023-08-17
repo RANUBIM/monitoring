@@ -11,6 +11,28 @@
             </div>
          </div>
 
+         {{-- Filter --}}
+         <div class=" mb-2 ">   
+            <form action="/alat/" method="post"
+               class="d-inline">
+               @method('get')
+               @csrf
+               <input type="hidden" name="filter" value="">
+               <button type="submit" class="btn btn-behance"><a>All</a></button>
+            </form>
+
+            @foreach ($dataLabor as $item)
+               <form action="/alat/" method="post"
+                  class="d-inline">
+                  @method('get')
+                  @csrf
+                  <input type="hidden" name="filter" value="{{ $item->id }}">
+                  <button type="submit" class="btn btn-behance"><a>{{ $item->nama }}</a></button>
+               </form>
+            @endforeach  
+         </div>
+         {{-- /Filter --}}
+
          {{-- Notif --}}
          @if (session()->has('success'))
             <div class="alert alert-primary alert-dismissible show fade">
