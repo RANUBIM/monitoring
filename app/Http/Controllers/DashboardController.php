@@ -117,7 +117,6 @@ class DashboardController extends Controller
         endif;
 
         // dd($dataLog);
-        
 
         // $datas = Log::latest()->paginate(10);
         // $datasCounted = Log::latest()->take(5)->get();
