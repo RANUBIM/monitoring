@@ -133,9 +133,9 @@ class PeminjamansController extends Controller
         else
         {
             if (Auth::user()->role == "Kepala Jurusan" || Auth::user()->role == "Laboran") :
-                $datas = Peminjamans::with(['dataUser','dataAlat.dataLabor'])->get();
+                $datas = Peminjamans::with(['dataUser','dataAlat.dataLabor'])->orderBy('id','desc')->get();
             else:
-                $datas = Peminjamans::with(['dataUser','dataAlat.dataLabor'])->where('user_id',Auth::user()->id)->get();
+                $datas = Peminjamans::with(['dataUser','dataAlat.dataLabor'])->where('user_id',Auth::user()->id)->orderBy('id','desc')->get();
             endif;
         }
 

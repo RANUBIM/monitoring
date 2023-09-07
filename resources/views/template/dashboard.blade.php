@@ -9,7 +9,8 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                
+                {{-- <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                     <div class="card card-statistic-1">
                         <div class="card-icon bg-primary">
                             <i class="far fa-user"></i>
@@ -38,8 +39,9 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                </div> --}}
+
+                {{-- <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="card card-statistic-1">
                         <div class="card-icon bg-warning">
                             <i class="far fa-file"></i>
@@ -54,7 +56,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="card card-statistic-1">
                         <div class="card-icon bg-success">
                             <i class="fas fa-circle"></i>
@@ -68,51 +70,224 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
+
             <div class="row">
-                {{-- <div class="col-lg-12 col-md-12 col-12 col-sm-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Statistics</h4>
-                            <div class="card-header-action">
-                                <div class="btn-group">
-                                    <a href="#" class="btn btn-primary">Week</a>
-                                    <a href="#" class="btn">Month</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <canvas id="myChart" height="182"></canvas>
-                            <div class="statistic-details mt-sm-4">
-                                <div class="statistic-details-item">
-                                    <span class="text-muted"><span class="text-primary"><i
-                                                class="fas fa-caret-up"></i></span> 7%</span>
-                                    <div class="detail-value">$243</div>
-                                    <div class="detail-name">Today's Sales</div>
-                                </div>
-                                <div class="statistic-details-item">
-                                    <span class="text-muted"><span class="text-danger"><i
-                                                class="fas fa-caret-down"></i></span> 23%</span>
-                                    <div class="detail-value">$2,902</div>
-                                    <div class="detail-name">This Week's Sales</div>
-                                </div>
-                                <div class="statistic-details-item">
-                                    <span class="text-muted"><span class="text-primary"><i
-                                                class="fas fa-caret-up"></i></span>9%</span>
-                                    <div class="detail-value">$12,821</div>
-                                    <div class="detail-name">This Month's Sales</div>
-                                </div>
-                                <div class="statistic-details-item">
-                                    <span class="text-muted"><span class="text-primary"><i
-                                                class="fas fa-caret-up"></i></span> 19%</span>
-                                    <div class="detail-value">$92,142</div>
-                                    <div class="detail-name">This Year's Sales</div>
-                                </div>
+
+                @if (Auth::user()->role == 'Kepala Jurusan' || Auth::user()->role == 'Laboran')
+                    <div class="col-6">
+                        <div class="card">
+                            <div class="card-body">
+                                {!! $dataDetailChart->container() !!}
                             </div>
                         </div>
                     </div>
-                </div> --}}
+
+                    <div class="col-6">
+                        <div class="card">
+                            <div class="card-body">
+                                {!! $dataPeminjamanPenggunaanChart->container() !!}
+                            </div>
+                        </div>
+                    </div>    
+                @endif
+                
+                
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-body">
+                            {!! $dataPeminjamanChart->container() !!}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-body">
+                            {!! $dataPenggunaanChart->container() !!}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-6 col-md-6 col-6 col-sm-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Reminder Peminjaman</h4>
+                            {{-- <div class="card-header-action">
+                                <a href="/activities" class="btn btn-primary">Stok Alat</a>
+                            </div> --}}
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-striped mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Aktor</th>
+                                            <th>Kegiatan</th>
+                                            <th>Batas Peminjaman</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($dataPeminjamanTerdekat as $show)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>
+                                                {{-- <a href="#" class="font-weight-600"><img
+                                                        src="assets/img/avatar/avatar-1.png" alt="avatar"
+                                                        width="30" class="rounded-circle mr-1"> {{ $show->user_id }}</a> --}}
+                                                {{ $show->dataUser->nama }}
+                                            </td>
+                                            <td>
+                                                <strong>{{$show->kegiatan}}</strong>
+                                                <br>
+                                                {{$show->tujuan}}
+                                            </td>
+                                            <td>
+                                                {{ \Carbon\Carbon::parse($show->tgl_pengembalian)->diff(\Carbon\Carbon::now())->d }} hari lagi
+                                                <br>
+                                                {{-- {{ $show->tgl_pengembalian }} --}}
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 col-md-6 col-6 col-sm-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Peminjaman Melewati Batas</h4>
+                            {{-- <div class="card-header-action">
+                                <a href="/activities" class="btn btn-primary">Stok Alat</a>
+                            </div> --}}
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-striped mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Aktor</th>
+                                            <th>Kegiatan</th>
+                                            <th>Melewati Batas Peminjaman</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($dataPeminjamanTelat as $show)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>
+                                                {{-- <a href="#" class="font-weight-600"><img
+                                                        src="assets/img/avatar/avatar-1.png" alt="avatar"
+                                                        width="30" class="rounded-circle mr-1"> {{ $show->user_id }}</a> --}}
+                                                {{ $show->dataUser->nama }}
+                                            </td>
+                                            <td>
+                                                <strong>{{$show->kegiatan}}</strong>
+                                                <br>
+                                                {{$show->tujuan}}
+                                            </td>
+                                            <td>
+                                                {{ \Carbon\Carbon::parse($show->tgl_pengembalian)->diff(\Carbon\Carbon::now())->d }} hari
+                                                <br>
+                                                {{-- {{ $show->tgl_pengembalian }} --}}
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                @if (Auth::user()->role == 'Kepala Jurusan' || Auth::user()->role == 'Laboran')
+                <div class="col-lg-6 col-md-6 col-6 col-sm-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Reminder Stok Alat</h4>
+                            <div class="card-header-action">
+                                {{-- <a href="/activities" class="btn btn-primary">Stok Alat</a> --}}
+                            </div>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-striped mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Nama</th>
+                                            <th>Sisa Stok</th>
+                                            {{-- <th>Dipinjam</th> --}}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($dataAlat as $show)
+                                            @if ($show->stok >= 5 && ($show->stok-$show->tersedia) <= 5)
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $show->nama }}</td>
+                                                    <td>{{ $show->stok - $show->dipinjam}} {{ $show->satuan }}</td>
+                                                    {{-- <td>{{ $show->stok - $show->dipinjam }}</td> --}}
+                                                </tr>
+                                            @endif
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-6 col-sm-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Reminder Stok Bahan</h4>
+                            <div class="card-header-action">
+                                {{-- <a href="/activities" class="btn btn-primary">Stok Alat</a> --}}
+                            </div>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-striped mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Nama</th>
+                                            {{-- <th>Stok</th>
+                                            <th>Dipinjam</th> --}}
+                                            <th>Sisa Stok</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($dataBahan as $show)
+                                            @if ($show->stok >= 10 && ($show->stok-$show->digunakan) <= 10)
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $show->nama }}</td>
+                                                    {{-- <td>{{ $show->stok }} {{ $show->satuan }}</td>
+                                                    <td>{{ $show->digunakan }} {{ $show->satuan }}</td> --}}
+                                                    <td>{{ $show->stok - $show->digunakan }} {{ $show->satuan }}</td>
+                                                </tr>
+                                            @endif
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
                 <div class="col-lg-12 col-md-12 col-12 col-sm-12">
                     <div class="card">
                         <div class="card-header">
@@ -160,7 +335,23 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </section>
     </div>
+    <script src="{{ $dataPeminjamanChart->cdn() }}"></script>
+
+    {{ $dataPeminjamanChart->script() }}
+    
+    <script src="{{ $dataPeminjamanPenggunaanChart->cdn() }}"></script>
+
+    {{ $dataPeminjamanPenggunaanChart->script() }}
+    
+    <script src="{{ $dataPenggunaanChart->cdn() }}"></script>
+
+    {{ $dataPenggunaanChart->script() }}
+    
+    <script src="{{ $dataDetailChart->cdn() }}"></script>
+
+    {{ $dataDetailChart->script() }}
 @endsection

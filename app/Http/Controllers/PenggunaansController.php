@@ -130,10 +130,10 @@ class PenggunaansController extends Controller
         else
         {
             if (Auth::user()->role == "Kepala Jurusan" || Auth::user()->role == "Laboran") :
-                $datas = Penggunaans::with(['dataUser','dataBahan.dataLabor'])->get();
+                $datas = Penggunaans::with(['dataUser','dataBahan.dataLabor'])->orderBy('id','desc')->get();
             else :
                 $datas = Penggunaans::with(['dataUser','dataBahan.dataLabor'])
-                ->where('user_id',Auth::user()->id)->get();
+                ->where('user_id',Auth::user()->id)->orderBy('id','desc')->get();
             endif;
         }
         // dd($datas);
